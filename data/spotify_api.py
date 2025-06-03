@@ -3,6 +3,7 @@ import os
 import base64
 import requests
 import json
+import scraping_2025
 
 load_dotenv()
 
@@ -25,8 +26,46 @@ def get_token():
     token = json_result["access_token"]
     return token
 
+
 def get_auth_header(token):
     return {"Authorization": "Bearer " + token}
 
+
+def search_for_track(token, artist_name, track_name, year):
+    url="https://api.spotify.com/v1/search"
+    query_params = {
+        "q": f"{track_name} year:{year} artist:{artist_name}",
+        "type": "track",
+        "limit": 1,
+    }
+
+    result = requests.get(url=url, params=query_params, headers=get_auth_header(token))
+
+    data = result.json()
+    if len(data["tracks"]["items"]) <= 0:
+        print("Song not found ...")
+        return
+    
+    # print(data)
+
+    spotify_id = data["tracks"]["items"][0]["id"]
+    spotify_name = data["tracks"]["items"][0]["name"]
+    spotify_url = data["tracks"]["items"][0]["external_urls"]["spotify"]
+
+    print(spotify_name)
+    print(spotify_url)
+
+
+
 token = get_token()
-print(token)
+
+songs_2025 = [[]]
+
+print(scraping_2025.each_entry)
+
+for entry in scraping_2025.each_entry:
+    artist_name = entry[1]
+    song_name = entry[2]
+    search_for_track(token, artist_name, song_name, 2025)
+
+search_for_track(token, "Nina Žižić", 'Dobrodošli" (Добродошли)', 2025)
