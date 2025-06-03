@@ -44,7 +44,7 @@ def search_for_track(token, artist_name, track_name, year):
     data = result.json()
     if len(data["tracks"]["items"]) <= 0:
         print("Song not found ...")
-        return
+        return ""
     
     # print(data)
 
@@ -52,20 +52,31 @@ def search_for_track(token, artist_name, track_name, year):
     spotify_name = data["tracks"]["items"][0]["name"]
     spotify_url = data["tracks"]["items"][0]["external_urls"]["spotify"]
 
-    print(spotify_name)
-    print(spotify_url)
+    # print(spotify_name)
+    # print(spotify_url)
+
+    return spotify_url
 
 
 
 token = get_token()
 
-songs_2025 = [[]]
+songs_2025 = []
 
 print(scraping_2025.each_entry)
 
 for entry in scraping_2025.each_entry:
     artist_name = entry[1]
     song_name = entry[2]
-    search_for_track(token, artist_name, song_name, 2025)
+    # search_for_track(token, artist_name, song_name, 2025)
+    # print(search_for_track(token, artist_name, song_name, 2025))
+    full_details = entry.append(search_for_track(token, artist_name, song_name, 2025))
+    print(entry)
+    print(full_details)
+    songs_2025.append(entry)
 
-search_for_track(token, "Nina Žižić", 'Dobrodošli" (Добродошли)', 2025)
+# search_for_track(token, "Nina Žižić", 'Dobrodošli" (Добродошли)', 2025)
+
+
+print("--------------------------------------------------------")
+print(songs_2025)

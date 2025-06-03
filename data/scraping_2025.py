@@ -81,7 +81,7 @@ add_songs()
 # print(artists)
 # print(songs)
 
-each_entry = [[]]
+each_entry = []
 
 index = 0
 
@@ -89,7 +89,6 @@ while index < len(countries) and index < len(artists) and index < len(songs):
     each_entry.append([countries[index], artists[index], songs[index]])
     index += 1
 
-each_entry.pop(0)
 print(each_entry)
     
 
