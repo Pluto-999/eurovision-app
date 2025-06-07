@@ -45,7 +45,7 @@ def create_string(index, entry):
         if found_opening:
             index += 1
             continue
-        if not char.isalnum() and char != " " and char != '"':
+        if not char.isalnum() and char != " " and char != '"' and char != "'":
             if found_opening:
                 found_opening = False
             else:
@@ -81,7 +81,7 @@ for entry in table_entries:
     song_index = find_string(6, entry)
     song = create_string(song_index, entry)
 
-    each_entry.append([country, artist, song.strip()])
+    each_entry.append([country, artist, song])
 
 
 print("Each entry ..." , each_entry)
@@ -182,3 +182,15 @@ print("Semi 2 entries: ... ", semi_2_entries)
 
 
 #### MATCH UP EACH_ENTRY WITH RESULTS ####
+
+nqs = semi_1_entries[10:] + semi_2_entries[10:]
+nqs.sort(key=lambda x: (-x[2], x[0]))
+
+
+position = 27
+for entry in nqs:
+    entry[0] = position
+    position += 1
+
+
+print("FULL RESULTS:" , final_entries + nqs)
