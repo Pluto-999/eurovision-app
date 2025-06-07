@@ -35,7 +35,7 @@ def find_string(spaces_required, entry):
     return index
 
 
-def create_number_string(index, entry):
+def create_string(index, entry):
     string = ""
     found_opening = False
     while index < len(entry):
@@ -45,7 +45,7 @@ def create_number_string(index, entry):
         if found_opening:
             index += 1
             continue
-        if not char.isalnum():
+        if not char.isalnum() and char != " " and char != '"':
             if found_opening:
                 found_opening = False
             else:
@@ -73,17 +73,15 @@ each_entry = []
 
 for entry in table_entries:
 
-    country = create_country_string(0, entry)
-
-    # countries.append(string)
+    country = create_string(0, entry)
 
     artist_index = find_string(4, entry)
-    artist = create_country_string(artist_index, entry)
+    artist = create_string(artist_index, entry)
 
     song_index = find_string(6, entry)
-    song = create_country_string(song_index, entry)
+    song = create_string(song_index, entry)
 
-    each_entry.append([country, artist, song])
+    each_entry.append([country, artist, song.strip()])
 
 
 print("Each entry ..." , each_entry)
@@ -104,15 +102,15 @@ table_entries.pop(0)
 for entry in table_entries:
 
     position_index = find_string(10, entry)
-    position = create_number_string(position_index, entry)
+    position = create_string(position_index, entry)
 
     country_index = find_string(2, entry)
     country = create_country_string(country_index, entry)
 
     points_index = find_string(8, entry)
-    points = create_number_string(points_index, entry)
+    points = create_string(points_index, entry)
 
-    running_order = create_number_string(0, entry)
+    running_order = create_string(0, entry)
 
     final_entries.append([int(position), country.strip(), int(points), int(running_order)])
 
@@ -135,15 +133,15 @@ table_entries.pop(0)
 
 for entry in table_entries:
     position_index = find_string(10, entry)
-    position = create_number_string(position_index, entry)
+    position = create_string(position_index, entry)
 
     country_index = find_string(2, entry)
     country = create_country_string(country_index, entry)
 
     points_index = find_string(8, entry)
-    points = create_number_string(points_index, entry)
+    points = create_string(points_index, entry)
 
-    running_order = create_number_string(0, entry)
+    running_order = create_string(0, entry)
 
     semi_1_entries.append([int(position), country.strip(), int(points), int(running_order)])
 
@@ -167,18 +165,20 @@ table_entries.pop(0)
 
 for entry in table_entries:
     position_index = find_string(10, entry)
-    position = create_number_string(position_index, entry)
+    position = create_string(position_index, entry)
 
     country_index = find_string(2, entry)
     country = create_country_string(country_index, entry)
 
     points_index = find_string(8, entry)
-    points = create_number_string(points_index, entry)
+    points = create_string(points_index, entry)
 
-    running_order = create_number_string(0, entry)
+    running_order = create_string(0, entry)
 
     semi_2_entries.append([int(position), country.strip(), int(points), int(running_order)])
 
 semi_2_entries.sort()
 print("Semi 2 entries: ... ", semi_2_entries)
 
+
+#### MATCH UP EACH_ENTRY WITH RESULTS ####
