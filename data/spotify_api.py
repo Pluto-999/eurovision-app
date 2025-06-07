@@ -63,20 +63,29 @@ token = get_token()
 
 songs_2025 = []
 
-print(scraping_2025.each_entry)
+# print(scraping_2025.each_entry)
 
 for entry in scraping_2025.each_entry:
     artist_name = entry[1]
     song_name = entry[2]
-    # search_for_track(token, artist_name, song_name, 2025)
-    # print(search_for_track(token, artist_name, song_name, 2025))
-    full_details = entry.append(search_for_track(token, artist_name, song_name, 2025))
-    print(entry)
-    print(full_details)
+    entry.append(search_for_track(token, artist_name, song_name, 2025))
     songs_2025.append(entry)
-
-# search_for_track(token, "Nina Žižić", 'Dobrodošli" (Добродошли)', 2025)
 
 
 print("--------------------------------------------------------")
 print(songs_2025)
+
+## Add points to all entries in the final ...
+for entry in songs_2025:
+    country = entry[0]
+    for entry_2 in scraping_2025.final_entries:
+        country_2 = entry[1]
+        if country == country_2:
+            score = entry_2[2]
+            position = entry_2[0]
+            entry.append(score)
+            entry.append(position)
+            
+
+# print("--------------------------------------------------------")
+# print(songs_2025)
