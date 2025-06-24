@@ -1,26 +1,23 @@
 from bs4 import BeautifulSoup
 import requests
+import json
 
 url = "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025"
 
 page = requests.get(url)
 
 soup = BeautifulSoup(page.text, "html.parser")
-# print(soup.prettify())
 
 participants_table = soup.find("table", class_ = "wikitable plainrowheaders sticky-header")
-# print(participants_table.prettify())
 
 countries = []
 artists = []
 songs = []
 
 titles = participants_table.find_all("tr")
-# print(titles)
 
 table_entries = [ title.text.strip() for title in titles ]
 table_entries.pop(0)
-# print(table_entries)
 
 
 def find_string(spaces_required, entry):
@@ -84,20 +81,15 @@ for entry in table_entries:
     each_entry.append([country, artist, song])
 
 
-print("Each entry ..." , each_entry)
-
-
 ################### FINAL RESULTS ################### 
-final_entries = []
+final_results = []
 
 final_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[2]
-# print(final_results_table.prettify())
 
 titles = final_results_table.find_all("tr")
 
 table_entries = [ title.text.strip() for title in titles ]
 table_entries.pop(0)
-# print(table_entries)
 
 for entry in table_entries:
 
@@ -112,24 +104,21 @@ for entry in table_entries:
 
     running_order = create_string(0, entry)
 
-    final_entries.append([int(position), country.strip(), int(points), int(running_order)])
+    final_results.append([int(position), country.strip(), int(points), int(running_order), False])
 
-final_entries.sort()
-print("Final entries: ... ", final_entries)
+final_results.sort()
 
 
 ################### SEMI-FINAL 1 RESULTS ###################
 
-semi_1_entries = []
+semi_1_results = []
 
 semi_1_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[0]
 
 titles = semi_1_results_table.find_all("tr")
-# print(titles)
 
 table_entries = [ title.text.strip() for title in titles ]
 table_entries.pop(0)
-# print(table_entries)
 
 for entry in table_entries:
     position_index = find_string(10, entry)
@@ -143,25 +132,26 @@ for entry in table_entries:
 
     running_order = create_string(0, entry)
 
-    semi_1_entries.append([int(position), country.strip(), int(points), int(running_order)])
+    # add nq bool
+    nq = False
+    if int(position) > 10:
+        nq = True
 
-semi_1_entries.sort()
-print("Semi 1 entries: ... ", semi_1_entries)
+    semi_1_results.append([int(position), country.strip(), int(points), int(running_order), nq])
 
+semi_1_results.sort()
 
 
 ################### SEMI-FINAL 2 RESULTS ###################
 
-semi_2_entries = []
+semi_2_results = []
 
 semi_2_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[1]
 
 titles = semi_2_results_table.find_all("tr")
-# print(titles)
 
 table_entries = [ title.text.strip() for title in titles ]
 table_entries.pop(0)
-# print(table_entries)
 
 for entry in table_entries:
     position_index = find_string(10, entry)
@@ -175,22 +165,53 @@ for entry in table_entries:
 
     running_order = create_string(0, entry)
 
-    semi_2_entries.append([int(position), country.strip(), int(points), int(running_order)])
+    # add nq bool
+    nq = False
+    if int(position) > 10:
+        nq = True
 
-semi_2_entries.sort()
-print("Semi 2 entries: ... ", semi_2_entries)
+    semi_2_results.append([int(position), country.strip(), int(points), int(running_order), nq])
 
-
-#### MATCH UP EACH_ENTRY WITH RESULTS ####
-
-nqs = semi_1_entries[10:] + semi_2_entries[10:]
-nqs.sort(key=lambda x: (-x[2], x[0]))
+semi_2_results.sort()
 
 
-position = 27
-for entry in nqs:
-    entry[0] = position
-    position += 1
+nqs = semi_1_results[10:] + semi_2_results[10:]
+nqs.sort(key = lambda x: (x[0], -x[2]))
 
 
-print("FULL RESULTS:" , final_entries + nqs)
+def add_artist_and_song(results):
+    for entry in results:
+        country = entry[1]
+        for entry_2 in each_entry:
+            if entry_2[0] == country:
+                entry.append(entry_2[1])
+                entry.append(entry_2[2])
+
+### ADD ARTIST AND SONG TO RESULTS ###
+
+add_artist_and_song(final_results)
+
+add_artist_and_song(semi_1_results)
+
+add_artist_and_song(semi_2_results)
+
+
+# results now have: position, country, points, running order, nq bool, artist, song
+
+full_results = final_results + nqs
+
+# print("ALL ENTRIES: ", each_entry)
+# print("-----------------------------------------------------------------------------")
+# print("FINAL RESULTS: ", final_results)
+# print("-----------------------------------------------------------------------------")
+# print("SEMI 1 RESULTS: ", semi_1_results)
+# print("-----------------------------------------------------------------------------")
+# print("SEMI 2 RESULTS: ", semi_2_results)
+# print("-----------------------------------------------------------------------------")
+# print("FULL RESULTS: ", full_results)
+
+### TO DO !! ###
+# String parsing is still not complete .. e.g. [15, 'Germany', 151, 16, False, 'Abor ', '"Baller"']
+# e.g. [26, 'San Marino', 27, 25, False, 'Gabry Ponte', '"Tutta l\'Italia"']
+# e.g. [12, 'Netherlands', 175, 12, False, 'Claude', '"C\'est la vie"']
+# e.g. [19, 'United Kingdom', 88, 8, False, 'Remember Monday', '"What the Hell Just Happened']

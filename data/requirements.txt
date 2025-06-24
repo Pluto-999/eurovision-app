@@ -1,3 +1,4 @@
+attrs==25.3.0
 beautifulsoup4==4.13.4
 cachetools==5.5.2
 certifi==2025.6.15
@@ -10,6 +11,8 @@ google-auth-oauthlib==1.2.2
 googleapis-common-protos==1.70.0
 httplib2==0.22.0
 idna==3.10
+jsonschema==4.24.0
+jsonschema-specifications==2025.4.1
 oauthlib==3.3.1
 proto-plus==1.26.1
 protobuf==6.31.1
@@ -17,8 +20,10 @@ pyasn1==0.6.1
 pyasn1_modules==0.4.2
 pyparsing==3.2.3
 python-dotenv==1.1.1
+referencing==0.36.2
 requests==2.32.4
 requests-oauthlib==2.0.0
+rpds-py==0.25.1
 rsa==4.9.1
 soupsieve==2.7
 typing_extensions==4.14.0

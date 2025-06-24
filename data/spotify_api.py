@@ -3,8 +3,7 @@ import os
 import base64
 import requests
 import json
-import scraping_2025
-
+from scraping_2025 import each_entry, final_results, semi_1_results, semi_2_results, full_results
 load_dotenv()
 
 client_id = os.getenv("CLIENT_ID")
@@ -45,15 +44,8 @@ def search_for_track(token, artist_name, track_name, year):
     if len(data["tracks"]["items"]) <= 0:
         print("Song not found ...")
         return ""
-    
-    # print(data)
 
-    spotify_id = data["tracks"]["items"][0]["id"]
-    spotify_name = data["tracks"]["items"][0]["name"]
     spotify_url = data["tracks"]["items"][0]["external_urls"]["spotify"]
-
-    # print(spotify_name)
-    # print(spotify_url)
 
     return spotify_url
 
@@ -61,31 +53,35 @@ def search_for_track(token, artist_name, track_name, year):
 
 token = get_token()
 
-songs_2025 = []
-
-# print(scraping_2025.each_entry)
-
-for entry in scraping_2025.each_entry:
-    artist_name = entry[1]
-    song_name = entry[2]
-    entry.append(search_for_track(token, artist_name, song_name, 2025))
-    songs_2025.append(entry)
 
 
-print("--------------------------------------------------------")
-print(songs_2025)
+def add_spotify_track(list, artist_index, track_index):
+    for entry in list:
+        artist_name = entry[artist_index]
+        track_name = entry[track_index]
+        track = search_for_track(token, artist_name, track_name, 2025)
+        if track not in entry:
+            entry.append(track)
 
-## Add points to all entries in the final ...
-for entry in songs_2025:
-    country = entry[0]
-    for entry_2 in scraping_2025.final_entries:
-        country_2 = entry[1]
-        if country == country_2:
-            score = entry_2[2]
-            position = entry_2[0]
-            entry.append(score)
-            entry.append(position)
-            
 
-# print("--------------------------------------------------------")
-# print(songs_2025)
+add_spotify_track(each_entry, 1, 2)
+
+add_spotify_track(final_results, 5, 6)
+
+add_spotify_track(semi_1_results, 5, 6)
+
+add_spotify_track(semi_2_results, 5, 6)
+
+add_spotify_track(full_results, 5, 6)
+
+
+print("ALL ENTRIES: ", each_entry)
+print("-----------------------------------------------------------------------------")
+print("FINAL RESULTS: ", final_results)
+print("-----------------------------------------------------------------------------")
+print("SEMI 1 RESULTS: ", semi_1_results)
+print("-----------------------------------------------------------------------------")
+print("SEMI 2 RESULTS: ", semi_2_results)
+print("-----------------------------------------------------------------------------")
+print("FULL RESULTS: ", full_results)
+
