@@ -50,9 +50,7 @@ def search_for_track(token, artist_name, track_name, year):
     return spotify_url
 
 
-
 token = get_token()
-
 
 
 def add_spotify_track(list, artist_index, track_index):
@@ -62,17 +60,18 @@ def add_spotify_track(list, artist_index, track_index):
         track = search_for_track(token, artist_name, track_name, 2025)
         if track not in entry:
             entry.append(track)
+    return list
 
 
-add_spotify_track(each_entry, 1, 2)
+each_entry_with_spotify = add_spotify_track(each_entry, 1, 2)
 
-add_spotify_track(final_results, 5, 6)
+final_results_with_spotify = add_spotify_track(final_results, 5, 6)
 
-add_spotify_track(semi_1_results, 5, 6)
+semi_1_results_with_spotify = add_spotify_track(semi_1_results, 5, 6)
 
-add_spotify_track(semi_2_results, 5, 6)
+semi_2_results_with_spotify = add_spotify_track(semi_2_results, 5, 6)
 
-add_spotify_track(full_results, 5, 6)
+full_results_with_spotify = add_spotify_track(full_results, 5, 6)
 
 
 # print("ALL ENTRIES: ", each_entry)
