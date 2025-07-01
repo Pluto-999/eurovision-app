@@ -64,6 +64,34 @@ def create_country_string(index, entry):
         string += char
     return string
 
+def create_song_string(index, entry):
+    quote_mark_counter = 0
+    string = ""
+
+    while index < len(entry):
+        char = entry[index]
+        if char == "\n" or quote_mark_counter >= 2:
+            break
+        if char == '"':
+            quote_mark_counter += 1
+        index += 1
+        string += char
+    return string[1:-1]
+
+
+def create_artist_string(index, entry):
+    string = ""
+    
+    while index < len(entry):
+        char = entry[index]
+        if char == "\n" or char == "[":
+            break
+        index += 1
+        string += char
+    return string
+
+
+
 each_entry = []
 
 # Loop through every entry in the table to get the countries
@@ -73,10 +101,10 @@ for entry in table_entries:
     country = create_string(0, entry)
 
     artist_index = find_string(4, entry)
-    artist = create_string(artist_index, entry)
+    artist = create_artist_string(artist_index, entry)
 
     song_index = find_string(6, entry)
-    song = create_string(song_index, entry)
+    song = create_song_string(song_index, entry)
 
     each_entry.append([country, artist, song])
 
@@ -209,9 +237,3 @@ full_results = final_results + nqs
 # print("SEMI 2 RESULTS: ", semi_2_results)
 # print("-----------------------------------------------------------------------------")
 # print("FULL RESULTS: ", full_results)
-
-### TO DO !! ###
-# String parsing is still not complete .. e.g. [15, 'Germany', 151, 16, False, 'Abor ', '"Baller"']
-# e.g. [26, 'San Marino', 27, 25, False, 'Gabry Ponte', '"Tutta l\'Italia"']
-# e.g. [12, 'Netherlands', 175, 12, False, 'Claude', '"C\'est la vie"']
-# e.g. [19, 'United Kingdom', 88, 8, False, 'Remember Monday', '"What the Hell Just Happened']
