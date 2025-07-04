@@ -1,6 +1,13 @@
 from bs4 import BeautifulSoup
 import requests
 import json
+import os
+
+current_dir = os.path.dirname(__file__)
+json_path = os.path.join(current_dir, "flags.json")
+
+with open(json_path, "r") as f:
+    flags_data = json.load(f)
 
 url = "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025"
 
@@ -107,6 +114,11 @@ for entry in table_entries:
     song = create_song_string(song_index, entry)
 
     each_entry.append([country, artist, song])
+
+
+for entry in each_entry:
+    entry.append(flags_data[entry[0]])
+
 
 
 ################### FINAL RESULTS ################### 
