@@ -66,6 +66,7 @@ cur.execute("""
         position INT NOT NULL,
         points INT NOT NULL,
         running_order INT NOT NULL,
+        semi_number INT NOT NULL,
         is_nq BOOLEAN NOT NULL,
         PRIMARY KEY (country, year),
         FOREIGN KEY (country, year) REFERENCES Entry(country, year)

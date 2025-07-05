@@ -3,11 +3,6 @@ import requests
 import json
 import os
 
-current_dir = os.path.dirname(__file__)
-json_path = os.path.join(current_dir, "flags.json")
-
-with open(json_path, "r") as f:
-    flags_data = json.load(f)
 
 url = "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025"
 
@@ -99,7 +94,8 @@ def create_artist_string(index, entry):
 
 
 
-each_entry = []
+all_entries = []
+all_entries_dict = {} # for this, we need country, year, artist, song
 
 # Loop through every entry in the table to get the countries
 
@@ -113,16 +109,22 @@ for entry in table_entries:
     song_index = find_string(6, entry)
     song = create_song_string(song_index, entry)
 
-    each_entry.append([country, artist, song])
+    all_entries.append({
+        "country": country.strip(), 
+        "year": 2025, 
+        "artist": artist, 
+        "song": song
+        }
+    )
 
+all_entries_dict["all_entries"] = all_entries
 
-for entry in each_entry:
-    entry.append(flags_data[entry[0]])
-
-
+with open("./json_data/entries.json", "w") as outfile:
+    json.dump(all_entries_dict, outfile, ensure_ascii=False)
 
 ################### FINAL RESULTS ################### 
 final_results = []
+final_results_dict = {} # for this, we need country, year, position, points, running_order
 
 final_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[2]
 
@@ -144,14 +146,26 @@ for entry in table_entries:
 
     running_order = create_string(0, entry)
 
-    final_results.append([int(position), country.strip(), int(points), int(running_order), False])
+    final_results.append({
+        "country": country.strip(), 
+        "year": 2025, 
+        "position": int(position), 
+        "points": int(points), 
+        "running_order": int(running_order)
+        }
+    )
 
-final_results.sort()
+final_results_dict["final_entries"] = final_results
+
+with open("./json_data/final_results.json", "w") as outfile:
+    json.dump(final_results_dict, outfile)
+
 
 
 ################### SEMI-FINAL 1 RESULTS ###################
 
 semi_1_results = []
+semi_1_results_dict = {} # for this, we need country, year, position, points, running_order, semi_number, is_nq
 
 semi_1_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[0]
 
@@ -177,14 +191,26 @@ for entry in table_entries:
     if int(position) > 10:
         nq = True
 
-    semi_1_results.append([int(position), country.strip(), int(points), int(running_order), nq])
+    semi_1_results.append({
+        "country": country.strip(), 
+        "year": 2025, 
+        "position": int(position), 
+        "points": int(points), 
+        "running_order": int(running_order),
+        "semi_number": 1,
+        "is_nq": nq
+    })
 
-semi_1_results.sort()
 
+semi_1_results_dict["semi_1_entries"] = semi_1_results
+
+with open("./json_data/semi_1_results.json", "w") as outfile:
+    json.dump(semi_1_results_dict, outfile)
 
 ################### SEMI-FINAL 2 RESULTS ###################
 
 semi_2_results = []
+semi_2_results_dict = {} # for this, we need country, year, position, points, running_order, semi_number, is_nq
 
 semi_2_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[1]
 
@@ -205,47 +231,23 @@ for entry in table_entries:
 
     running_order = create_string(0, entry)
 
-    # add nq bool
+    ## add nq bool
     nq = False
     if int(position) > 10:
         nq = True
 
-    semi_2_results.append([int(position), country.strip(), int(points), int(running_order), nq])
-
-semi_2_results.sort()
-
-
-nqs = semi_1_results[10:] + semi_2_results[10:]
-nqs.sort(key = lambda x: (x[0], -x[2]))
-
-
-def add_artist_and_song(results):
-    for entry in results:
-        country = entry[1]
-        for entry_2 in each_entry:
-            if entry_2[0] == country:
-                entry.append(entry_2[1])
-                entry.append(entry_2[2])
-
-### ADD ARTIST AND SONG TO RESULTS ###
-
-add_artist_and_song(final_results)
-
-add_artist_and_song(semi_1_results)
-
-add_artist_and_song(semi_2_results)
+    semi_2_results.append({
+        "country": country.strip(), 
+        "year": 2025, 
+        "position": int(position), 
+        "points": int(points), 
+        "running_order": int(running_order),
+        "semi_number": 2,
+        "is_nq": nq
+    })
 
 
-# results now have: position, country, points, running order, nq bool, artist, song
+semi_2_results_dict["semi_2_entries"] = semi_2_results
 
-full_results = final_results + nqs
-
-# print("ALL ENTRIES: ", each_entry)
-# print("-----------------------------------------------------------------------------")
-# print("FINAL RESULTS: ", final_results)
-# print("-----------------------------------------------------------------------------")
-# print("SEMI 1 RESULTS: ", semi_1_results)
-# print("-----------------------------------------------------------------------------")
-# print("SEMI 2 RESULTS: ", semi_2_results)
-# print("-----------------------------------------------------------------------------")
-# print("FULL RESULTS: ", full_results)
+with open("./json_data/semi_2_results.json", "w") as outfile:
+    json.dump(semi_2_results_dict, outfile)

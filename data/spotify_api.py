@@ -3,7 +3,7 @@ import os
 import base64
 import requests
 import json
-from scraping_2025 import each_entry, final_results, semi_1_results, semi_2_results, full_results
+
 load_dotenv()
 
 client_id = os.getenv("CLIENT_ID")
@@ -53,34 +53,18 @@ def search_for_track(token, artist_name, track_name, year):
 token = get_token()
 
 
-def add_spotify_track(list, artist_index, track_index):
-    for entry in list:
-        artist_name = entry[artist_index]
-        track_name = entry[track_index]
-        track = search_for_track(token, artist_name, track_name, 2025)
-        if track not in entry:
-            entry.append(track)
-    return list
+def add_spotify_track(artist_name, track_name):
+    track = search_for_track(token, artist_name, track_name, 2025)
+    return track
 
 
-each_entry_with_spotify = add_spotify_track(each_entry, 1, 2)
-
-final_results_with_spotify = add_spotify_track(final_results, 5, 6)
-
-semi_1_results_with_spotify = add_spotify_track(semi_1_results, 5, 6)
-
-semi_2_results_with_spotify = add_spotify_track(semi_2_results, 5, 6)
-
-full_results_with_spotify = add_spotify_track(full_results, 5, 6)
+with open("./json_data/entries.json", "r") as openfile:
+    data = json.load(openfile)
 
 
-# print("ALL ENTRIES: ", each_entry)
-# print("-----------------------------------------------------------------------------")
-# print("FINAL RESULTS: ", final_results)
-# print("-----------------------------------------------------------------------------")
-# print("SEMI 1 RESULTS: ", semi_1_results)
-# print("-----------------------------------------------------------------------------")
-# print("SEMI 2 RESULTS: ", semi_2_results)
-# print("-----------------------------------------------------------------------------")
-# print("FULL RESULTS: ", full_results)
+for each_entry in data["all_entries"]:
+    each_entry["spotify_url"] = add_spotify_track(each_entry["artist"], each_entry["song"])
 
+
+with open("./json_data/entries.json", "w") as outfile:
+    json.dump(data, outfile, ensure_ascii=False)

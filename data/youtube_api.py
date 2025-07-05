@@ -1,7 +1,7 @@
 from googleapiclient.discovery import build
 from dotenv import load_dotenv
 import os
-from spotify_api import each_entry_with_spotify, final_results_with_spotify, semi_1_results_with_spotify, semi_2_results_with_spotify, full_results_with_spotify
+import json
 
 load_dotenv()
 
@@ -9,33 +9,35 @@ api_key = os.getenv("API_KEY")
 
 yt_service = build("youtube", "v3", developerKey=api_key)
 
-def add_yt_data(list):
 
-    for entry in list:
-        request = yt_service.search().list(
-            part="snippet",
-            q=entry[0] + "eurovision 2025 live",
-            maxResults=1
-        )
+def add_yt_data(country):
+    request = yt_service.search().list(
+        part="snippet",
+        q=country + "eurovision 2025 live",
+        maxResults=1
+    )
+    
+    response = request.execute()
 
-        response = request.execute()
-        # print(response)
-        video_id = response["items"][0]["id"]["videoId"]
-        video_thumbnail = response["items"][0]["snippet"]["thumbnails"]["high"]["url"]
-        video_url = "https://www.youtube.com/watch?v=" + video_id
-        video_name = response["items"][0]["snippet"]["title"]
-        # print("The name of the video is: " + video_name)
-        # print("The id of the video is: " + video_id)
-        # print("The URL of the video is: " + video_url)
-        # print("The thumbnail of the video is: " + video_thumbnail)
-        entry.append(video_thumbnail)
-        entry.append(video_url)
-
-    return list
+    video_id = response["items"][0]["id"]["videoId"]
+    video_thumbnail = response["items"][0]["snippet"]["thumbnails"]["high"]["url"]
+    video_url = "https://www.youtube.com/watch?v=" + video_id
+    
+    return [video_thumbnail, video_url]
 
 
-each_entry_with_all_data = add_yt_data(each_entry_with_spotify)
+with open("./json_data/entries.json", "r") as openfile:
+    data = json.load(openfile)
+
+
+for each_entry in data["all_entries"]:
+    yt_data = add_yt_data(each_entry["country"])
+    each_entry["yt_thumbnail"] = yt_data[0]
+    each_entry["yt_url"] = yt_data[1]
+
+
+with open("./json_data/entries.json", "w") as outfile:
+    json.dump(data, outfile, ensure_ascii=False)
 
 
 yt_service.close()
-
