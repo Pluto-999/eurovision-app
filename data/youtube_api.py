@@ -26,18 +26,4 @@ def add_yt_data(country):
     return [video_thumbnail, video_url]
 
 
-with open("./json_data/entries.json", "r") as openfile:
-    data = json.load(openfile)
-
-
-for each_entry in data["all_entries"]:
-    yt_data = add_yt_data(each_entry["country"])
-    each_entry["yt_thumbnail"] = yt_data[0]
-    each_entry["yt_url"] = yt_data[1]
-
-
-with open("./json_data/entries.json", "w") as outfile:
-    json.dump(data, outfile, ensure_ascii=False)
-
-
 yt_service.close()

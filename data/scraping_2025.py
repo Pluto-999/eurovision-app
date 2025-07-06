@@ -2,7 +2,9 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import os
-
+from scraping_helpers import find_string, create_string
+from spotify_api import add_spotify_track
+from youtube_api import add_yt_data
 
 url = "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025"
 
@@ -22,80 +24,8 @@ table_entries = [ title.text.strip() for title in titles ]
 table_entries.pop(0)
 
 
-def find_string(spaces_required, entry):
-    index = 0
-    counter = 0
-    while index < len(entry) and counter < spaces_required:
-        char = entry[index]
-        index += 1
-        if char == "\n":
-            counter += 1
-
-    return index
-
-
-def create_string(index, entry):
-    string = ""
-    found_opening = False
-    while index < len(entry):
-        char = entry[index]
-        if char == "\n":
-            break
-        if found_opening:
-            index += 1
-            continue
-        if not char.isalnum() and char != " " and char != '"' and char != "'":
-            if found_opening:
-                found_opening = False
-            else:
-                found_opening = True
-            index += 1
-            continue
-        index += 1
-        string += char
-    return string
-
-
-def create_country_string(index, entry):
-    string = ""
-    while index < len(entry):
-        char = entry[index]
-        if char == "\n":
-            break
-        index += 1
-        string += char
-    return string
-
-def create_song_string(index, entry):
-    quote_mark_counter = 0
-    string = ""
-
-    while index < len(entry):
-        char = entry[index]
-        if char == "\n" or quote_mark_counter >= 2:
-            break
-        if char == '"':
-            quote_mark_counter += 1
-        index += 1
-        string += char
-    return string[1:-1]
-
-
-def create_artist_string(index, entry):
-    string = ""
-    
-    while index < len(entry):
-        char = entry[index]
-        if char == "\n" or char == "[":
-            break
-        index += 1
-        string += char
-    return string
-
-
-
 all_entries = []
-all_entries_dict = {} # for this, we need country, year, artist, song
+all_entries_dict = {} # for this, we need country, year, artist, song, spotifty_url, yt_thumbnail, yt_url
 
 # Loop through every entry in the table to get the countries
 
@@ -104,23 +34,27 @@ for entry in table_entries:
     country = create_string(0, entry)
 
     artist_index = find_string(4, entry)
-    artist = create_artist_string(artist_index, entry)
+    artist = create_string(artist_index, entry)
 
     song_index = find_string(6, entry)
-    song = create_song_string(song_index, entry)
+    song = create_string(song_index, entry)
 
     all_entries.append({
         "country": country.strip(), 
         "year": 2025, 
         "artist": artist, 
-        "song": song
+        "song": song,
+        "spotify_url": add_spotify_track(artist, song, 2025),
+        "yt_thumbnail": add_yt_data(country)[0],
+        "yt_url": add_yt_data(country)[1]
         }
     )
 
 all_entries_dict["all_entries"] = all_entries
 
-with open("./json_data/entries.json", "w") as outfile:
+with open("./json_data/entries_2025.json", "w") as outfile:
     json.dump(all_entries_dict, outfile, ensure_ascii=False)
+
 
 ################### FINAL RESULTS ################### 
 final_results = []
@@ -139,7 +73,7 @@ for entry in table_entries:
     position = create_string(position_index, entry)
 
     country_index = find_string(2, entry)
-    country = create_country_string(country_index, entry)
+    country = create_string(country_index, entry)
 
     points_index = find_string(8, entry)
     points = create_string(points_index, entry)
@@ -157,7 +91,7 @@ for entry in table_entries:
 
 final_results_dict["final_entries"] = final_results
 
-with open("./json_data/final_results.json", "w") as outfile:
+with open("./json_data/final_results_2025.json", "w") as outfile:
     json.dump(final_results_dict, outfile)
 
 
@@ -179,7 +113,7 @@ for entry in table_entries:
     position = create_string(position_index, entry)
 
     country_index = find_string(2, entry)
-    country = create_country_string(country_index, entry)
+    country = create_string(country_index, entry)
 
     points_index = find_string(8, entry)
     points = create_string(points_index, entry)
@@ -204,7 +138,7 @@ for entry in table_entries:
 
 semi_1_results_dict["semi_1_entries"] = semi_1_results
 
-with open("./json_data/semi_1_results.json", "w") as outfile:
+with open("./json_data/semi_1_results_2025.json", "w") as outfile:
     json.dump(semi_1_results_dict, outfile)
 
 ################### SEMI-FINAL 2 RESULTS ###################
@@ -224,7 +158,7 @@ for entry in table_entries:
     position = create_string(position_index, entry)
 
     country_index = find_string(2, entry)
-    country = create_country_string(country_index, entry)
+    country = create_string(country_index, entry)
 
     points_index = find_string(8, entry)
     points = create_string(points_index, entry)
@@ -249,5 +183,5 @@ for entry in table_entries:
 
 semi_2_results_dict["semi_2_entries"] = semi_2_results
 
-with open("./json_data/semi_2_results.json", "w") as outfile:
+with open("./json_data/semi_2_results_2025.json", "w") as outfile:
     json.dump(semi_2_results_dict, outfile)

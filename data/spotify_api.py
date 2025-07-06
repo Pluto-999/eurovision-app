@@ -4,6 +4,7 @@ import base64
 import requests
 import json
 
+
 load_dotenv()
 
 client_id = os.getenv("CLIENT_ID")
@@ -53,18 +54,6 @@ def search_for_track(token, artist_name, track_name, year):
 token = get_token()
 
 
-def add_spotify_track(artist_name, track_name):
-    track = search_for_track(token, artist_name, track_name, 2025)
+def add_spotify_track(artist_name, track_name, year):
+    track = search_for_track(token, artist_name, track_name, year)
     return track
-
-
-with open("./json_data/entries.json", "r") as openfile:
-    data = json.load(openfile)
-
-
-for each_entry in data["all_entries"]:
-    each_entry["spotify_url"] = add_spotify_track(each_entry["artist"], each_entry["song"])
-
-
-with open("./json_data/entries.json", "w") as outfile:
-    json.dump(data, outfile, ensure_ascii=False)

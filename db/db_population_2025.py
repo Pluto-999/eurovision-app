@@ -40,7 +40,7 @@ conn.commit()
 
 #### POPULATE ENTRY TABLE ####
 
-with open("../data/json_data/entries.json", "r") as openfile:
+with open("../data/json_data/entries_2025.json", "r") as openfile:
     entries_data = json.load(openfile)
 
 
@@ -63,7 +63,7 @@ conn.commit()
 
 #### POPULATE FINAL RESULT TABLE ####
 
-with open("../data/json_data/final_results.json", "r") as openfile:
+with open("../data/json_data/final_results_2025.json", "r") as openfile:
     final_results_data = json.load(openfile)
 
 
@@ -84,7 +84,7 @@ conn.commit()
 
 #### POPULATE SEMI RESULT TABLE ####
 
-with open("../data/json_data/semi_1_results.json", "r") as openfile:
+with open("../data/json_data/semi_1_results_2025.json", "r") as openfile:
     semi_1_results_data = json.load(openfile)
 
 
@@ -106,7 +106,7 @@ conn.commit()
 
 
 
-with open("../data/json_data/semi_2_results.json", "r") as openfile:
+with open("../data/json_data/semi_2_results_2025.json", "r") as openfile:
     semi_2_results_data = json.load(openfile)
 
 
