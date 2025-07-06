@@ -45,8 +45,8 @@ for entry in table_entries:
         "artist": artist, 
         "song": song,
         "spotify_url": add_spotify_track(artist, song, 2025),
-        "yt_thumbnail": add_yt_data(country)[0],
-        "yt_url": add_yt_data(country)[1]
+        # "yt_thumbnail": add_yt_data(country)[0],
+        # "yt_url": add_yt_data(country)[1]
         }
     )
 
