@@ -7,6 +7,7 @@ const dotenv = require("dotenv")
 
 const countriesRoutes = require("./routes/countriesRoutes") 
 const entriesRoutes = require("./routes/entriesRoutes")
+const resultsRoutes = require("./routes/resultsRoutes")
 
 dotenv.config()
 
@@ -25,8 +26,8 @@ app.get("/", (req, res) => {
 })
 
 app.use("/api/countries", countriesRoutes)
-
 app.use("/api/entries", entriesRoutes)
+app.use("/api/results", resultsRoutes)
 
 app.listen(PORT, () => {
     console.log(`server is listening on port ${PORT} ...`)
