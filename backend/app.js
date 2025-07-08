@@ -4,6 +4,8 @@ const helmet = require("helmet")
 const morgan = require("morgan")
 const cors = require("cors")
 const dotenv = require("dotenv")
+const cookieParser = require("cookie-parser")
+
 const errorHandler = require("./middleware/errorHandler")
 
 const countriesRoutes = require("./routes/countriesRoutes") 
@@ -22,9 +24,12 @@ app.use(morgan("dev"))
 app.use(cors())
 
 app.use(express.json())
+app.use(cookieParser(process.env.JWT_SECRET_KEY))
 
 app.get("/", (req, res) => {
-    res.send("HELLO WORLD!")
+    console.log('Cookies: ', req.signedCookies)
+
+    res.send("HOME PAGE")
 })
 
 app.use("/api/countries", countriesRoutes)
