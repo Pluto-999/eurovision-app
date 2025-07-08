@@ -4,10 +4,12 @@ const helmet = require("helmet")
 const morgan = require("morgan")
 const cors = require("cors")
 const dotenv = require("dotenv")
+const errorHandler = require("./middleware/errorHandler")
 
 const countriesRoutes = require("./routes/countriesRoutes") 
 const entriesRoutes = require("./routes/entriesRoutes")
 const resultsRoutes = require("./routes/resultsRoutes")
+const authRoutes = require("./routes/authRoutes")
 
 dotenv.config()
 
@@ -28,6 +30,9 @@ app.get("/", (req, res) => {
 app.use("/api/countries", countriesRoutes)
 app.use("/api/entries", entriesRoutes)
 app.use("/api/results", resultsRoutes)
+app.use("/api/auth", authRoutes)
+
+app.use(errorHandler)
 
 app.listen(PORT, () => {
     console.log(`server is listening on port ${PORT} ...`)

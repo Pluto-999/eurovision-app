@@ -76,18 +76,37 @@ conn.commit()
 
 
 cur.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        username TEXT PRIMARY KEY NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        CHECK (
+            length(username) >= 3 
+            AND length(username) <= 15
+            AND email ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+            )
+    )
+""")
+
+conn.commit()
+
+
+cur.execute("""
     CREATE TABLE IF NOT EXISTS ranking (
         country TEXT NOT NULL,
         year INT NOT NULL,
-        user_id TEXT NOT NULL,
+        username TEXT NOT NULL,
         position INT,
         points INT,
         stars_rating INT,
-        PRIMARY KEY (country, year, user_id),
-        FOREIGN KEY (country, year) REFERENCES Entry(country, year)
+        PRIMARY KEY (country, year, username),
+        FOREIGN KEY (country, year) REFERENCES Entry(country, year),
+        FOREIGN KEY (username) REFERENCES users(username)
+        
     )
 """)
 conn.commit()
+
 
 # Close the cursor and return the connection to the pool
 cur.close()
