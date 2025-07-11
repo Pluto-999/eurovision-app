@@ -12,6 +12,9 @@ const countriesRoutes = require("./routes/countriesRoutes")
 const entriesRoutes = require("./routes/entriesRoutes")
 const resultsRoutes = require("./routes/resultsRoutes")
 const authRoutes = require("./routes/authRoutes")
+const userRoutes = require("./routes/userRoutes")
+
+const authMiddleware = require("./middleware/authMiddleware")
 
 dotenv.config()
 
@@ -36,6 +39,7 @@ app.use("/api/countries", countriesRoutes)
 app.use("/api/entries", entriesRoutes)
 app.use("/api/results", resultsRoutes)
 app.use("/api/auth", authRoutes)
+app.use("/api/user", authMiddleware, userRoutes)
 
 app.use(errorHandler)
 

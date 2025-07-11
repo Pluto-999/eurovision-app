@@ -45,7 +45,7 @@ const register = asyncWrapper(async (req, res) => {
     // GENERATING JWT/COOKIE AND SENDING BACK RESPONSE
 
     // just want what we are sending to the frontend (payload) to be the username (primary key of users table)
-    const payload= {username: username}
+    const payload = {username: username}
     
     attachCookie(res, payload) // attach cookie to response (res)
 
