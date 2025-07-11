@@ -5,6 +5,7 @@ function HomePage () {
         <>
             <div> HOME PAGE </div>
             <Link to="/results"> Results Home Page </Link>
+            <Link to="/account"> Account Page</Link>
         </>
     )
 }

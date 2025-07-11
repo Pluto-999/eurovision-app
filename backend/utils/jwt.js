@@ -15,7 +15,8 @@ function attachCookie(res, payload) {
     res.cookie("token", token, {
         httpOnly: true,
         expires: new Date(Date.now() + 86400000), // expires in 1 day
-        signed: true
+        signed: true,
+        sameSite: "Lax",
         // also set secure to true so as only to be used with https ???
     })
 }

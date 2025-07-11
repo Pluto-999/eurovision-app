@@ -57,7 +57,7 @@ const login = asyncWrapper(async (req, res) => {
     const { username, password } = req.body
 
     if (!username || !password) {
-        return res.status(400).json({ success: false, message: "both username and password are required to login" })
+        return res.status(400).json({ success: false, message: "Both username and password are required to login" })
     }
 
     const user = await sql`
@@ -67,7 +67,7 @@ const login = asyncWrapper(async (req, res) => {
     `
 
     if (user.length === 0) {
-        return res.status(401).json({ success: false, message: "no user exists with this username" })
+        return res.status(401).json({ success: false, message: "No user exists with this username" })
     }
 
     const storedPassword = user[0].password
@@ -75,7 +75,7 @@ const login = asyncWrapper(async (req, res) => {
     const samePassword = await compareHash(password, storedPassword) 
 
     if (!samePassword) {
-        return res.status(401).json({ success: false, message: "your password is incorrect, please try again" })
+        return res.status(401).json({ success: false, message: "Your password is incorrect, please try again" })
     }
 
     const payload = {username: username}
