@@ -4,11 +4,13 @@ const {
     getUser, 
     updateUserDetails,
     getAllUsers,
+    homePage
 } = require("../controllers/userController")
 const router = express.Router()
 
 router.get("/allUsers", getAllUsers)
 router.get("/currentUser", getCurrentUser)
+router.get("/home", homePage)
 router.patch("/updateUser", updateUserDetails)
 router.get("/:username", getUser)
 

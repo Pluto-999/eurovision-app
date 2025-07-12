@@ -1,5 +1,5 @@
 import axios from "axios"
-import { use, useState } from "react"
+import { useState } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 
@@ -19,7 +19,7 @@ function LoginPage() {
             
             if (response.data.success) {
                 toast("Successfully logged in")
-                navigate("/")
+                navigate("/userhome")
             }
             else {
                 toast("Something went wrong, please try again")

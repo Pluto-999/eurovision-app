@@ -38,9 +38,25 @@ const getAllUsers = asyncWrapper(async (req, res) => {
     res.status(200).json({ success: true, users: users })
 })
 
+const homePage = asyncWrapper(async (req, res) => {
+    const user = await sql`
+        SELECT username, email
+        FROM users
+        WHERE username=${req.username}
+    `
+    if (user.length === 0) {
+        return res.status(401).json({ success: false, message: "no user exists with this username" })
+    }
+
+    res.status(200).json({ success: true, user: user[0] })
+})
+
+
+
 module.exports = {
     getCurrentUser, 
     updateUserDetails,
     getUser,
     getAllUsers,
+    homePage
 }

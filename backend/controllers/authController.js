@@ -92,7 +92,7 @@ const logout = asyncWrapper(async (req, res) => {
         expiresIn: new Date(Date.now())
     })
 
-    res.status(200).json({ success: true, message: "logged out successfully" })
+    res.status(200).json({ success: true, message: "Logged out successfully" })
 })
 
 module.exports = {

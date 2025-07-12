@@ -4,7 +4,7 @@ const authMiddleware = async (req, res, next) => {
     const token = req.signedCookies.token
 
     if (!token) {
-        return res.status(401).json({ success: false, message: "sorry, you are unauthorized to access this route" })
+        return res.status(401).json({ success: false, message: "Sorry, you are unauthorized to access this route. Try logging in again or register for an account if you do not have one." })
     }
 
     try {
@@ -13,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
         next()
     }
     catch {
-        return res.status(401).json({ success: false, message: "sorry, you are unauthorized to access this route" })
+        return res.status(401).json({ success: false, message: "Sorry, you are unauthorized to access this route. Try logging in again or register for an account if you do not have one." })
     }
     
 }
