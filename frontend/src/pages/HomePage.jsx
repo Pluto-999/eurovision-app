@@ -4,6 +4,7 @@ function HomePage () {
     return (
         <>
             <div> HOME PAGE </div>
+            <Link to="/countries"> Participating Countries </Link>
             <Link to="/results"> Results Home Page </Link>
             <Link to="/account"> Account Page</Link>
         </>

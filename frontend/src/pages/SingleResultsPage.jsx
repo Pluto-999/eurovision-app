@@ -22,26 +22,25 @@ function SingleResultsPage() {
         <>
             <div> { params.year } Results Page for { params.country }</div>
 
-            <div> Semi Final Result (Semi Final {results.semi_result?.[0].semi_number}): </div>
+            <div> Semi Final Result (Semi Final {results.semi_result?.[0].semi_number}) </div>
             <div> {results.semi_result?.map(result => (
-                <li key={result.country + result.year}>
-                    <p> Position: { result.position }</p>
-                    <p> Points: { result.points }</p>
-                    <p> Running Order: { result.running_order }</p>
-                    {result.is_nq ? qualified = false: qualified = true}
-                    <p></p>
-                </li>
+                <ul key={result.country + result.year}>
+                    <li> Position: { result.position }</li>
+                    <li> Points: { result.points }</li>
+                    <li> Running Order: { result.running_order }</li>
+                    <li>{result.is_nq ? qualified = false: qualified = true}</li>
+                </ul>
             ))} 
             </div>
 
-            <div>Final Result:</div>
+            <div> Final Result </div>
             <div> {!qualified && <div> Did not qualify for the Grand Final </div>}</div>
             <div> {qualified && results.final_result?.map( result => (
-                <li key={result.country + result.year}>
-                    <p> Position: { result.position }</p>
-                    <p> Points: { result.points }</p>
-                    <p> Running Order: { result.running_order }</p>
-                </li>
+                <ul key={result.country + result.year}>
+                    <li> Position: { result.position }</li>
+                    <li> Points: { result.points }</li>
+                    <li> Running Order: { result.running_order }</li>
+                </ul>
             ))}
             </div>
         </>
