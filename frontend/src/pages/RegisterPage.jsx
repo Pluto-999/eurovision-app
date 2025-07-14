@@ -20,8 +20,10 @@ function RegisterPage() {
             }, { withCredentials: true })
             
             if (response.data.success) {
-                toast("Account successfully created")
-                navigate("/")
+                toast("Account successfully created", {
+                    icon: "✅"
+                })
+                navigate("/userhome")
             }
             else {
                 console.log(response)
@@ -29,7 +31,10 @@ function RegisterPage() {
 
         }
         catch (error) {
-            toast(error.response.data.message)
+            console.log(error)
+            toast(error.response.data.message, {
+                icon: "❌"   
+            })
             console.log(error.response.data.message)
         }
     }

@@ -18,15 +18,21 @@ function LoginPage() {
             }, { withCredentials: true })
             
             if (response.data.success) {
-                toast("Successfully logged in")
+                toast("Successfully logged in", {
+                    icon: "✅"
+                })
                 navigate("/userhome")
             }
             else {
-                toast("Something went wrong, please try again")
+                toast("Something went wrong, please try again", {
+                    icon: "❌"
+                })
             }
         }
         catch (error) {
-            toast(error.response.data.message)
+            toast(error.response.data.message, {
+                icon: "❌"
+            })
             console.log(error.response.data.message)
         }
     }

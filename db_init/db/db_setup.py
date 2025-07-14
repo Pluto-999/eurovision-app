@@ -96,13 +96,13 @@ cur.execute("""
         country TEXT NOT NULL,
         year INT NOT NULL,
         username TEXT NOT NULL,
-        position INT,
-        points INT,
-        stars_rating INT,
+        position INT DEFAULT -1,
+        points INT DEFAULT -1,
+        stars_rating INT DEFAULT -1,
         PRIMARY KEY (country, year, username),
+        UNIQUE(username, year, position),
         FOREIGN KEY (country, year) REFERENCES Entry(country, year),
         FOREIGN KEY (username) REFERENCES users(username)
-        
     )
 """)
 conn.commit()

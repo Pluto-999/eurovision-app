@@ -1,11 +1,12 @@
 import { Routes, Route } from "react-router-dom"
-import CountryAllEntriesPage from "../pages/CountryAllEntriesPage"
+import IndividualCountryHomePage from "../pages/IndividualCountryHomePage"
+import CountryIndividualEntryPage from "../pages/CountryIndividualEntryPage"
 
 function EntriesRoutes() {
     return (
         <Routes>
-            <Route path="/country/:country" element={<CountryAllEntriesPage />}/>
-            
+            <Route path="/country/:country" element={<IndividualCountryHomePage />}/>
+            <Route path="/:country/:year" element={<CountryIndividualEntryPage />} />
         </Routes>
     )
 }

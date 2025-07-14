@@ -19,8 +19,7 @@ function CountriesPage() {
             {countries.map(country => (
                 <ul key={country.country}>
                     <Link to={`/entries/country/${country.country}`}>
-                        <li> Country: {country.country} </li>
-                        <li> <img src={country.flag_image} alt="Flag of respective country"></img></li>
+                        <li>{country.country} <img src={country.flag_image} alt="Flag of respective country" width={"10%"} height={"10%"}></img></li>
                     </Link>
                 </ul>
             ))}

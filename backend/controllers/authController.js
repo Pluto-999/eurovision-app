@@ -2,12 +2,22 @@ const sql = require("../config/db")
 const asyncWrapper = require("../middleware/asyncWrapper")
 const { hashFunction, compareHash } = require("../utils/hashPassword")
 const { verifyToken, attachCookie } = require("../utils/jwt")
+const createDeafultRankings = require("../utils/createDefaultRankings")
 
 const register = asyncWrapper(async (req, res) => {
     const { username, email, password } = req.body
 
     if (!username || !email || !password) {
-        return res.status(400).json({ success: false, message: "all fields are required" })
+        return res.status(400).json({ success: false, message: "All fields are required" })
+    }
+
+    if (username.length < 3 || username.length > 15) {
+        return res.status(400).json({ success: false, message: "Username must be between 3 and 15 characters" })
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ success: false, message: "The email you provided is not a valid format" })
     }
 
     // LOOKING FOR DUPLICATE USERNAME OR EMAIL
@@ -41,13 +51,16 @@ const register = asyncWrapper(async (req, res) => {
         VALUES (${username}, ${email}, ${hashedPassword})
         RETURNING *
     `
-    
+
     // GENERATING JWT/COOKIE AND SENDING BACK RESPONSE
 
     // just want what we are sending to the frontend (payload) to be the username (primary key of users table)
     const payload = {username: username}
     
     attachCookie(res, payload) // attach cookie to response (res)
+
+    // add all entries as unranked and associated to the new user being registered
+    createDeafultRankings(username)
 
     res.status(201).json({ success: true, username: user[0].username })
 

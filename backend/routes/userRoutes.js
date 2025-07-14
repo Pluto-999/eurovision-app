@@ -1,18 +1,18 @@
 const express = require("express")
 const {
-    getCurrentUser,
-    getUser, 
     updateUserDetails,
     getAllUsers,
-    homePage
+    homePage,
+    changeRanking,
+    changeRating
 } = require("../controllers/userController")
 const router = express.Router()
 
 router.get("/allUsers", getAllUsers)
-router.get("/currentUser", getCurrentUser)
 router.get("/home", homePage)
 router.patch("/updateUser", updateUserDetails)
-router.get("/:username", getUser)
+router.patch("/changeRanking", changeRanking)
+router.patch("/changeRating", changeRating)
 
 
 module.exports = router

@@ -22,8 +22,6 @@ function CountryAllEntriesPage() {
                         <li> Year: {entry.year} </li>
                         <li> Artist: {entry.artist} </li>
                         <li> Song: {entry.song} </li>
-                        <li> <a href={entry.spotify_url}>Spotify Link</a></li>
-                        <li> <a href={entry.yt_url}><img src={entry.yt_thumbnail}></img></a></li>
                     </ul>
                 ))
             }

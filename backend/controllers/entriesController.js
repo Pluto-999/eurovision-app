@@ -31,7 +31,7 @@ const getSingleEntry = asyncWrapper(async (req, res) => {
         FROM Entry
         WHERE year=${year} AND country=${country}
     `
-    res.status(200).json({ success:true, data: data })
+    res.status(200).json({ success:true, data: data[0] })
 })
 
 
