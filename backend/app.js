@@ -13,6 +13,7 @@ const entriesRoutes = require("./routes/entriesRoutes")
 const resultsRoutes = require("./routes/resultsRoutes")
 const authRoutes = require("./routes/authRoutes")
 const userRoutes = require("./routes/userRoutes")
+const userStatsRoutes = require("./routes/userStatsRoutes")
 
 const authMiddleware = require("./middleware/authMiddleware")
 
@@ -43,6 +44,7 @@ app.use("/api/entries", entriesRoutes)
 app.use("/api/results", resultsRoutes)
 app.use("/api/auth", authRoutes)
 app.use("/api/user", authMiddleware, userRoutes)
+app.use("/api/userstats", userStatsRoutes)
 
 app.use(errorHandler)
 
