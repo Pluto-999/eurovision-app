@@ -108,6 +108,33 @@ cur.execute("""
 conn.commit()
 
 
+cur.execute("""
+    CREATE TABLE IF NOT EXISTS messages (
+        message_id SERIAL PRIMARY KEY,
+        sender TEXT NOT NULL,
+        receiver TEXT NOT NULL,
+        content TEXT NOT NULL,
+        timestamp TIMESTAMP NOT NULL,
+        FOREIGN KEY (sender) REFERENCES users(username),
+        FOREIGN KEY (receiver) REFERENCES users(username)
+    )
+""")
+conn.commit()
+
+
+cur.execute("""
+    CREATE TABLE IF NOT EXISTS friends (
+        user1 TEXT NOT NULL,
+        user2 TEXT NOT NULL,
+        PRIMARY KEY (user1, user2),
+        FOREIGN KEY (user1) REFERENCES users(username),
+        FOREIGN KEY (user2) REFERENCES users(username),
+        CHECK (user1 < user2),
+        CHECK (user1 != user2)
+    )
+""")
+conn.commit()
+
 # Close the cursor and return the connection to the pool
 cur.close()
 connection_pool.putconn(conn)

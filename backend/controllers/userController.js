@@ -18,17 +18,6 @@ const updateUserDetails = asyncWrapper(async (req, res) => {
     res.send("update user details")
 })
 
-const getAllUsers = asyncWrapper(async (req, res) => {
-    const users = await sql`
-        SELECT username, email
-        FROM users
-    `
-    if (users.length === 0) {
-        return res.status(401).json({ success: false, message: "no users exist" })
-    }
-
-    res.status(200).json({ success: true, users: users })
-})
 
 const homePage = asyncWrapper(async (req, res) => {
     const user = await sql`
@@ -42,6 +31,7 @@ const homePage = asyncWrapper(async (req, res) => {
 
     res.status(200).json({ success: true, user: user[0] })
 })
+
 
 const changeRanking = asyncWrapper(async (req, res) => {
     const username = await sql`
@@ -355,7 +345,6 @@ const getCurrentUserRankings = asyncWrapper(async (req, res) => {
 
 module.exports = {
     updateUserDetails,
-    getAllUsers,
     homePage,
     changeRanking,
     changeRating,

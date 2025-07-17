@@ -1,7 +1,6 @@
 const express = require("express")
 const {
     updateUserDetails,
-    getAllUsers,
     homePage,
     changeRanking,
     changeRating,
@@ -9,7 +8,6 @@ const {
 } = require("../controllers/userController")
 const router = express.Router()
 
-router.get("/allUsers", getAllUsers)
 router.get("/home", homePage)
 router.patch("/updateUser", updateUserDetails)
 router.patch("/changeRanking", changeRanking)

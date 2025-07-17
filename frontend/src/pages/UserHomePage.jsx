@@ -31,7 +31,7 @@ function UserHomePage() {
         <>
             <h1> Welcome {user ? user.username : ""} </h1>
             <Link to="/account/logout"> Logout </Link>
-            <ResultsRoutes />
+            {/* <ResultsRoutes /> */}
         </>
     )
 }

@@ -14,12 +14,14 @@ const resultsRoutes = require("./routes/resultsRoutes")
 const authRoutes = require("./routes/authRoutes")
 const userRoutes = require("./routes/userRoutes")
 const userStatsRoutes = require("./routes/userStatsRoutes")
+const friendsRoutes = require("./routes/friendsRoutes")
+const messagesRoutes = require("./routes/messagesRoutes")
 
 const authMiddleware = require("./middleware/authMiddleware")
 
 dotenv.config()
 
-const app = express()
+const { app, server } = require("./socket")
 
 const PORT = process.env.PORT || 3000
 
@@ -45,9 +47,11 @@ app.use("/api/results", resultsRoutes)
 app.use("/api/auth", authRoutes)
 app.use("/api/user", authMiddleware, userRoutes)
 app.use("/api/userstats", userStatsRoutes)
+app.use("/api/friends", authMiddleware, friendsRoutes)
+app.use("/api/messages", authMiddleware, messagesRoutes)
 
 app.use(errorHandler)
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`server is listening on port ${PORT} ...`)
 })

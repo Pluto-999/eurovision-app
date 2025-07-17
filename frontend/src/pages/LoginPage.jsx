@@ -21,7 +21,7 @@ function LoginPage() {
                 toast("Successfully logged in", {
                     icon: "✅"
                 })
-                navigate("/userhome")
+                navigate("/user/home")
             }
             else {
                 toast("Something went wrong, please try again", {
