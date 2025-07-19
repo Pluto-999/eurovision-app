@@ -14,6 +14,8 @@ const io = new Server(server, {
     }
 })
 
+const onlineUsers = new Set()
+
 // socket refers to user that has just connected
 io.on("connection", (socket) => {
     const rawCookie = socket.handshake.headers.cookie
@@ -36,7 +38,8 @@ io.on("connection", (socket) => {
     try {
         const payload = verifyToken(unsignedToken)
         socket.user = payload
-        console.log("user connected:", payload.username)
+        onlineUsers.add(socket.user.username)
+        console.log("user connected:", socket.user.username)
     }
     catch (error) {
         console.log(error)
@@ -48,9 +51,10 @@ io.on("connection", (socket) => {
     //     socket.broadcast.emit("receiveMessage", data)
     // })
 
-    // io.on("disconnect", () => {
-    //     console.log("A user disconnected", socket.id)
-    // })
+    io.on("disconnect", () => {
+        onlineUsers.delete(socket.user.username)
+        console.log("A user disconnected", socket.id)
+    })
 })
 
 module.exports = { app, server, io }

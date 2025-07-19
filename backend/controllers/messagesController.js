@@ -58,6 +58,9 @@ const sendMessage = asyncWrapper(async (req, res) => {
         VALUES (${currentUser}, ${targetUser[0]["username"]}, ${message}, ${new Date})
         RETURNING *
     `
+
+    io.to(receiver).emit("newMessage", newMessage)
+
     res.status(201).json({ success: true, newMessage: newMessage })
 
 

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { use, useState } from "react"
+import { useState } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 
@@ -23,7 +23,7 @@ function RegisterPage() {
                 toast("Account successfully created", {
                     icon: "✅"
                 })
-                navigate("/userhome")
+                navigate("/user/home")
             }
             else {
                 console.log(response)
