@@ -8,7 +8,6 @@ function FriendsRoutes() {
         <Routes>
             <Route path="/my_friends" element={<FriendsList />}/>
             <Route path="/search/" element={<FriendSearch />} />
-            <Route path="/add_friend" element={<FriendAdd />} />
         </Routes>
     )
 }

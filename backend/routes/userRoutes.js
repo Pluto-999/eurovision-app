@@ -3,7 +3,7 @@ const {
     updateUserDetails,
     homePage,
     changeRanking,
-    changeRating,
+    // changeRating,
     getCurrentUserRankings
 } = require("../controllers/userController")
 const router = express.Router()
@@ -11,7 +11,7 @@ const router = express.Router()
 router.get("/home", homePage)
 router.patch("/updateUser", updateUserDetails)
 router.patch("/changeRanking", changeRanking)
-router.patch("/changeRating", changeRating)
+// router.patch("/changeRating", changeRating)
 router.get("/ranking/:year", getCurrentUserRankings)
 
 
