@@ -17,6 +17,7 @@ const userStatsRoutes = require("./routes/userStatsRoutes")
 const friendsRoutes = require("./routes/friendsRoutes")
 const messagesRoutes = require("./routes/messagesRoutes")
 const ratingRoutes = require("./routes/ratingRoutes")
+const rankingRoutes = require("./routes/rankingRoutes")
 
 const authMiddleware = require("./middleware/authMiddleware")
 
@@ -51,6 +52,7 @@ app.use("/api/userstats", userStatsRoutes)
 app.use("/api/friends", authMiddleware, friendsRoutes)
 app.use("/api/messages", authMiddleware, messagesRoutes)
 app.use("/api/rating", ratingRoutes)
+app.use("/api/ranking", rankingRoutes)
 
 app.use(errorHandler)
 

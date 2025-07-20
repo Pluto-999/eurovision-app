@@ -2,17 +2,17 @@ const express = require("express")
 const {
     updateUserDetails,
     homePage,
-    changeRanking,
+    // changeRanking,
     // changeRating,
-    getCurrentUserRankings
+    // getCurrentUserRankings
 } = require("../controllers/userController")
 const router = express.Router()
 
 router.get("/home", homePage)
 router.patch("/updateUser", updateUserDetails)
-router.patch("/changeRanking", changeRanking)
+// router.patch("/changeRanking", changeRanking)
 // router.patch("/changeRating", changeRating)
-router.get("/ranking/:year", getCurrentUserRankings)
+// router.get("/ranking/:year", getCurrentUserRankings)
 
 
 module.exports = router

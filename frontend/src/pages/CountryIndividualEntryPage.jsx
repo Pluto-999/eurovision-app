@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 import SingleResultsPage from "../pages/SingleResultsPage"
+import ChangeUserRating from "../pages/ChangeUserRating"
 
 function CountryIndividualEntryPage() {
     const params = useParams()
@@ -25,6 +26,8 @@ function CountryIndividualEntryPage() {
 
             <SingleResultsPage />
 
+            {/* <h2> Your rating of this country: </h2>
+            <ChangeUserRating /> */}
         </div>
 
         </>
