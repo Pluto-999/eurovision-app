@@ -31,6 +31,8 @@ function UserHomePage() {
         <>
             <h1> Welcome {user ? user.username : ""} </h1>
             <Link to="/user/my_ranking/2025">My 2025 Ranking</Link>
+            <Link to="/friends/my_friends"> My Friends List</Link>
+            <Link to="/friends/search"> Search for Friends</Link>
             <Link to="/account/logout"> Logout </Link>
             {/* <ResultsRoutes /> */}
         </>

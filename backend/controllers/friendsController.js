@@ -58,7 +58,7 @@ const addFriend = asyncWrapper(async (req, res) => {
     `
 
     if (friendToAdd.length === 0) {
-        return res.status(400).json({ success: false, message: "No user exists with this username" })
+        return res.status(404).json({ success: false, message: "No user exists with this username" })
     }
 
     const currentUsername = req.username
@@ -93,8 +93,49 @@ const addFriend = asyncWrapper(async (req, res) => {
 
 })
 
+
+const deleteFriend = asyncWrapper(async (req, res) => {
+    const usernameToRemove = req.params.username
+    const currentUsername = req.username
+
+    if (currentUsername === usernameToRemove) {
+        return res.status(400).json({ success: false, message: "You cannot remove yourself as a friend" })
+    }
+
+    const findUser = await sql`
+        SELECT *
+        FROM users
+        WHERE username=${usernameToRemove}
+    `
+
+    if (findUser.length === 0) {
+        return res.status(404).json({ success: false, message: "No user exists with this username" })
+    }
+    
+    const [firstUser, secondUser] = [usernameToRemove, currentUsername].sort()
+
+    const existingFriendship = await sql`
+        SELECT *
+        FROM friends
+        WHERE user1=${firstUser} AND user2=${secondUser}
+    `
+
+    if (existingFriendship.length === 0) {
+        return res.status(404).json({ success: false, message: `You cannot delete ${usernameToRemove} as you are not friends with them` })
+    }
+
+    await sql`
+        DELETE FROM friends
+        WHERE user1=${firstUser} AND user2=${secondUser}
+    `
+
+    res.status(200).json({ success: true, message: `Successfully deleted ${usernameToRemove} as your friend` })
+
+})
+
 module.exports = {
     searchForFriends,
     getFriends, 
-    addFriend
+    addFriend,
+    deleteFriend
 }
