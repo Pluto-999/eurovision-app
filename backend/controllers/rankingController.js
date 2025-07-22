@@ -273,6 +273,37 @@ const changeRanking = asyncWrapper(async (req, res) => {
     }
 })
 
+async function getRankings (year, username, res) {
+    const entries = entriesByYear[year]
+
+    // ensure a valid year is given in the request
+    if (!entries) {
+        return res.status(400).json({ success: false, message: "Sorry, data is not provided for this year" })
+    }
+
+    const ranked_entries = await sql`
+        SELECT *
+        FROM ranking
+        WHERE year=${year} AND username=${username[0]["username"]} AND position > 0
+        ORDER BY position 
+    `
+
+    const unranked_entries = await sql`
+        SELECT *
+        FROM ranking
+        WHERE year=${year} AND username=${username[0]["username"]} AND position < 0
+        ORDER BY position DESC
+
+    `
+
+    return res.status(200).json({ 
+        success: true, 
+        ranked_entries: ranked_entries, 
+        unranked_entries: unranked_entries
+    })
+}
+
+
 const getCurrentUserAllRankings = asyncWrapper(async (req, res) => {
     const username = await sql`
         SELECT username
@@ -283,6 +314,52 @@ const getCurrentUserAllRankings = asyncWrapper(async (req, res) => {
     if (username.length === 0) {
         return res.status(401).json({ success: false, message: "No user exists with this username" })
     }
+
+    const year = req.params.year
+
+    const entries = entriesByYear[year]
+
+    // ensure a valid year is given in the request
+    if (!entries) {
+        return res.status(400).json({ success: false, message: "Sorry, data is not provided for this year" })
+    }
+
+    const ranked_entries = await sql`
+        SELECT *
+        FROM ranking
+        WHERE year=${year} AND username=${username[0]["username"]} AND position > 0
+        ORDER BY position 
+    `
+
+    const unranked_entries = await sql`
+        SELECT *
+        FROM ranking
+        WHERE year=${year} AND username=${username[0]["username"]} AND position < 0
+        ORDER BY position DESC
+
+    `
+
+    return res.status(200).json({ 
+        success: true, 
+        ranked_entries: ranked_entries, 
+        unranked_entries: unranked_entries
+    })
+
+    return getRankings(req.params.year, username[0]["username"], res)
+})
+
+const getOtherUserAllRankings = asyncWrapper(async (req, res) => {
+    const username = await sql`
+        SELECT username
+        FROM users
+        WHERE username=${req.params.username}
+    `
+    
+    if (username.length === 0) {
+        return res.status(401).json({ success: false, message: "No user exists with this username" })
+    }
+
+    // return getRankings(req.params.year, username[0]["username"], res)
 
     const { year } = req.params
 
@@ -313,10 +390,6 @@ const getCurrentUserAllRankings = asyncWrapper(async (req, res) => {
         ranked_entries: ranked_entries, 
         unranked_entries: unranked_entries
     })
-})
-
-const getOtherUserAllRankings = asyncWrapper(async (req, res) => {
-
 })
 
 const getCurrentUserSingleRanking = asyncWrapper(async (req, res) => {

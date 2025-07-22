@@ -5,7 +5,7 @@ import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable"
-import SortableItem from './SortableItem'
+import Entry from "../components/Entry"
 
 function CurrentUserRanking() {
     const params = useParams()
@@ -83,7 +83,6 @@ function CurrentUserRanking() {
 
     }
 
-
     return (
         <>
         <DndContext 
@@ -100,7 +99,7 @@ function CurrentUserRanking() {
             >
                 {
                     allEntries.map(entry => (
-                        <SortableItem 
+                        <Entry 
                             key={entry.country + entry.year} 
                             id={entry.country + entry.year}
                             country={entry.country}

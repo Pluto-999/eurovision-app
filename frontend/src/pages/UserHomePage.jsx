@@ -30,6 +30,7 @@ function UserHomePage() {
     return (
         <>
             <h1> Welcome {user ? user.username : ""} </h1>
+            <Link to="/user/my_ranking/2025">My 2025 Ranking</Link>
             <Link to="/account/logout"> Logout </Link>
             {/* <ResultsRoutes /> */}
         </>

@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import UserHomePage from "../pages/UserHomePage"
 import ChangeUserRating from "../pages/ChangeUserRating"
 import CurrentUserRanking from "../pages/CurrentUserRanking"
+import OtherUserRanking from "../pages/OtherUserRanking"
 
 function UserRoutes() {
     return (
@@ -9,6 +10,7 @@ function UserRoutes() {
             <Route path="/home" element={<UserHomePage />}/>
             <Route path="/change_rating/:country/:year" element={<ChangeUserRating />} />
             <Route path="/my_ranking/:year" element={<CurrentUserRanking />} />
+            <Route path="/ranking/:username/:year" element={<OtherUserRanking />} />
         </Routes>
     )
 }
