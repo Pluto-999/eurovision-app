@@ -48,11 +48,13 @@ const getCountryResultsAllYears = asyncWrapper(async (req, res) => {
         SELECT *
         FROM semi_result
         WHERE country=${country}
+        ORDER BY year DESC
     `
     const final_data = await sql`
         SELECT *
         FROM final_result
         WHERE country=${country}
+        ORDER BY year DESC
     `
     res.status(200).json({ success: true, data: { semi_results: semi_data, final_results: final_data } })
 })

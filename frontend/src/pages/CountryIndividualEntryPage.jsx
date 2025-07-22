@@ -4,27 +4,38 @@ import { useParams } from "react-router-dom"
 import SingleResultsPage from "../pages/SingleResultsPage"
 import ChangeUserRating from "../pages/ChangeUserRating"
 
-function CountryIndividualEntryPage() {
+function CountryIndividualEntryPage({ entry }) {
     const params = useParams()
-    const [entry, setEntry] = useState([])
+    const [entryData, setEntryData] = useState([])
+
+    const country = params.country ? params.country : entry.country
+    const year = params.year ? params.year : entry.year
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/entries/${params.country}/${params.year}`)
-        .then(response => setEntry(response.data.data))
+        axios.get(`http://localhost:3000/api/entries/${country}/${year}`)
+        .then(response => setEntryData(response.data.data))
+        .catch(error => {
+            console.log(error)
+            if (error.response.data.message) {
+                toast(error.response.data.message)
+            }
+            else {
+                toast("Something has gone wrong, please try again")
+            }
+        })
     }, [])
 
     return (
         <>
-
         <div>
             <ul>
-                <li> Artist: {entry.artist} </li>
-                <li> Song: {entry.song} </li>
-                <li> <a href={entry.spotify_url}>Spotify Link</a></li>
-                <li> <a href={entry.yt_url}><img src={entry.yt_thumbnail}></img></a></li>
+                <li> Artist: {entryData.artist} </li>
+                <li> Song: {entryData.song} </li>
+                <li> <a href={entryData.spotify_url}>Spotify Link</a></li>
+                <li> <a href={entryData.yt_url}><img src={entryData.yt_thumbnail}></img></a></li>
             </ul>
 
-            <SingleResultsPage />
+            <SingleResultsPage entry={entry}/>
 
             {/* <h2> Your rating of this country: </h2>
             <ChangeUserRating /> */}

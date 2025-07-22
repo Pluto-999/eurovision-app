@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
+import "../styles/Stats.css"
 
 function CountriesPage() {
     const [countries, setCountries] = useState([])
@@ -16,14 +17,22 @@ function CountriesPage() {
         <>
         <h1> List of Participating Countries since 2021 </h1>
         <div>
-            {countries.map(country => (
-                <ul key={country.country}>
-                    <Link to={`/entries/country/${country.country}`}>
-                        <li>{country.country} <img src={country.flag_image} alt="Flag of respective country" width={"10%"} height={"10%"}></img></li>
-                    </Link>
-                </ul>
-            ))}
-
+            <ul className="grid">
+                {countries.map((country) => (
+                    <li key={country.country} className="link country-item">
+                        <Link to={`/entries/country/${country.country}`}>
+                            {country.country}
+                            <img
+                                src={country.flag_image}
+                                alt={`Flag of ${country.country}`}
+                                width="30%"
+                                height="30%"
+                                className="mx-auto"
+                            />
+                        </Link>
+                    </li>
+                ))}
+            </ul>
         </div>
         </>
     )

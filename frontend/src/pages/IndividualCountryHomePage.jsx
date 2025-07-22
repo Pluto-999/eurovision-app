@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 import CountryAllEntriesPage from "../pages/CountryAllEntriesPage"
+import CountryResultsPage from "./CountryResultsPage"
 
 function IndividualCountryHomePage() {
     const params = useParams()
@@ -15,6 +16,7 @@ function IndividualCountryHomePage() {
     return (
         <>
         <CountryAllEntriesPage />
+        <CountryResultsPage />
         </>
     )
 }
