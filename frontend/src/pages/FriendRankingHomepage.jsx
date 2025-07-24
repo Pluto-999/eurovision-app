@@ -3,7 +3,7 @@ import axios from "axios"
 import OtherUserRanking from "./OtherUserRanking"
 import { Link, useParams } from "react-router-dom"
 
-function FriendAccountPage() {
+function FriendRankingHomepage() {
     const params = useParams()
 
     return (
@@ -11,4 +11,4 @@ function FriendAccountPage() {
     )
 }
 
-export default FriendAccountPage
+export default FriendRankingHomepage

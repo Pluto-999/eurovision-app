@@ -23,11 +23,6 @@ function SingleResultsPage({ entry }) {
         })
     }, [])
 
-
-    const semi_result = results.semi_result?.[0]
-    const final_result = results.final_result?.[0]
-    console.log(results)
-
     let qualified = true
 
     return (

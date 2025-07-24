@@ -14,7 +14,15 @@ const getAverageRating = asyncWrapper(async (req, res) => {
     `
 
     if (allRatings.length === 0) {
-        return res.status(400).json({ success: false, message: "No one has rated this entry yet" })
+        return res.status(200).json({ 
+            success: false, 
+            message: "No one has rated this entry yet",
+            data: {
+                country: country,
+                year: year,
+                average: -1
+            }     
+        })
     }
 
     const average = calculateAverage(allRatings, "stars_rating")
@@ -41,7 +49,15 @@ const getAveragePosition = asyncWrapper(async (req, res) => {
     `
 
     if (allRankings.length === 0) {
-        return res.status(400).json({ success: false, message: "No one has ranking this entry yet" })
+        return res.status(200).json({ 
+            success: false, 
+            message: "No one has ranked this entry yet",
+            data: {
+                country: country,
+                year: year,
+                average: -1
+            }
+        })
     }
 
     const average = calculateAverage(allRankings, "position")
@@ -68,7 +84,15 @@ const getAveragePoints = asyncWrapper(async (req, res) => {
     `
 
     if (allPoints.length === 0) {
-        return res.status(400).json({ success: false, message: "No one has given this entry any points yet" })
+        return res.status(200).json({ 
+            success: false, 
+            message: "No one has given this entry any points yet",
+            data: {
+                country: country,
+                year: year,
+                average: -1
+            }
+        })
     }
 
     const average = calculateAverage(allPoints, "points")
@@ -80,32 +104,6 @@ const getAveragePoints = asyncWrapper(async (req, res) => {
     }
 
     res.status(200).json({ success: true, data: data })
-})
-
-
-const getTotalPoints = asyncWrapper(async (req, res) => {
-    const { country, year } = req.params
-
-    const allPoints = await sql`
-        SELECT points
-        FROM ranking
-        WHERE country=${country}
-            AND year=${year}
-            AND points > 0
-    `
-
-    if (allPoints.length === 0) {
-        return res.status(400).json({ success: false, message: "No one has given this entry any points yet" })
-    }
-
-    const data = {
-        country: country,
-        year: year,
-        total_points: allPoints
-    }
-
-    res.status(200).json({ success: true, data: data })
-    
 })
 
 
@@ -137,10 +135,14 @@ const getUserResults = asyncWrapper(async (req, res) => {
     for (const [country, points] of pointsMap) {
         toReturn.push({
             country: country,
-            year: 2025,
+            year: year,
             points: points
         })
     }
+
+    toReturn.sort((a, b) => (
+        a.points > b.points ? -1 : b.points > a.points ? 1 : 0
+    ))
 
     res.json({ success: true, data: toReturn })
 })
@@ -149,6 +151,5 @@ module.exports = {
     getAverageRating,
     getAveragePosition,
     getAveragePoints,
-    getTotalPoints,
     getUserResults
 }

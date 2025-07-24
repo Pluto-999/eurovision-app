@@ -6,6 +6,7 @@ import UserRoutes from "./routes/UserRoutes"
 import HomePage from "./pages/HomePage"
 import CountriesPage from "./pages/CountriesPage"
 import FriendsRoutes from "./routes/FriendsRoutes"
+import UserStatsRoutes from "./routes/UserStatsRoutes"
 import Chat from "./pages/Chat"
 import { Toaster } from "react-hot-toast"
 
@@ -21,7 +22,7 @@ function App() {
         <Route path="/user/*" element={<UserRoutes />}/>
         <Route path="/countries/*" element={<CountriesPage />} />
         <Route path="/friends/*" element={<FriendsRoutes />} />
-        {/* BUNCH MORE ROUTES ... */}
+        <Route path="/user_stats/*" element={<UserStatsRoutes />} />
         <Route path="/chat/*" element={<Chat />} />
       </Routes>
 
