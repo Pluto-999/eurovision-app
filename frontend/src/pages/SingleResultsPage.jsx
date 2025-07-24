@@ -40,7 +40,7 @@ function SingleResultsPage({ entry }) {
                         <div> Automatic Qualifier for this year, so has no Semi Final Result </div>
                     ) : (
                         <>
-                            <div> Semi Final Result (Semi Final {results.semi_result?.[0].semi_number}) </div>
+                            <h2> Semi Final Result (Semi Final {results.semi_result?.[0].semi_number}) </h2>
                             <div> {results.semi_result?.map(result => (
                                 <ul key={result.country + result.year}>
                                     <li> Position: { result.position }</li>
@@ -56,7 +56,7 @@ function SingleResultsPage({ entry }) {
                 } 
             </div>
 
-            <div> Final Result </div>
+            <h2> Final Result </h2>
             <div> {!qualified && <div> Did not qualify for the Grand Final </div>}</div>
             <div> {qualified && results.final_result?.map( result => (
                 <ul key={result.country + result.year}>
