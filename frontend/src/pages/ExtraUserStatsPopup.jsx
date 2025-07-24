@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios"
 import toast from "react-hot-toast"
+import { Rating } from "react-simple-star-rating"
 
 function ExtraUserStatsPopup(props) {
     const [averageRating, setAverageRating] = useState(-1)
@@ -41,7 +42,13 @@ function ExtraUserStatsPopup(props) {
                 <h2> Detailed Community Stats</h2>
                 <ul>
                     <li>Average Rating: {averageRating > 0 ? (
-                        averageRating) : ( <> No one has rated this entry yet </>
+                        <Rating 
+                            initialValue={averageRating}
+                            readonly
+                            allowFraction
+                            SVGclassName="inline"
+                        />
+                    ) : ( <> No one has rated this entry yet </>
                     )}</li>
                     <li>Average Position: {averagePosition > 0 ? (
                         averagePosition) : ( <> No has has ranked this entry yet </>
