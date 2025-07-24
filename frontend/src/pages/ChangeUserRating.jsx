@@ -64,12 +64,13 @@ function ChangeUserRating() {
 
     return (
         <>
-            <div> {params.country} , { params.year } </div>
+            <h1> {params.country}, { params.year } </h1>
             
             <Rating
                 onClick={handleRating}
                 transition={true}
                 initialValue={rating}
+                SVGclassName="inline"
             />
             
         </>

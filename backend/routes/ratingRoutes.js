@@ -10,6 +10,6 @@ const router = express.Router()
 
 router.patch("/changeRating", authMiddleware, changeRating)
 router.get("/currentUserRating/:country/:year", authMiddleware, getCurrentUserRating)
-router.get("/otherUserRating/:username", getOtherUserRating)
+router.get("/otherUserRating/:username/:country/:year", authMiddleware, getOtherUserRating)
 
 module.exports = router

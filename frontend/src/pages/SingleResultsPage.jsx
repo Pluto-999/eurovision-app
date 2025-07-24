@@ -32,12 +32,13 @@ function SingleResultsPage({ entry }) {
 
     return (
         <>
-            <div> { year } Results Page for { country }</div>
-
             <div> 
                 {
                     results.semi_result?.length === 0 ? (
+                        <>
+                        <h2> Semi Final Result </h2>
                         <div> Automatic Qualifier for this year, so has no Semi Final Result </div>
+                        </>
                     ) : (
                         <>
                             <h2> Semi Final Result (Semi Final {results.semi_result?.[0].semi_number}) </h2>

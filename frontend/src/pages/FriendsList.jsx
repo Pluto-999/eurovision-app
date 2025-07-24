@@ -46,6 +46,7 @@ function FriendsList() {
                 friendList.map((friend) => (
                     <li key={friend}>
                         {friend}
+                        <button><Link to={`/friends/${friend}`}> View Friend's Rankings </Link></button>
                         <FriendDelete username={friend} fetchFriends={fetchFriends}/>
                     </li>
                 ))

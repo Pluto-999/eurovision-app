@@ -349,6 +349,10 @@ const getCurrentUserAllRankings = asyncWrapper(async (req, res) => {
 })
 
 const getOtherUserAllRankings = asyncWrapper(async (req, res) => {
+    if (req.username && req.username === req.params.username) {
+        return res.status(404).json({ success: false, message: "You cannot view your own rankings on the friends route" })
+    }
+    
     const username = await sql`
         SELECT username
         FROM users
@@ -358,8 +362,6 @@ const getOtherUserAllRankings = asyncWrapper(async (req, res) => {
     if (username.length === 0) {
         return res.status(401).json({ success: false, message: "No user exists with this username" })
     }
-
-    // return getRankings(req.params.year, username[0]["username"], res)
 
     const { year } = req.params
 
@@ -392,18 +394,9 @@ const getOtherUserAllRankings = asyncWrapper(async (req, res) => {
     })
 })
 
-const getCurrentUserSingleRanking = asyncWrapper(async (req, res) => {
-
-})
-
-const getOtherUserSingleRanking = asyncWrapper(async (req, res) => {
-
-})
 
 module.exports = {
     changeRanking,
     getCurrentUserAllRankings,
     getOtherUserAllRankings,
-    getCurrentUserSingleRanking,
-    getOtherUserSingleRanking
 }

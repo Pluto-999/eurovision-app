@@ -91,7 +91,34 @@ const getCurrentUserRating = asyncWrapper(async (req, res) => {
 })
 
 const getOtherUserRating = asyncWrapper(async (req, res) => {
+    const { username, country, year } = req.params
+    
+    if (!username || !country || !year) {
+        return res.status(400).json({ success: false, message: "Please ensure you specify the username, country and year" })
+    }
 
+    if (req.username && username === req.username) {
+        return res.status(404).json({ success: false, message: "You cannot view your own ratings on the friends route" })
+    }
+
+    const user = await sql`
+        SELECT username
+        FROM users
+        WHERE username=${username}
+    `
+    if (user.length === 0) {
+        return res.status(401).json({ success: false, message: "No user exists with this username" })
+    }
+
+    const rating = await sql`
+        SELECT stars_rating
+        FROM ranking
+        WHERE country=${country} 
+            AND year=${year}
+            AND username=${user[0]["username"]}  
+    `
+
+    res.status(200).json({ success: true, rating: rating[0]["stars_rating"] })
 })
 
 module.exports = {
