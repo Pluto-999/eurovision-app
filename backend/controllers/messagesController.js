@@ -22,10 +22,13 @@ const getMessages = asyncWrapper(async (req, res) => {
         WHERE sender=${otherUser} AND receiver=${currentUser}
     `
 
+    const allMessages = currentUserSentMessages.concat(currentUserReceivedMessages)
+
+    allMessages.sort((a, b) => a.timestamp - b.timestamp)
+
     res.status(200).json({ 
         success: true, 
-        sentMessages: currentUserSentMessages, 
-        receivedMessages: currentUserReceivedMessages 
+        messages: allMessages 
     })
 })
 
@@ -58,8 +61,6 @@ const sendMessage = asyncWrapper(async (req, res) => {
         VALUES (${currentUser}, ${targetUser[0]["username"]}, ${message}, ${new Date})
         RETURNING *
     `
-
-    io.to(receiver).emit("newMessage", newMessage)
 
     res.status(201).json({ success: true, newMessage: newMessage })
 

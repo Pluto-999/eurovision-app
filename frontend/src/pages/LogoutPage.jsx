@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
+import socket from "../socket"
 
 function LogoutPage() {
     const navigate = useNavigate()
@@ -13,6 +14,11 @@ function LogoutPage() {
         .then(response => {
             const message = response.data.message
             toast(message)
+
+            if (socket.connected) {
+                socket.disconnect()
+            }
+
             navigate("/account")
         }, [])
     })

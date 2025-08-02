@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
+import socket from "../socket"
 
 function RegisterPage() {
     const navigate = useNavigate()
@@ -24,6 +25,10 @@ function RegisterPage() {
                     icon: "✅"
                 })
                 navigate("/user/home")
+
+                if (!socket.connected) {
+                    socket.connect()
+                }
             }
             else {
                 console.log(response)

@@ -14,7 +14,7 @@ const io = new Server(server, {
     }
 })
 
-const onlineUsers = new Set()
+const onlineUsers = new Map()
 
 // socket refers to user that has just connected
 io.on("connection", (socket) => {
@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
     try {
         const payload = verifyToken(unsignedToken)
         socket.user = payload
-        onlineUsers.add(socket.user.username)
+        onlineUsers[socket.user.username] = socket.id
         console.log("user connected:", socket.user.username)
     }
     catch (error) {
@@ -46,14 +46,15 @@ io.on("connection", (socket) => {
         return socket.disconnect(true)
     }
 
-    // socket.on("sendMessage", (data) => {
-    //     console.log(data)
-    //     socket.broadcast.emit("receiveMessage", data)
-    // })
+    socket.on("sendMessage", (data) => {
+        const targetSocketId = onlineUsers[data.username]
+        io.to(targetSocketId).emit("receiveMessage", data)
+    })
 
-    io.on("disconnect", () => {
+    socket.on("disconnect", () => {
+        console.log("A user disconnected", socket.user.username)
         onlineUsers.delete(socket.user.username)
-        console.log("A user disconnected", socket.id)
+        
     })
 })
 

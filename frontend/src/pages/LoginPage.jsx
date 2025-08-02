@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
+import socket from "../socket"
 
 function LoginPage() {
     const navigate = useNavigate()
@@ -22,6 +23,10 @@ function LoginPage() {
                     icon: "✅"
                 })
                 navigate("/user/home")
+
+                if (!socket.connected) {
+                    socket.connect()
+                }
             }
             else {
                 toast("Something went wrong, please try again", {
