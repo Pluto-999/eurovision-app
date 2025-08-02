@@ -6,10 +6,13 @@ import "../styles/Stats.css"
 import CountryIndividualEntryPage from "./CountryIndividualEntryPage"
 import Popup from 'reactjs-popup'
 import ExtraUserStatsPopup from "./ExtraUserStatsPopup"
+import { Ring } from "ldrs/react"
+import "ldrs/react/Ring.css"
 
 function AllUserRankings() {
     const params = useParams()
     const [rankings, setRankings] = useState([])
+    const [loading, setLoading] = useState(true)
     
     useEffect(() => {
         axios.get(`http://localhost:3000/api/userstats/results/${params.year}`)
@@ -25,10 +28,15 @@ function AllUserRankings() {
                 toast.error("Something has gone wrong, please try again")
             }
         })
+        .finally(() => {
+            setLoading(false)
+        })
     }, [])
 
     return (
         <>
+            {loading ? ( <Ring />) : (
+            <>
             <h1> Community Results for {params.year} </h1>
             {
                 rankings.map(ranking => (
@@ -53,6 +61,8 @@ function AllUserRankings() {
                     </div>
                 ))
             }
+            </>
+            )}
         </>
     )
 }

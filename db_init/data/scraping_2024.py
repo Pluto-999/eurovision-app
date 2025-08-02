@@ -6,7 +6,7 @@ from scraping_helpers import (
     write_entries, write_final_results, write_semi_results
 )
 
-url = "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025"
+url = "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2024"
 
 page = requests.get(url)
 
@@ -22,40 +22,40 @@ titles = participants_table.find_all("tr")
 table_entries = [ title.text.strip() for title in titles ]
 table_entries.pop(0)
 
-write_entries(table_entries, 2025)
+write_entries(table_entries, 2024)
 
 
-################### FINAL RESULTS ################### 
+################### FINAL RESULTS ###################
 
-final_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[2]
+final_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[3]
 
 titles = final_results_table.find_all("tr")
 
 table_entries = [ title.text.strip() for title in titles ]
 table_entries.pop(0)
 
-write_final_results(table_entries, 2025)
+write_final_results(table_entries, 2024)
 
 
 ################### SEMI-FINAL 1 RESULTS ###################
 
-semi_1_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[0]
+semi_1_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[1]
 
 titles = semi_1_results_table.find_all("tr")
 
 table_entries = [ title.text.strip() for title in titles ]
 table_entries.pop(0)
 
-write_semi_results(table_entries, 2025, 1)
+write_semi_results(table_entries, 2024, 1)
 
 
 ################### SEMI-FINAL 2 RESULTS ###################
 
-semi_2_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[1]
+semi_2_results_table = soup.find_all("table", class_ = "sortable wikitable plainrowheaders")[2]
 
 titles = semi_2_results_table.find_all("tr")
 
 table_entries = [ title.text.strip() for title in titles ]
 table_entries.pop(0)
 
-write_semi_results(table_entries, 2025, 2)
+write_semi_results(table_entries, 2024, 2)

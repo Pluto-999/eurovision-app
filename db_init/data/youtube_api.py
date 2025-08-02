@@ -10,10 +10,10 @@ api_key = os.getenv("API_KEY")
 yt_service = build("youtube", "v3", developerKey=api_key)
 
 
-def add_yt_data(country):
+def add_yt_data(country, year):
     request = yt_service.search().list(
         part="snippet",
-        q=country + "eurovision 2025 live",
+        q=country + f"eurovision {year} live",
         maxResults=1
     )
     

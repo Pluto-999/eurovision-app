@@ -8,6 +8,7 @@ import CountriesPage from "./pages/CountriesPage"
 import FriendsRoutes from "./routes/FriendsRoutes"
 import UserStatsRoutes from "./routes/UserStatsRoutes"
 import Chat from "./pages/Chat"
+import NotFound from "./pages/NotFound"
 import { Toaster } from "react-hot-toast"
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/friends/*" element={<FriendsRoutes />} />
         <Route path="/user_stats/*" element={<UserStatsRoutes />} />
         <Route path="/chat/*" element={<Chat />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
 
