@@ -4,6 +4,7 @@ const { Server } = require("socket.io")
 const cookie = require("cookie")
 const cookieParser = require("cookie-parser")
 const { verifyToken } = require("./utils/jwt")
+const sql = require("./config/db")
 
 const app = express()
 const server = http.createServer(app)
@@ -46,9 +47,38 @@ io.on("connection", (socket) => {
         return socket.disconnect(true)
     }
 
-    socket.on("sendMessage", (data) => {
-        const targetSocketId = onlineUsers[data.username]
-        io.to(targetSocketId).emit("receiveMessage", data)
+    socket.on("sendMessage", async (data) => {
+        const message = data.message
+        const targetUser = data.username
+        const currentUser = socket.user.username
+
+        if (!message || message.length === 0 || !targetUser || targetUser === currentUser) {
+            return
+        }
+
+        try {
+            const newMessage = await sql`
+                INSERT INTO messages (sender, receiver, content, timestamp)
+                VALUES (${currentUser}, ${targetUser}, ${message}, ${new Date})
+                RETURNING *
+            `
+
+            const payload = {
+                sender: currentUser,
+                receiver: targetUser,
+                content: newMessage[0].content,
+                timestamp: newMessage[0].timestamp
+            }
+
+            const targetSocketId = onlineUsers[targetUser]
+            io.to(targetSocketId).emit("receiveMessage", payload)
+
+            socket.emit("receiveMessage", payload)
+        }
+        catch (error) {
+            console.log(error)
+            socket.emit("error", { message: "There was an error trying to send your message." })
+        }
     })
 
     socket.on("disconnect", () => {

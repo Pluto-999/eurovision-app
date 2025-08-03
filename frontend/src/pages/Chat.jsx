@@ -5,7 +5,6 @@ import axios from "axios"
 
 function Chat() {
     const [message, setMessage] = useState("")
-    const [messageReceived, setMessageReceived] = useState("")
     const params = useParams()
     const [allMessages, setAllMessages] = useState([])
 
@@ -14,29 +13,26 @@ function Chat() {
             message: message,
             username: params.username
         })
-        axios.post(`http://localhost:3000/api/messages/${params.username}`,
-            { message: message },
-            { withCredentials: true }
-        )
-        .then(response => {
-            console.log(response)
-        })
+        setMessage("")
     }
 
-    // runs any time socket emits something as socket is in dependency list
     useEffect(() => {
-        socket.on("receiveMessage", (data) => {
-            setMessageReceived(data.message)
-        })
-    }, [socket])
+        const handleReceiveMessage = (data) => {
+            setAllMessages(prev => [...prev, data])
+        }
 
+        socket.on("receiveMessage", handleReceiveMessage)
+
+        return () => {
+            socket.off("receiveMessage", handleReceiveMessage)
+        }
+    }, [])
 
     useEffect(() => {
         axios.get(`http://localhost:3000/api/messages/${params.username}`,
             { withCredentials: true }
         )
         .then(response => {
-            console.log(response)
             setAllMessages(response.data.messages)
         })
     }, [])
@@ -48,16 +44,19 @@ function Chat() {
                 {
                     allMessages.map((message) => (
                         
-                        <li key={message.timestamp} className={message.sender ? "bg-blue-500" : "bg-cyan-500"}>
+                        <li key={message.message_id} className={message.sender === params.username ? "bg-blue-500" : "bg-cyan-500"}>
                             <div> {message.content} </div>
                             <div> {message.timestamp} </div>
                         </li>
                     ))
                 } 
             </ul>
-            <input placeholder="message" onChange={(event) => {setMessage(event.target.value)}}></input>
+            <input 
+                placeholder="message" 
+                value={message}
+                onChange={(event) => {setMessage(event.target.value)}}
+            ></input>
             <button onClick={sendMessage}> Send Message </button>
-            <h1>Message: { messageReceived }</h1>
         </>
     )
 }
