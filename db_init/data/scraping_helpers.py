@@ -64,7 +64,7 @@ def write_entries(table_entries, year):
         song_index = find_string(6, entry)
         song = create_string_with_brackets(song_index, entry)
 
-        # yt_thumbnail, yt_url = add_yt_data(country, year)
+        yt_thumbnail, yt_url = add_yt_data(country, year)
 
         all_entries.append({
             "country": country.strip(), 
@@ -72,8 +72,8 @@ def write_entries(table_entries, year):
             "artist": artist, 
             "song": song,
             "spotify_url": add_spotify_track(artist, song, year),
-            # "yt_thumbnail": yt_thumbnail,
-            # "yt_url": yt_url
+            "yt_thumbnail": yt_thumbnail,
+            "yt_url": yt_url
             }
         )
 
