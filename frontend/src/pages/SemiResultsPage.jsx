@@ -26,9 +26,10 @@ function SemiResultsPage() {
     return (
         <>
             <h1> {params.year} Semi Results {params.semi_number} Page</h1>
+            <ul className="grid">
             {
                 results.map(result => (
-                    <div key={result.country + result.year}>
+                    <li key={result.country + result.year}>
                         <Popup
                             trigger={
                                 <button className="link">
@@ -47,9 +48,10 @@ function SemiResultsPage() {
                                 <CountryIndividualEntryPage entry={result} /> 
                             </div>
                         </Popup>
-                    </div>
+                    </li>
                 ))
             }
+            </ul>
         </>
     )
 }

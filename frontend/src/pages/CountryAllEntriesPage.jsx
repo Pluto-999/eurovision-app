@@ -25,31 +25,31 @@ function CountryAllEntriesPage() {
 
     return (
         <>
-        <div>
         <h1> List of Entries for {params.country} </h1>
 
-        {entries.map(entry => (
-            <div key={entry.country + entry.year}>
-                <Popup 
-                    trigger={
-                    <button className="link"> 
-                        <ul>
-                            <li> Year: {entry.year} </li>
-                            <li> Artist: {entry.artist} </li>
-                            <li> Song: {entry.song} </li>
-                        </ul>
-                    </button>
-                } 
-                position="center center"
-                modal
-                >
-                    <div className="popup">
-                        <CountryIndividualEntryPage entry={entry} /> 
-                    </div>
-                </Popup>
-            </div>
-        ))}
-        </div>
+        <ul className="grid">
+            {entries.map(entry => (
+                <li key={entry.country + entry.year} className="card">
+                    <Popup 
+                        trigger={
+                        <button className="link"> 
+                            <ul>
+                                <li> Year: {entry.year} </li>
+                                <li> Artist: {entry.artist} </li>
+                                <li> Song: {entry.song} </li>
+                            </ul>
+                        </button>
+                    } 
+                    position="center center"
+                    modal
+                    >
+                        <div className="popup">
+                            <CountryIndividualEntryPage entry={entry} /> 
+                        </div>
+                    </Popup>
+                </li>
+            ))}
+            </ul>
         </>
     )
 }

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 import SingleResultsPage from "../pages/SingleResultsPage"
-import ChangeUserRating from "../pages/ChangeUserRating"
+import { FaYoutube } from "react-icons/fa";
+import { FaSpotify } from "react-icons/fa";
+import "../styles/Stats.css"
 
 function CountryIndividualEntryPage({ entry }) {
     const params = useParams()
@@ -31,14 +33,18 @@ function CountryIndividualEntryPage({ entry }) {
             <ul>
                 <li> Artist: {entryData.artist} </li>
                 <li> Song: {entryData.song} </li>
-                <li> <a href={entryData.spotify_url}>Spotify Link</a></li>
-                <li> <a href={entryData.yt_url}><img src={entryData.yt_thumbnail}></img></a></li>
+                <li><a href={entryData.yt_url}><FaYoutube size={40}/></a></li>
+                <li><a href={entryData.spotify_url}><FaSpotify size={40}/></a></li>
+                <li>
+                    <div className="crop">
+                        <img src={entryData.yt_thumbnail} className="w-full h-full object-cover object-center"></img>
+                    </div>
+                </li>
+                
             </ul>
 
             <SingleResultsPage entry={entry}/>
 
-            {/* <h2> Your rating of this country: </h2>
-            <ChangeUserRating /> */}
         </div>
 
         </>

@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom"
+import Navbar from "./components/Navbar"
 import ResultsRoutes from "./routes/ResultsRoutes"
 import EntriesRoutes from "./routes/EntriesRoutes"
 import AccountRoutes from "./routes/AccountRoutes"
@@ -32,6 +33,7 @@ function App() {
   return (
     <div>
       <div><Toaster /></div>
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/results/*" element={<ResultsRoutes />} />

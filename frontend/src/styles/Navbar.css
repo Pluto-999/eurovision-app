@@ -1,0 +1,24 @@
+.navbar{
+    position: sticky;
+    top: 0;
+}
+
+ul{
+    list-style-type: none;
+}
+
+.navbar_links li {
+    display: inline;
+    padding: 12px;
+    transition-duration: 0.5s;
+}
+
+.navbar_links li :hover{
+    filter: drop-shadow(0 0 5em #646cffaa);
+    color: #56598a;
+    transition-duration: 0.5s;
+}
+
+.navbar_links li a{
+    transition-duration: 0.5s;
+}

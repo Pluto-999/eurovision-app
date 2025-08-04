@@ -19,8 +19,11 @@ function CountriesPage() {
         <div>
             <ul className="grid">
                 {countries.map((country) => (
-                    <li key={country.country} className="link country-item">
-                        <Link to={`/entries/country/${country.country}`}>
+                    <li key={country.country}>
+                        <Link 
+                            to={`/entries/country/${country.country}`}
+                            className="link"    
+                        >
                             {country.country}
                             <img
                                 src={country.flag_image}

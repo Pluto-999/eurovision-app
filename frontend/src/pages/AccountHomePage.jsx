@@ -19,11 +19,8 @@ function HomePage () {
         })
         .catch(error => {
             console.log(error)
-            if (error.response.data.message) {
+            if (error.response.status !== 401 && error.response.data.message) {
                 toast(error.response.data.message)
-            }
-            else {
-                toast("Something has gone wrong, please try again")
             }
             navigate("/account")
         })

@@ -18,8 +18,12 @@ function CountryResultsPage() {
     <>
       <h1>Results for {params.country}</h1>
 
-      <h2>Semi Final Results</h2>
-      <ul className="results-grid">
+      {results.semi_results?.length !== 0 ? (
+        <h2> Semi Final Results </h2>
+        
+      ) : (<></>)}
+
+      <ul className="grid">
         {results.semi_results?.map((result) => (
           <li key={result.country + result.year}>
             <Link
@@ -37,8 +41,11 @@ function CountryResultsPage() {
         ))}
       </ul>
 
-      <h2>Final Results</h2>
-      <ul className="results-grid">
+      {results.final_results?.length !== 0 ? (
+        <h2> Final Results </h2>
+      ) : (<></>)}
+
+      <ul className="grid">
         {results.final_results?.map((result) => (
           <li key={result.country + result.year}>
             <Link className="link" to={`/results/final/${result.year}`}>

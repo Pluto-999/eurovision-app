@@ -26,9 +26,10 @@ function FinalResultsPage() {
     return (
         <>
             <h1> {params.year} Final Results Page</h1>
+            <ul className="grid">
             {
                 results.map(result => (
-                    <div key={result.country + result.year}>
+                    <li key={result.country + result.year}>
                         <Popup
                             trigger={
                                 <button className="link">
@@ -47,9 +48,10 @@ function FinalResultsPage() {
                                 <CountryIndividualEntryPage entry={result} /> 
                             </div>
                         </Popup>
-                    </div>
+                    </li>
                 ))
             }
+            </ul>
         </>
     )
 }

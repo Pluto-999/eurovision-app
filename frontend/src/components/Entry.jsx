@@ -18,7 +18,7 @@ function Entry(props) {
 
   const isRanked = props.position > 0 ? true : false
   
-  const rankedStyle = isRanked ? "bg-gray-100 hover:bg-gray-200" : "bg-gray-500 hover:bg-gray-400"
+  const rankedStyle = isRanked ? "bg-indigo-200 hover:bg-indigo-300" : "bg-gray-200 hover:bg-gray-300"
 
   return (
     <>
@@ -30,13 +30,26 @@ function Entry(props) {
         <div {...attributes} {...listeners}>
             {isRanked ? props.position : ""} {props.country}, {props.year} 
         </div>
-        <Link 
-            to={`/entries/${props.country}/${props.year}`}
-            onClick={(e) => e.stopPropagation()}
-            className="text-gray-800 hover:text-blue-600 font-medium"
-        > 
-        View Entry
-        </Link>
+        <ul>
+          <li>
+            <Link 
+              to={`/entries/${props.country}/${props.year}`}
+              onClick={(e) => e.stopPropagation()}
+              className="text-gray-800 hover:text-blue-600 font-medium"
+            > 
+            View Entry
+            </Link>
+          </li>
+          <li>
+            <Link
+              to={`/user/change_rating/${props.country}/${props.year}`}
+              onClick={(e) => e.stopPropagation()}
+              className="text-gray-800 hover:text-blue-600 font-medium"
+            >
+              Edit Rating
+            </Link>
+          </li>
+      </ul>
     </div>
     </>
   );

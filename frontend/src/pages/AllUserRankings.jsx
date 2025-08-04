@@ -38,9 +38,10 @@ function AllUserRankings() {
             {loading ? ( <Ring />) : (
             <>
             <h1> Community Results for {params.year} </h1>
+            <ul className="grid">
             {
                 rankings.map(ranking => (
-                    <div key={ranking.country + ranking.year}>
+                    <li key={ranking.country + ranking.year}>
                         <Popup
                             trigger={
                                 <button className="link">
@@ -58,9 +59,10 @@ function AllUserRankings() {
                                 <ExtraUserStatsPopup country={ranking.country} year={ranking.year} />
                             </div>
                         </Popup>
-                    </div>
+                    </li>
                 ))
             }
+            </ul>
             </>
             )}
         </>
