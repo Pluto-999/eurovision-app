@@ -30,24 +30,27 @@ function FinalResultsPage() {
             {
                 results.map(result => (
                     <li key={result.country + result.year}>
-                        <Popup
-                            trigger={
-                                <button className="link">
-                                    <ul>
-                                        <li> Country: {result.country}</li>
-                                        <li> Position: {result.position}</li>
-                                        <li> Points: {result.points}</li>
-                                        <li> Running Order: {result.running_order}</li> 
-                                    </ul>
-                                </button>
-                            }
-                            position="center center"
-                            modal
-                        >
-                            <div className="popup">
-                                <CountryIndividualEntryPage entry={result} /> 
+                        
+                        
+                        <button className="btn link" onClick={()=>document.getElementById(`modal_${result.country}_${result.year}`).showModal()}>
+                        <ul>
+                            <li> Country: {result.country}</li>
+                            <li> Position: {result.position}</li>
+                            <li> Points: {result.points}</li>
+                            <li> Running Order: {result.running_order}</li> 
+                        </ul>
+                        </button>
+                        <dialog id={`modal_${result.country}_${result.year}`} className="modal">
+                            <div className="modal-box w-11/12 max-w-2xl text-center content-center">
+                                <form method="dialog">
+                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                </form>
+                                <CountryIndividualEntryPage entry={result} />
                             </div>
-                        </Popup>
+                            <form method="dialog" className="modal-backdrop">
+                                <button>close</button>
+                            </form>
+                        </dialog>
                     </li>
                 ))
             }

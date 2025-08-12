@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @tailwind components;
 @tailwind utilities;
+@plugin "daisyui";
 
 
 :root {
@@ -80,4 +81,10 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.main_page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

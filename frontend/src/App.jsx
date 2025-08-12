@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom"
+ import { Routes, Route } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import ResultsRoutes from "./routes/ResultsRoutes"
 import EntriesRoutes from "./routes/EntriesRoutes"
@@ -14,6 +14,7 @@ import { Toaster } from "react-hot-toast"
 import { useEffect } from "react"
 import axios from "axios"
 import socket from "./socket"
+import "./index.css"
 
 function App() {
   useEffect(() => {
@@ -31,9 +32,10 @@ function App() {
   })
   
   return (
-    <div>
+    <>
       <div><Toaster /></div>
       <Navbar />
+      <div className="main_page">
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/results/*" element={<ResultsRoutes />} />
@@ -46,9 +48,8 @@ function App() {
         <Route path="/chat/:username" element={<Chat />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-
-
-    </div>
+      </div>
+    </>
   )
 }
 

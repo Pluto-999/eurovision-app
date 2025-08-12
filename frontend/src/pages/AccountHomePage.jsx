@@ -37,7 +37,7 @@ function HomePage () {
         ) : 
         user ? (navigate("/user/home")) : ( 
             <>
-            <h1> ACCOUNT HOME PAGE </h1>
+            <h1> Account Home Page </h1>
             <Link to="/account/register"> Register </Link>
             <Link to="/account/login"> Login </Link>
             </>

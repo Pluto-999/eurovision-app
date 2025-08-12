@@ -30,15 +30,20 @@ function UserHomePage() {
     return (
         <>
             <h1> Welcome {user ? user.username : ""} </h1>
-            <Link to="/user/my_ranking/2025">My 2025 Ranking</Link>
-            <Link to="/user/my_ranking/2024">My 2024 Ranking</Link>
-            <Link to="/user/my_ranking/2023">My 2023 Ranking</Link>
-            <Link to="/user/my_ranking/2022">My 2022 Ranking</Link>
-            <Link to="/user/my_ranking/2021">My 2021 Ranking</Link>
-            <Link to="/friends/my_friends"> My Friends List</Link>
-            <Link to="/friends/search"> Search for Friends</Link>
             <Link to="/account/logout"> Logout </Link>
-            {/* <ResultsRoutes /> */}
+            <h2> My Rankings </h2>
+            <ul>
+                <li><Link to="/user/my_ranking/2025">My 2025 Ranking</Link></li>
+                <li><Link to="/user/my_ranking/2024">My 2024 Ranking</Link></li>
+                <li><Link to="/user/my_ranking/2023">My 2023 Ranking</Link></li>
+                <li><Link to="/user/my_ranking/2022">My 2022 Ranking</Link></li>
+                <li><Link to="/user/my_ranking/2021">My 2021 Ranking</Link></li>
+            </ul>
+            <h2> Friends </h2>
+            <ul>
+                <li><Link to="/friends/my_friends"> My Friends </Link></li>
+                <li><Link to="/friends/search"> Search for Friends</Link></li>
+            </ul>
         </>
     )
 }

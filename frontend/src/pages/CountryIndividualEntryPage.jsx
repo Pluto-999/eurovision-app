@@ -5,6 +5,7 @@ import SingleResultsPage from "../pages/SingleResultsPage"
 import { FaYoutube } from "react-icons/fa";
 import { FaSpotify } from "react-icons/fa";
 import "../styles/Stats.css"
+import toast from "react-hot-toast"
 
 function CountryIndividualEntryPage({ entry }) {
     const params = useParams()

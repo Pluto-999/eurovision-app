@@ -5,13 +5,23 @@ function Navbar() {
     return (
         <nav className="navbar">
             <ul className="navbar_links">
-                <li> <Link to="/">Euroscore</Link></li>
-                <li> <Link to="/countries">Countries Homepage</Link></li>
-                <li> <Link to="/results">Results Home Page</Link></li>
-                <li> <Link to="/user_stats">Community Rankings and Ratings</Link></li>
-                <li> <Link to="/account">My Account</Link></li>
+                <li className=""> <Link to="/">Euroscore</Link></li>
+                <li className=""> <Link to="/countries">Countries Homepage</Link></li>
+                <li className=""> <Link to="/results">Results Home Page</Link></li>
+                <li className=""> <Link to="/user_stats">Community Rankings and Ratings</Link></li>
+                <li>
+                    <div className="dropdown dropdown-end">
+                        <div tabIndex={0} role="button" className="account">Account</div>
+                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                <li><Link to="/account">Profile</Link></li>
+                                <li><Link to="/account/logout"> Logout </Link></li>
+                            </ul>
+                        </div>
+                </li>
             </ul>
         </nav>
+
+        
     )
 }
 

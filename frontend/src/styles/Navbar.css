@@ -1,6 +1,9 @@
 .navbar{
     position: sticky;
     top: 0;
+    z-index: 1;
+    background-color: white;
+    padding: 10px;
 }
 
 ul{
@@ -14,11 +17,18 @@ ul{
 }
 
 .navbar_links li :hover{
-    filter: drop-shadow(0 0 5em #646cffaa);
     color: #56598a;
     transition-duration: 0.5s;
 }
 
 .navbar_links li a{
     transition-duration: 0.5s;
+}
+
+.account { 
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+    transition-duration: 0.5s;
+    cursor: pointer;
 }

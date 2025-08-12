@@ -40,14 +40,20 @@ function Chat() {
     return (
         <>
             <h1> Chat with {params.username} </h1>
+            
             <ul> 
                 {
                     allMessages.map((message) => (
                         
-                        <li key={message.message_id} className={message.sender === params.username ? "bg-blue-500" : "bg-cyan-500"}>
-                            <div> {message.content} </div>
-                            <div> {message.timestamp} </div>
+                        <li 
+                            key={message.message_id} 
+                            className={`chat ${message.sender === params.username ? "chat-start" : "chat-end"}`}
+                        >
+                            <div className="chat-bubble"> {message.content} </div>
+                            
+                            <div className="chat-footer"> {message.timestamp} </div>
                         </li>
+                        
                     ))
                 } 
             </ul>

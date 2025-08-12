@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 import CountryIndividualEntryPage from "./CountryIndividualEntryPage"
-import Popup from 'reactjs-popup'
 import "../styles/Stats.css"
+import toast from "react-hot-toast"
 
 function CountryAllEntriesPage() {
     const params = useParams()
@@ -26,29 +26,30 @@ function CountryAllEntriesPage() {
     return (
         <>
         <h1> List of Entries for {params.country} </h1>
-
         <ul className="grid">
             {entries.map(entry => (
                 <li key={entry.country + entry.year} className="card">
-                    <Popup 
-                        trigger={
-                        <button className="link"> 
-                            <ul>
-                                <li> Year: {entry.year} </li>
-                                <li> Artist: {entry.artist} </li>
-                                <li> Song: {entry.song} </li>
-                            </ul>
-                        </button>
-                    } 
-                    position="center center"
-                    modal
-                    >
-                        <div className="popup">
-                            <CountryIndividualEntryPage entry={entry} /> 
-                        </div>
-                    </Popup>
+                    <button className="btn link" onClick={()=>document.getElementById(`modal_${entry.country}_${entry.year}`).showModal()}>
+                        <ul>
+                            <li> Year: {entry.year} </li>
+                            <li> Artist: {entry.artist} </li>
+                            <li> Song: {entry.song} </li>
+                        </ul>
+                    </button>
+                    <dialog id={`modal_${entry.country}_${entry.year}`} className="modal">
+                    <div className="modal-box w-11/12 max-w-2xl text-center content-center">
+                        <form method="dialog">
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        </form>
+                        <CountryIndividualEntryPage entry={entry} />
+                    </div>
+                    <form method="dialog" className="modal-backdrop">
+                        <button>close</button>
+                    </form>
+                    </dialog>
                 </li>
-            ))}
+                )
+            )}
             </ul>
         </>
     )
