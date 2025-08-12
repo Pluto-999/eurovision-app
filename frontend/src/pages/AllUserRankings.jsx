@@ -4,10 +4,11 @@ import axios from "axios"
 import toast from "react-hot-toast"
 import "../styles/Stats.css"
 import CountryIndividualEntryPage from "./CountryIndividualEntryPage"
-import Popup from 'reactjs-popup'
+import Popup from "../components/Popup"
 import ExtraUserStatsPopup from "./ExtraUserStatsPopup"
 import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
+
 
 function AllUserRankings() {
     const params = useParams()
@@ -41,25 +42,22 @@ function AllUserRankings() {
             <ul className="grid">
             {
                 rankings.map(ranking => (
-                    <li key={ranking.country + ranking.year}>
-                        <Popup
-                            trigger={
-                                <button className="link">
-                                    <ul>
-                                        <li> Country: {ranking.country}</li>
-                                        <li> Total Points: {ranking.points}</li>
-                                    </ul>
-                                </button>
-                            }
-                            position="center center"
-                            modal
-                        >
-                            <div className="popup">
-                                <CountryIndividualEntryPage entry={ranking} />
-                                <ExtraUserStatsPopup country={ranking.country} year={ranking.year} />
-                            </div>
-                        </Popup>
-                    </li>
+                    <Popup 
+                        entry={ranking}
+                        listItems={
+                            <>
+                                <li> Country: {ranking.country}</li>
+                                <li> Total Points: {ranking.points}</li>
+                            </>
+                        }
+                        popupContent={
+                            <>
+                            <CountryIndividualEntryPage entry={ranking} />
+                            <ExtraUserStatsPopup country={ranking.country} year={ranking.year} />
+                            </>
+                        }
+                    />
+
                 ))
             }
             </ul>

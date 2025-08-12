@@ -5,7 +5,7 @@ import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import { Rating } from "react-simple-star-rating"
 import "../styles/Stats.css"
-import Popup from "reactjs-popup"
+import Popup from "../components/Popup"
 import CountryIndividualEntryPage from "./CountryIndividualEntryPage"
 
 function OtherUserRanking() {
@@ -63,67 +63,98 @@ function OtherUserRanking() {
         loadEntriesAndRatings()
     }, [])
 
+    const rankedEntries = []
+    const unrankedEntries = []
 
-    // const isRanked = props.position > 0 ? true : false
-  
-    // const rankedStyle = isRanked ? "bg-gray-100 hover:bg-gray-200" : "bg-gray-500 hover:bg-gray-400"
-
+    for (let i = 0; i < allEntries.length; i++) {
+        if (allEntries[i].position < 0) {
+            unrankedEntries.push(allEntries[i])
+        }
+        else {
+            rankedEntries.push(allEntries[i])
+        }
+    }
 
     return(
         <>
             <h1> {params.username}'s Ranking of {params.year} Entries </h1>
+            {rankedEntries.length > 0 && (
+            <>
+                <h2> Ranked Entries</h2>
             {
-                allEntries.map(entry => (
-                    
-                    <div key={entry.country + entry.year}>
-                        <Popup
-                            trigger = {
-                                <button className="link">
-                                    <ul>
-                                        <li>Country: {entry.country}</li>
-                                        <li>
-                                            {entry.position < 0 ? (
-                                                <>
-                                                {params.username} is yet to rank {entry.country}
-                                                </>
-                                            ) : (
-                                                <>
-                                                {params.username}'s ranking: {entry.position}
-                                                </>
-                                            )}
-                                        </li>
-                                        <li>
-                                            {entry.stars_rating === 0 ? (
-                                                <>
-                                                {params.username} is yet to rate {entry.country}
-                                                </>
-                                            ) : (
-                                                <>
-                                                {params.username}'s rating:
-                                                <Rating
-                                                    readonly
-                                                    initialValue={entry.rating}
-                                                    SVGclassName="inline"
-                                                />
-                                            </>
-                                            )}
-                                        </li>
-                                    </ul>
-                                </button>
-                            }
-                            position="center center"
-                            modal
-                        >
-                            <div className="popup">
-                                <CountryIndividualEntryPage entry={entry} />
-                            </div>
-                        </Popup>
-
-                    </div>
-                    
-                    
+                rankedEntries.map(entry => (
+                    <Popup 
+                        entry={entry}
+                        listItems={
+                            <>
+                                <li> Country: {entry.country} </li>
+                                <li> Ranking: {entry.position} </li>
+                                <li>
+                                    {entry.stars_rating === 0 ? (
+                                        <>
+                                        {params.username} is yet to give {entry.country} a stars rating
+                                        </>
+                                    ) : (
+                                        <>
+                                        {params.username}'s rating:
+                                        <Rating
+                                            readonly
+                                            initialValue={entry.rating}
+                                            SVGclassName="inline"
+                                        />
+                                    </>
+                                    )}
+                                </li>
+                            </>
+                        }
+                        popupContent={
+                            <CountryIndividualEntryPage entry={entry} />
+                        }
+                    />
                 ))
             }
+            </>
+            )}
+            
+            
+            {unrankedEntries.length > 0 && (
+            <> 
+                <h2> Unranked Entries </h2>
+            {
+                unrankedEntries.map(entry => (
+                    <Popup 
+                        entry={entry}
+                        listItems={
+                            <>
+                            <li> Country: {entry.country} </li>
+                            <li>
+                                {entry.stars_rating === 0 ? (
+                                    <>
+                                    {params.username} is yet to give {entry.country} a stars rating
+                                    </>
+                                ) : (
+                                    <>
+                                    {params.username}'s rating:
+                                    <Rating
+                                        readonly
+                                        initialValue={entry.rating}
+                                        SVGclassName="inline"
+                                    />
+                                </>
+                                )}
+                            </li>
+                            </>
+                        }
+                        popupContent={
+                            <CountryIndividualEntryPage entry={entry} />
+                        }
+                    />
+                ))
+            }
+            </>
+        )}
+            
+            
         </>
     )
 }
