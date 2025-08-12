@@ -3,8 +3,8 @@ const asyncWrapper = require("../middleware/asyncWrapper")
 const entries_2025 = require("../../db_init/data/json_data/entries_2025.json")
 const entries_2024 = require("../../db_init/data/json_data/entries_2024.json")
 const entries_2023 = require("../../db_init/data/json_data/entries_2023.json")
-const entries_2022 = null
-const entries_2021 = null
+const entries_2022 = require("../../db_init/data/json_data/entries_2022.json")
+const entries_2021 = require("../../db_init/data/json_data/entries_2021.json")
 const entriesByYear = {
     2021: entries_2021, 
     2022: entries_2022, 
