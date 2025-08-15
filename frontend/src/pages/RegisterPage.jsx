@@ -48,34 +48,41 @@ function RegisterPage() {
         <>
             <h1> Register </h1>
             <form onSubmit={handleSubmit}>
-                <label> Username: </label>
-                <input 
-                    type="text"
-                    required={true}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter your username"
-                >
-                </input>
                 
-                <label> Email: </label>
-                <input
-                    type="text"
-                    required={true}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                >
-                </input>
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend"> Username </legend>
+                    <input 
+                        type="text" 
+                        className="input" 
+                        placeholder="Enter your username"
+                        onChange={(e) => setUsername(e.target.value)}
+                        required={true}
+                    />
+                </fieldset>
                 
-                <label> Password: </label>
-                <input
-                    type="text"
-                    required={true}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
-                >
-                </input>
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend"> Email </legend>
+                    <input 
+                        type="text" 
+                        className="input" 
+                        placeholder="Enter your email" 
+                        required={true}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </fieldset>
 
-                <input type="submit"></input>
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend"> Password </legend>
+                    <input 
+                        type="password" 
+                        className="input" 
+                        placeholder="Enter your password" 
+                        required={true}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </fieldset>
+
+                <input type="submit" className="btn"></input>
             </form>
         </>
     )

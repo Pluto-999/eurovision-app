@@ -46,25 +46,30 @@ function LoginPage() {
         <>
             <h1> Login </h1>
             <form onSubmit={handleSubmit}>
-                <label> Username: </label>
-                <input 
-                    type="text"
-                    required={true}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter your username"
-                >
-                </input>
                 
-                <label> Password: </label>
-                <input
-                    type="text"
-                    required={true}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
-                >
-                </input>
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend"> Username </legend>
+                    <input 
+                        type="text" 
+                        className="input" 
+                        placeholder="Enter your username"
+                        onChange={(e) => setUsername(e.target.value)}
+                        required={true}
+                    />
+                </fieldset>
+                
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend"> Password </legend>
+                    <input 
+                        type="password" 
+                        className="input" 
+                        placeholder="Enter your password" 
+                        required={true}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </fieldset>
 
-                <input type="submit"></input>
+                <input type="submit" className="btn"></input>
             </form>
         </>
     )
