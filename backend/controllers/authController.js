@@ -1,8 +1,11 @@
 const sql = require("../config/db")
 const asyncWrapper = require("../middleware/asyncWrapper")
 const { hashFunction, compareHash } = require("../utils/hashPassword")
-const { verifyToken, attachCookie } = require("../utils/jwt")
+const { attachCookie } = require("../utils/jwt")
 const createDeafultRankings = require("../utils/createDefaultRankings")
+const hashToken = require("../utils/hashPasswordToken")
+const sendResetPasswordEmail = require("../utils/sendResetPasswordEmail")
+const crypto = require("crypto")
 
 const register = asyncWrapper(async (req, res) => {
     const { username, email, password } = req.body
@@ -108,8 +111,90 @@ const logout = asyncWrapper(async (req, res) => {
     res.status(200).json({ success: true, message: "Logged out successfully" })
 })
 
+const forgotPassword = asyncWrapper(async (req, res) => {
+    const { email } = req.body
+
+    if (!email) {
+        return res.status(400).json({ success: false, message: "Please provide a valid email" })
+    }
+
+    const user = await sql`
+        SELECT *
+        FROM users
+        WHERE email=${email}
+    `
+
+    // if the email is valid we want to allow the user to reset their password
+    if (user.length > 0) {
+        
+        const passwordToken = crypto.randomBytes(32).toString("hex")
+
+        const expiration = 1000 * 60 * 10 // 10 minute expiration for passwordToken
+        const passwordTokenExpiration = new Date(Date.now() + expiration)
+
+        await sql`
+            UPDATE users
+            SET password_token=${hashToken(passwordToken)}, password_token_expiration=${passwordTokenExpiration}
+            WHERE username=${user[0].username}
+        `
+
+        // send email
+        try {
+            await sendResetPasswordEmail(user[0].username, user[0].email, passwordToken, process.env.FRONTEND_URL)
+        }
+        catch (error) {
+            console.log("Error sending forgot password email: ", error)
+        }
+    }
+
+    res.status(200).json({ success: true, message: "Please check your email for a link to reset your password" })
+})
+
+const resetPassword = async (req, res) => {
+    const { token, email, password } = req.body
+
+    if (!token || !email || !password) {
+        return res.status(400).json({ success: false, message: "All fields are required" })
+    }
+
+    const user = await sql`
+        SELECT *
+        FROM users
+        WHERE email=${email}
+    `
+
+    if (user.length === 0) {
+        return res.status(400).json({ success: false, message: "This link is either invalid or has expired. Please try again"})
+    }
+
+    
+    const currentTime = new Date()
+
+    if (!user[0].password_token || 
+        !user[0].password_token_expiration ||
+        user[0].password_token != hashToken(token) || 
+        currentTime > new Date(user[0].password_token_expiration)
+    )  {
+        return res.status(400).json({ success: false, message: "This link is either invalid or has expired. Please try again"})
+    }
+
+    // now we can actually update the password
+    const hashedPassword = await hashFunction(password)
+    
+    await sql`
+        UPDATE users
+        SET password=${hashedPassword}, password_token=${null}, password_token_expiration=${null}
+        WHERE username=${user[0].username}
+    `
+    
+    res.status(200).json({ success: true, message: "Password has been successfully reset" })
+    
+}
+
 module.exports = {
     register,
     login,
-    logout
+    logout,
+    forgotPassword,
+    resetPassword
 }

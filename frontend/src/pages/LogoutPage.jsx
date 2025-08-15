@@ -20,8 +20,17 @@ function LogoutPage() {
             }
 
             navigate("/account")
-        }, [])
-    })
+        })
+        .catch(error => {
+            if (error.status === 401) {
+                toast("You are already logged out")
+                navigate("/account")
+            }
+            else {
+                toast("Sorry, something went wrong. Please try again later")
+            }
+        })
+    }, [])
 
     return (
         <></>

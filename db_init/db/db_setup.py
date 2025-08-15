@@ -88,6 +88,13 @@ cur.execute("""
     )
 """)
 
+# Add rows for forgot password
+cur.execute("""
+    ALTER TABLE users
+    ADD password_token TEXT,
+    ADD password_token_expiration TIMESTAMP 
+""")
+
 conn.commit()
 
 
