@@ -10,12 +10,15 @@ const transporter = nodemailer.createTransport({
     })
 
 const sendEmail = async(to, subject, html) => {
-    return transporter.sendMail({
+    const info = transporter.sendMail({
         from: '"Euroscore" <no-reply@euroscore.app>',
         to: to,
         subject: subject,
         html: html
     })
+
+    console.log("Message sent:", info.messageId);
+
 }
 
 module.exports = sendEmail

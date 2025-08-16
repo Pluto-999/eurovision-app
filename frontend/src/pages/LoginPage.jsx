@@ -3,6 +3,7 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import socket from "../socket"
+import { Link } from "react-router-dom"
 
 function LoginPage() {
     const navigate = useNavigate()
@@ -68,6 +69,10 @@ function LoginPage() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </fieldset>
+
+                <div>
+                    <Link to="/account/forgot_password">Forgot Password?</Link>
+                </div>
 
                 <input type="submit" className="btn"></input>
             </form>

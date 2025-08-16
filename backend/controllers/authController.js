@@ -105,7 +105,7 @@ const logout = asyncWrapper(async (req, res) => {
     // removing the cookie
     res.cookie("token", "", {
         httpOnly: true,
-        expiresIn: new Date(Date.now())
+        expires: new Date(0)
     })
 
     res.status(200).json({ success: true, message: "Logged out successfully" })
@@ -151,23 +151,28 @@ const forgotPassword = asyncWrapper(async (req, res) => {
 })
 
 const resetPassword = async (req, res) => {
-    const { token, email, password } = req.body
+    const { token, password } = req.body
 
-    if (!token || !email || !password) {
+    if (!token || !password) {
         return res.status(400).json({ success: false, message: "All fields are required" })
     }
 
     const user = await sql`
         SELECT *
         FROM users
-        WHERE email=${email}
+        WHERE password_token=${hashToken(token)}
     `
 
     if (user.length === 0) {
-        return res.status(400).json({ success: false, message: "This link is either invalid or has expired. Please try again"})
+        return res.status(400).json({ success: false, message: "This link is either invalid or has expired. Please try again" })
     }
 
-    
+    const samePassword = await compareHash(password, user[0].password)
+
+    if (samePassword) {
+        return res.status(400).json({ success: false, message: "Please ensure you pick a new password" })
+    }
+
     const currentTime = new Date()
 
     if (!user[0].password_token || 
@@ -175,7 +180,7 @@ const resetPassword = async (req, res) => {
         user[0].password_token != hashToken(token) || 
         currentTime > new Date(user[0].password_token_expiration)
     )  {
-        return res.status(400).json({ success: false, message: "This link is either invalid or has expired. Please try again"})
+        return res.status(400).json({ success: false, message: "This link is either invalid or has expired. Please try again" })
     }
 
     // now we can actually update the password
@@ -187,7 +192,7 @@ const resetPassword = async (req, res) => {
         WHERE username=${user[0].username}
     `
     
-    res.status(200).json({ success: true, message: "Password has been successfully reset" })
+    res.status(200).json({ success: true, message: "Password has been successfully reset. You can now login with your new password" })
     
 }
 
