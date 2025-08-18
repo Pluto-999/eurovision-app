@@ -2,12 +2,12 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
 
-function SingleResultsPage({ entry }) {
+function SingleResultsPage({ entryCountry, entryYear }) {
     const params = useParams()
     const [results, setResults] = useState([])
 
-    const country = params.country ? params.country : entry.country
-    const year = params.year ? params.year : entry.year
+    const country = params.country ? params.country : entryCountry
+    const year = params.year ? params.year : entryYear
 
     useEffect(() => {
         axios.get(`http://localhost:3000/api/results/${country}/${year}`)

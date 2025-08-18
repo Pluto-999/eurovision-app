@@ -31,7 +31,8 @@ function SemiResultsPage() {
             {
                 results.map(result => (
                     <Popup 
-                        entry={result}
+                        entryCountry={result.country}
+                        entryYear={result.year}
                         listItems={
                             <>
                                 <li> Country: {result.country}</li>
@@ -41,8 +42,12 @@ function SemiResultsPage() {
                             </>
                         }
                         popupContent={
-                            <CountryIndividualEntryPage entry={result} />
+                            <CountryIndividualEntryPage 
+                                entryCountry={result.country}
+                                entryYear={result.year} 
+                            />
                         }
+                        buttonStyling={"link"}
                     />
                 ))
             }

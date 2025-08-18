@@ -81,14 +81,61 @@ function OtherUserRanking() {
             {rankedEntries.length > 0 && (
             <>
                 <h2> Ranked Entries</h2>
-            {
-                rankedEntries.map(entry => (
-                    <Popup 
-                        entry={entry}
-                        listItems={
-                            <>
+                <ul className="grid">
+                {
+                    rankedEntries.map(entry => (
+                        <Popup 
+                            entryCountry={entry.country}
+                            entryYear={entry.year}
+                            listItems={
+                                <>
+                                    <li> Country: {entry.country} </li>
+                                    <li> Ranking: {entry.position} </li>
+                                    <li>
+                                        {entry.stars_rating === 0 ? (
+                                            <>
+                                            {params.username} is yet to give {entry.country} a stars rating
+                                            </>
+                                        ) : (
+                                            <>
+                                            {params.username}'s rating:
+                                            <Rating
+                                                readonly
+                                                initialValue={entry.rating}
+                                                SVGclassName="inline"
+                                            />
+                                        </>
+                                        )}
+                                    </li>
+                                </>
+                            }
+                            popupContent={
+                                <CountryIndividualEntryPage 
+                                    entryCountry={entry.country}
+                                    entryYear={entry.year} 
+                                />
+                            }
+                            buttonStyling={"link"}
+                        />
+                    ))
+                }
+                </ul>
+            </>
+            )}
+            
+            
+            {unrankedEntries.length > 0 && (
+            <> 
+                <h2> Unranked Entries </h2>
+                <ul className="grid">
+                {
+                    unrankedEntries.map(entry => (
+                        <Popup 
+                            entryCountry={entry.country}
+                            entryYear={entry.year}
+                            listItems={
+                                <>
                                 <li> Country: {entry.country} </li>
-                                <li> Ranking: {entry.position} </li>
                                 <li>
                                     {entry.stars_rating === 0 ? (
                                         <>
@@ -105,52 +152,19 @@ function OtherUserRanking() {
                                     </>
                                     )}
                                 </li>
-                            </>
-                        }
-                        popupContent={
-                            <CountryIndividualEntryPage entry={entry} />
-                        }
-                    />
-                ))
-            }
-            </>
-            )}
-            
-            
-            {unrankedEntries.length > 0 && (
-            <> 
-                <h2> Unranked Entries </h2>
-            {
-                unrankedEntries.map(entry => (
-                    <Popup 
-                        entry={entry}
-                        listItems={
-                            <>
-                            <li> Country: {entry.country} </li>
-                            <li>
-                                {entry.stars_rating === 0 ? (
-                                    <>
-                                    {params.username} is yet to give {entry.country} a stars rating
-                                    </>
-                                ) : (
-                                    <>
-                                    {params.username}'s rating:
-                                    <Rating
-                                        readonly
-                                        initialValue={entry.rating}
-                                        SVGclassName="inline"
-                                    />
                                 </>
-                                )}
-                            </li>
-                            </>
-                        }
-                        popupContent={
-                            <CountryIndividualEntryPage entry={entry} />
-                        }
-                    />
-                ))
-            }
+                            }
+                            popupContent={
+                                <CountryIndividualEntryPage 
+                                    entryCountry={entry.country}
+                                    entryYear={entry.year}
+                                />
+                            }
+                            buttonStyling={"link"}
+                        />
+                    ))
+                }
+                </ul>
             </>
         )}
             

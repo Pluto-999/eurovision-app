@@ -1,19 +1,26 @@
 
-function Popup({entry, listItems, popupContent}) {
+function Popup({
+    entryCountry, 
+    entryYear, 
+    listItems, 
+    popupContent,
+    buttonStyling
+}) {
+
+    const style = "btn" + (buttonStyling ? " " + buttonStyling : " w-40")
 
     return (
-        <li key={entry.country + entry.year} className="card">
-            <button className="btn link" onClick={()=>document.getElementById(`modal_${entry.country}_${entry.year}`).showModal()}>
+        <li key={entryCountry + entryYear} className="card">
+            <button className={style} onClick={()=>document.getElementById(`modal_${entryCountry}_${entryYear}`).showModal()}>
                 <ul>
                     {listItems}
                 </ul>
             </button>
-            <dialog id={`modal_${entry.country}_${entry.year}`} className="modal">
+            <dialog id={`modal_${entryCountry}_${entryYear}`} className="modal">
             <div className="modal-box w-11/12 max-w-2xl text-center content-center">
                 <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                {/* <CountryIndividualEntryPage entry={entry} /> */}
                 {popupContent}
             </div>
             <form method="dialog" className="modal-backdrop">

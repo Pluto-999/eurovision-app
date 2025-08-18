@@ -7,12 +7,12 @@ import { FaSpotify } from "react-icons/fa";
 import "../../styles/Stats.css"
 import toast from "react-hot-toast"
 
-function CountryIndividualEntryPage({ entry }) {
+function CountryIndividualEntryPage({ entryCountry, entryYear }) {
     const params = useParams()
     const [entryData, setEntryData] = useState([])
 
-    const country = params.country ? params.country : entry.country
-    const year = params.year ? params.year : entry.year
+    const country = params.country ? params.country : entryCountry
+    const year = params.year ? params.year : entryYear
 
     useEffect(() => {
         axios.get(`http://localhost:3000/api/entries/${country}/${year}`)
@@ -34,8 +34,12 @@ function CountryIndividualEntryPage({ entry }) {
             <ul>
                 <li> Artist: {entryData.artist} </li>
                 <li> Song: {entryData.song} </li>
-                <li><a href={entryData.yt_url}><FaYoutube size={40}/></a></li>
-                <li><a href={entryData.spotify_url}><FaSpotify size={40}/></a></li>
+                <li>
+                    <div className="icons">
+                        <a href={entryData.yt_url}><FaYoutube size={40}/></a>
+                        <a href={entryData.spotify_url}><FaSpotify size={40}/></a>
+                    </div>
+                </li>
                 <li>
                     <div className="crop">
                         <img src={entryData.yt_thumbnail} className="w-full h-full object-cover object-center"></img>
@@ -44,7 +48,10 @@ function CountryIndividualEntryPage({ entry }) {
                 
             </ul>
 
-            <SingleResultsPage entry={entry}/>
+            <SingleResultsPage 
+                entryCountry={entryCountry}
+                entryYear={entryYear}
+            />
 
         </div>
 

@@ -1,6 +1,8 @@
 import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import { Link } from "react-router-dom"
+import Popup from './Popup';
+import CountryIndividualEntryPage from '../pages/entries_pages/CountryIndividualEntryPage';
 
 function Entry(props) {
   const {
@@ -17,8 +19,23 @@ function Entry(props) {
   };
 
   const isRanked = props.position > 0 ? true : false
+
+  const hasPoints = props.position > 0 && props.position <= 10 ? true : false
   
   const rankedStyle = isRanked ? "bg-indigo-200 hover:bg-indigo-300" : "bg-gray-200 hover:bg-gray-300"
+
+  const points = {
+    1: "12",
+    2: "10",
+    3: "8",
+    4: "7",
+    5: "6",
+    6: "5",
+    7: "4",
+    8: "3",
+    9: "2",
+    10: "1"
+  }
 
   return (
     <>
@@ -28,17 +45,25 @@ function Entry(props) {
         className={`p-3 mb-2 rounded-lg shadow cursor-pointer ${rankedStyle}`}
     >
         <div {...attributes} {...listeners}>
-            {isRanked ? props.position : ""} {props.country}, {props.year} 
+          {isRanked ? props.position + ")" : ""} {props.country} {hasPoints ? ` - ${points[props.position]} points` : ""}
         </div>
         <ul>
           <li>
-            <Link 
-              to={`/entries/${props.country}/${props.year}`}
-              onClick={(e) => e.stopPropagation()}
-              className="text-gray-800 hover:text-blue-600 font-medium"
-            > 
-            View Entry
-            </Link>
+            <Popup 
+              entryCountry={props.country}
+              entryYear={props.year}
+              listItems={
+                <>
+                  <li> View Entry </li>
+                </>
+              }
+              popupContent={
+                <CountryIndividualEntryPage 
+                  entryCountry={props.country}
+                  entryYear={props.year}
+                />
+              }
+            />
           </li>
           <li>
             <Link

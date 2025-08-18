@@ -5,6 +5,7 @@ function FriendRankingHomepage() {
 
     return (
         <>
+            <h1> View {params.username}'s Rankings </h1>
             <Link to={`/friends/${params.username}/ranking/2025`}> 2025 Ranking </Link>
             <Link to={`/friends/${params.username}/ranking/2024`}> 2024 Ranking </Link>
             <Link to={`/friends/${params.username}/ranking/2023`}> 2023 Ranking </Link>

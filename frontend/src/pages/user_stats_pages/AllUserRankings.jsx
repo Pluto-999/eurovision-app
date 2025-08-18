@@ -43,7 +43,8 @@ function AllUserRankings() {
             {
                 rankings.map(ranking => (
                     <Popup 
-                        entry={ranking}
+                        entryCountry={ranking.country}
+                        entryYear={ranking.year}
                         listItems={
                             <>
                                 <li> Country: {ranking.country}</li>
@@ -52,10 +53,14 @@ function AllUserRankings() {
                         }
                         popupContent={
                             <>
-                            <CountryIndividualEntryPage entry={ranking} />
+                            <CountryIndividualEntryPage 
+                                entryCountry={ranking.country}
+                                entryYear={ranking.year}
+                            />
                             <ExtraUserStatsPopup country={ranking.country} year={ranking.year} />
                             </>
                         }
+                        buttonStyling={"link"}
                     />
 
                 ))

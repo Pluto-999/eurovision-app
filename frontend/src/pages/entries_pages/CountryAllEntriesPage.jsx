@@ -30,7 +30,8 @@ function CountryAllEntriesPage() {
         <ul className="grid">
             {entries.map(entry => (
                 <Popup 
-                    entry={entry}
+                    entryCountry={entry.country}
+                    entryYear={entry.year}
                     listItems={
                         <>
                             <li> Year: {entry.year} </li>
@@ -39,8 +40,12 @@ function CountryAllEntriesPage() {
                         </>
                     }
                     popupContent={
-                        <CountryIndividualEntryPage entry={entry} />
+                        <CountryIndividualEntryPage 
+                            entryCountry={entry.country}
+                            entryYear={entry.year} 
+                        />
                     }
+                    buttonStyling={"link"}
                 />
                 )
             )}
