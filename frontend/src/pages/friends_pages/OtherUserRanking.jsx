@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import axios, { all } from "axios"
+import axios from "axios"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import { Rating } from "react-simple-star-rating"
-import "../styles/Stats.css"
-import Popup from "../components/Popup"
-import CountryIndividualEntryPage from "./CountryIndividualEntryPage"
+import "../../styles/Stats.css"
+import Popup from "../../components/Popup"
+import CountryIndividualEntryPage from "../entries_pages/CountryIndividualEntryPage"
 
 function OtherUserRanking() {
     const params = useParams()

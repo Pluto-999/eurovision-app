@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/Stats.css";
+import "../../styles/Stats.css";
 
 function CountryResultsPage() {
   const params = useParams();

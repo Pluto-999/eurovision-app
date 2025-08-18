@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import socket from "../socket"
+import socket from "../../socket"
 import { useParams } from "react-router-dom"
 import axios from "axios"
 

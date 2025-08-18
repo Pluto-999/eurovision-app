@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
-import UserHomePage from "../pages/UserHomePage"
-import ChangeUserRating from "../pages/ChangeUserRating"
-import CurrentUserRanking from "../pages/CurrentUserRanking"
+import UserHomePage from "../pages/user_pages/UserHomePage"
+import ChangeUserRating from "../pages/user_pages/ChangeUserRating"
+import CurrentUserRanking from "../pages/user_pages/CurrentUserRanking"
 
 function UserRoutes() {
     return (

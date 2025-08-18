@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-import socket from "../socket"
+import socket from "../../socket"
 
 function LogoutPage() {
     const navigate = useNavigate()

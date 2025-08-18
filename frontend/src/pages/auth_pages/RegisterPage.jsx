@@ -2,25 +2,26 @@ import axios from "axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-import socket from "../socket"
-import { Link } from "react-router-dom"
+import socket from "../../socket"
 
-function LoginPage() {
+function RegisterPage() {
     const navigate = useNavigate()
     const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
-            const response = await axios.post("http://localhost:3000/api/auth/login", {
+            const response = await axios.post("http://localhost:3000/api/auth/register", {
                 username,
+                email,
                 password
             }, { withCredentials: true })
             
             if (response.data.success) {
-                toast("Successfully logged in", {
+                toast("Account successfully created", {
                     icon: "✅"
                 })
                 navigate("/user/home")
@@ -30,14 +31,14 @@ function LoginPage() {
                 }
             }
             else {
-                toast("Something went wrong, please try again", {
-                    icon: "❌"
-                })
+                console.log(response)
             }
+
         }
         catch (error) {
+            console.log(error)
             toast(error.response.data.message, {
-                icon: "❌"
+                icon: "❌"   
             })
             console.log(error.response.data.message)
         }
@@ -45,7 +46,7 @@ function LoginPage() {
 
     return (
         <>
-            <h1> Login </h1>
+            <h1> Register </h1>
             <form onSubmit={handleSubmit}>
                 
                 <fieldset className="fieldset">
@@ -60,6 +61,17 @@ function LoginPage() {
                 </fieldset>
                 
                 <fieldset className="fieldset">
+                    <legend className="fieldset-legend"> Email </legend>
+                    <input 
+                        type="text" 
+                        className="input" 
+                        placeholder="Enter your email" 
+                        required={true}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </fieldset>
+
+                <fieldset className="fieldset">
                     <legend className="fieldset-legend"> Password </legend>
                     <input 
                         type="password" 
@@ -70,14 +82,10 @@ function LoginPage() {
                     />
                 </fieldset>
 
-                <div>
-                    <Link to="/account/forgot_password">Forgot Password?</Link>
-                </div>
-
                 <input type="submit" className="btn"></input>
             </form>
         </>
     )
 }
 
-export default LoginPage
+export default RegisterPage

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { useParams } from "react-router-dom"
-import CountryAllEntriesPage from "../pages/CountryAllEntriesPage"
-import CountryResultsPage from "./CountryResultsPage"
+import CountryAllEntriesPage from "./CountryAllEntriesPage"
+import CountryResultsPage from "../results_pages/CountryResultsPage"
 
 function IndividualCountryHomePage() {
     const params = useParams()

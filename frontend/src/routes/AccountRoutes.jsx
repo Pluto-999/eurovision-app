@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom"
-import RegisterPage from "../pages/RegisterPage"
-import LoginPage from "../pages/LoginPage"
-import LogoutPage from "../pages/LogoutPage"
-import AccountHomePage from "../pages/AccountHomePage"
-import ForgotPassword from "../pages/ForgotPassword"
-import ResetPassword from "../pages/ResetPassword"
+import RegisterPage from "../pages/auth_pages/RegisterPage"
+import LoginPage from "../pages/auth_pages/LoginPage"
+import AccountHomePage from "../pages/auth_pages/AccountHomePage"
+import ForgotPassword from "../pages/auth_pages/ForgotPassword"
+import ResetPassword from "../pages/auth_pages/ResetPassword"
+import LogoutPage from "../pages/auth_pages/LogoutPage"
 
 function AccountRoutes() {
     return (

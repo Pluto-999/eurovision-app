@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 import CountryIndividualEntryPage from "./CountryIndividualEntryPage"
-import "../styles/Stats.css"
+import "../../styles/Stats.css"
 import toast from "react-hot-toast"
-import Popup from "../components/Popup"
+import Popup from "../../components/Popup"
 
 function CountryAllEntriesPage() {
     const params = useParams()

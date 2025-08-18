@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
-import "../styles/Stats.css"
-import Popup from "../components/Popup"
-import CountryIndividualEntryPage from "./CountryIndividualEntryPage"
+import "../../styles/Stats.css"
+import Popup from "../../components/Popup"
+import CountryIndividualEntryPage from "../entries_pages/CountryIndividualEntryPage"
 
 function FinalResultsPage() {
     const params = useParams()

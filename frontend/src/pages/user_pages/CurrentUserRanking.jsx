@@ -4,8 +4,8 @@ import axios from "axios"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
-import { SortableContext, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable"
-import Entry from "../components/Entry"
+import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable"
+import Entry from "../../components/Entry"
 
 function CurrentUserRanking() {
     const params = useParams()

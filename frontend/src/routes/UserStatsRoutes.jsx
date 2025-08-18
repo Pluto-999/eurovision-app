@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom"
-import UserStatsHomePage from "../pages/UserStatsHomePage"
-import AllUserRankings from "../pages/AllUserRankings"
+import UserStatsHomePage from "../pages/user_stats_pages/UserStatsHomePage"
+import AllUserRankings from "../pages/user_stats_pages/AllUserRankings"
 
 function UserStatsRoutes() {
     return (

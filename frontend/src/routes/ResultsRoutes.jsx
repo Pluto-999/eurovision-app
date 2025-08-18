@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom"
-import ResultsHomePage from "../pages/ResultsHomePage"
-import FinalResultsPage from "../pages/FinalResultsPage"
-import SemiResultsPage from "../pages/SemiResultsPage"
-import SingleResultsPage from "../pages/SingleResultsPage"
-import CountryResultsPage from "../pages/CountryResultsPage"
+import ResultsHomePage from "../pages/results_pages/ResultsHomePage"
+import FinalResultsPage from "../pages/results_pages/FinalResultsPage"
+import SemiResultsPage from "../pages/results_pages/SemiResultsPage"
+import SingleResultsPage from "../pages/results_pages/SingleResultsPage"
+import CountryResultsPage from "../pages/results_pages/CountryResultsPage"
 
 function ResultsRoutes() {
     return (

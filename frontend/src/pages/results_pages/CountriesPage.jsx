@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
-import "../styles/Stats.css"
+import "../../styles/Stats.css"
 
 function CountriesPage() {
     const [countries, setCountries] = useState([])

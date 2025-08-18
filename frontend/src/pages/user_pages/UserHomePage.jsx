@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-import ResultsRoutes from "../routes/ResultsRoutes"
 import { Link } from "react-router-dom"
 
 function UserHomePage() {

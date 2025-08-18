@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { useParams } from "react-router-dom"
-import SingleResultsPage from "../pages/SingleResultsPage"
+import SingleResultsPage from "../results_pages/SingleResultsPage"
 import { FaYoutube } from "react-icons/fa";
 import { FaSpotify } from "react-icons/fa";
-import "../styles/Stats.css"
+import "../../styles/Stats.css"
 import toast from "react-hot-toast"
 
 function CountryIndividualEntryPage({ entry }) {

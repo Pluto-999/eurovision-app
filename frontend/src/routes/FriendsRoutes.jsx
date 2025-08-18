@@ -1,9 +1,8 @@
 import { Routes, Route } from "react-router-dom"
-import FriendsList from "../pages/FriendsList"
-import FriendSearch from "../pages/FriendSearch"
-import FriendAdd from "../pages/FriendAdd"
-import FriendRankingHomepage from "../pages/FriendRankingHomepage"
-import OtherUserRanking from "../pages/OtherUserRanking"
+import FriendsList from "../pages/friends_pages/FriendsList"
+import FriendSearch from "../pages/friends_pages/FriendSearch"
+import FriendRankingHomepage from "../pages/friends_pages/FriendRankingHomepage"
+import OtherUserRanking from "../pages/friends_pages/OtherUserRanking"
 
 function FriendsRoutes() {
     return (
