@@ -7,7 +7,7 @@ import { FaSpotify } from "react-icons/fa";
 import "../../styles/Stats.css"
 import toast from "react-hot-toast"
 
-function CountryIndividualEntryPage({ entryCountry, entryYear }) {
+function CountryIndividualEntryPage({ entryCountry, entryYear, noResults }) {
     const params = useParams()
     const [entryData, setEntryData] = useState([])
 
@@ -48,10 +48,15 @@ function CountryIndividualEntryPage({ entryCountry, entryYear }) {
                 
             </ul>
 
-            <SingleResultsPage 
-                entryCountry={entryCountry}
-                entryYear={entryYear}
-            />
+            {
+                noResults ? 
+                    <></>
+                :
+                    <SingleResultsPage 
+                    entryCountry={entryCountry}
+                    entryYear={entryYear}
+                    />
+            }
 
         </div>
 

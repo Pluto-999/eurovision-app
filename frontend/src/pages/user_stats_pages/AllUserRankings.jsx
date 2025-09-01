@@ -39,6 +39,9 @@ function AllUserRankings() {
             {loading ? ( <Ring />) : (
             <>
             <h1> Community Results for {params.year} </h1>
+            
+            { console.log(rankings) }
+            
             <ul className="grid">
             {
                 rankings.map(ranking => (
@@ -56,6 +59,7 @@ function AllUserRankings() {
                             <CountryIndividualEntryPage 
                                 entryCountry={ranking.country}
                                 entryYear={ranking.year}
+                                noResults={true}
                             />
                             <ExtraUserStatsPopup country={ranking.country} year={ranking.year} />
                             </>
