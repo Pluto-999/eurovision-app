@@ -5,6 +5,7 @@ import "../../styles/Stats.css"
 import Popup from "../../components/Popup"
 import CountryIndividualEntryPage from "../entries_pages/CountryIndividualEntryPage"
 import toast from "react-hot-toast"
+import Sort from "../../components/Sort"
 
 function SemiResultsPage() {
     const params = useParams()
@@ -26,7 +27,16 @@ function SemiResultsPage() {
 
     return (
         <>
-            <h1> {params.year} Semi Results {params.semi_number} Page</h1>
+            <div className="flex gap-5 items-center">
+                <h1> {params.year} Semi Results {params.semi_number} Page </h1>
+                <Sort 
+                    data={results} 
+                    setData={setResults} 
+                    endPosition={true}
+                    includeRunningOrder={true}
+                    includeCountry={true}
+                />
+            </div>
             <ul className="grid">
             {
                 results.map(result => (

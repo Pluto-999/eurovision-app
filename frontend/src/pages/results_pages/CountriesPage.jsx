@@ -11,8 +11,6 @@ function CountriesPage() {
         .then(response => setCountries(response.data.data))
     }, [])
 
-    console.log(countries)
-
     return (
         <>
         <h1> List of Participating Countries since 2021 </h1>

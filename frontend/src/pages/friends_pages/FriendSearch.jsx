@@ -36,7 +36,7 @@ function FriendSearch () {
         <>
             <h1> Search for friends </h1>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="p-2 flex gap-4">
                 <input
                     type="text"
                     required={true}
@@ -45,13 +45,16 @@ function FriendSearch () {
                 >    
                 </input>
 
-                <input type="submit" value="Search"></input>
+                <button><input type="submit" value="Search"></input></button>
             </form>
 
             {
                 searchResults.map(friend => (
                     <ul key={friend.username}>
-                        <li>{friend.username} <FriendAdd username={friend.username}/> </li>
+                        <li className="p-2 flex items-center gap-4">
+                            {friend.username} 
+                            <FriendAdd username={friend.username}/> 
+                        </li>
                     </ul>
                 ))
                 

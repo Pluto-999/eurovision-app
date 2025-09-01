@@ -16,7 +16,7 @@ function Navbar() {
                                 <li><Link to="/account">Profile</Link></li>
                                 <li><Link to="/account/logout"> Logout </Link></li>
                             </ul>
-                        </div>
+                    </div>
                 </li>
             </ul>
         </nav>

@@ -2,15 +2,20 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/Stats.css";
+import Sort from "../../components/Sort"
 
 function CountryResultsPage() {
   const params = useParams();
-  const [results, setResults] = useState([]);
+  const [semiResults, setSemiResults] = useState([])
+  const [finalResults, setFinalResults] = useState([])
 
   useEffect(() => {
     axios
       .get(`http://localhost:3000/api/results/${params.country}`)
-      .then((response) => setResults(response.data.data))
+      .then((response) => {
+        setSemiResults(response.data.data.semi_results)
+        setFinalResults(response.data.data.final_results)
+      })
       .catch((error) => console.log(error));
   }, []);
 
@@ -18,13 +23,20 @@ function CountryResultsPage() {
     <>
       <h1>Results for {params.country}</h1>
 
-      {results.semi_results?.length !== 0 ? (
-        <h2> Semi Final Results </h2>
+      {semiResults?.length !== 0 ? (
+        <div className="flex gap-5 items-center">
+          <h2> Semi Final Results </h2>
+          <Sort 
+            data={semiResults} 
+            setData={setSemiResults} 
+            includeYear={true}  
+          />
+        </div>
         
       ) : (<></>)}
 
       <ul className="grid">
-        {results.semi_results?.map((result) => (
+        {semiResults?.map((result) => (
           <li key={result.country + result.year}>
             <Link
               className="link"
@@ -41,12 +53,20 @@ function CountryResultsPage() {
         ))}
       </ul>
 
-      {results.final_results?.length !== 0 ? (
-        <h2> Final Results </h2>
+      {finalResults?.length !== 0 ? (
+        <div className="flex gap-5 items-center">
+          <h2> Final Results </h2>
+          <Sort 
+            data={finalResults} 
+            setData={setFinalResults} 
+            includeYear={true}
+          />
+        </div>
+        
       ) : (<></>)}
 
       <ul className="grid">
-        {results.final_results?.map((result) => (
+        {finalResults?.map((result) => (
           <li key={result.country + result.year}>
             <Link className="link" to={`/results/final/${result.year}`}>
               <div>

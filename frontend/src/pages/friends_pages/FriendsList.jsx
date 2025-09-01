@@ -44,7 +44,7 @@ function FriendsList() {
             <ul>
             {
                 friendList.map((friend) => (
-                    <li key={friend}>
+                    <li key={friend} className="p-2 flex items-center gap-4">
                         {friend}
                         <button><Link to={`/friends/${friend}`}> View Friend's Rankings </Link></button>
                         <button><Link to={`/chat/${friend}`}> Chat with {friend} </Link></button>
