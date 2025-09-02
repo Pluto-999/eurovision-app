@@ -44,19 +44,6 @@
   padding:0.1rem;
 }
 
-
-.crop {
-  width: 600px;
-  height: 350px;
-  overflow: hidden;
-}
-
-.crop img {
-  width: 700px;
-  height: 500px;
-  margin: -75px 0 0 0;
-}
-
 .icons {
   display: flex;
   justify-content: center;

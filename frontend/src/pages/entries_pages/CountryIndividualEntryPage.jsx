@@ -41,8 +41,12 @@ function CountryIndividualEntryPage({ entryCountry, entryYear, noResults }) {
                     </div>
                 </li>
                 <li>
-                    <div className="crop">
-                        <img src={entryData.yt_thumbnail} className="w-full h-full object-cover object-center"></img>
+                    <div className="w-full aspect-video overflow-hidden">
+                        <img 
+                            src={entryData.yt_thumbnail} 
+                            className="w-full h-full object-cover object-center"
+                        />
+                        
                     </div>
                 </li>
                 
