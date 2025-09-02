@@ -51,7 +51,12 @@ function Chat() {
                         >
                             <div className="chat-bubble"> {message.content} </div>
                             
-                            <div className="chat-footer"> {message.timestamp} </div>
+                            <div className="chat-footer"> 
+                                {new Date(message.timestamp).toLocaleString("en-GB", {
+                                    dateStyle: "short",
+                                    timeStyle: "short"
+                                })} 
+                            </div>
                         </li>
                         
                     ))
