@@ -20,9 +20,7 @@ function LoginPage() {
             }, { withCredentials: true })
             
             if (response.data.success) {
-                toast("Successfully logged in", {
-                    icon: "✅"
-                })
+                toast.success("Successfully logged in")
                 navigate("/user/home")
 
                 if (!socket.connected) {
@@ -30,16 +28,11 @@ function LoginPage() {
                 }
             }
             else {
-                toast("Something went wrong, please try again", {
-                    icon: "❌"
-                })
+                toast.error("Something went wrong, please try again")
             }
         }
         catch (error) {
-            toast(error.response.data.message, {
-                icon: "❌"
-            })
-            console.log(error.response.data.message)
+            toast.error(error.response.data.message)
         }
     }
 

@@ -5,10 +5,11 @@ function Navbar() {
     return (
         <nav className="navbar">
             <ul className="navbar_links">
-                <li className=""> <Link to="/">Euroscore</Link></li>
-                <li className=""> <Link to="/countries">Countries Homepage</Link></li>
-                <li className=""> <Link to="/results">Results Home Page</Link></li>
-                <li className=""> <Link to="/user_stats">Community Rankings and Ratings</Link></li>
+                <li><Link to="/">Euroscore</Link></li>
+                <li><Link to="/countries">Countries Homepage</Link></li>
+                <li><Link to="/results">Results Home Page</Link></li>
+                <li><Link to="/user_stats">Community Rankings and Ratings</Link></li>
+                <li><Link to="search">Search</Link></li>
                 <li>
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="account">Account</div>
