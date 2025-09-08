@@ -88,41 +88,40 @@ function CurrentUserRanking() {
 
     return (
         <>
+            <h1> My {params.year} Ranking</h1>
+
             {loading ? (
                 <div className="loader">
                     <Ring />
                 </div>
             ) : (
                 <>
-                <DndContext 
-                onDragEnd={handleDragEnd}
-                sensors={sensors}
-                collisionDetection={closestCenter}
-                >
-                
-                <h1> My {params.year} Ranking</h1>
+                    <DndContext 
+                    onDragEnd={handleDragEnd}
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    >
 
-                <SortableContext
-                    items={allEntries.map(entry => entry.country + entry.year)}
-                    strategy={rectSortingStrategy}
-                >
-                    {
-                        allEntries.map(entry => (
-                            <Entry 
-                                key={entry.country + entry.year} 
-                                id={entry.country + entry.year}
-                                country={entry.country}
-                                year={entry.year}
-                                position={entry.position}
-                            />
-                        ))
-                    }
-                </SortableContext>
-                <DragOverlay />
-                </DndContext>
+                    <SortableContext
+                        items={allEntries.map(entry => entry.country + entry.year)}
+                        strategy={rectSortingStrategy}
+                    >
+                        {
+                            allEntries.map(entry => (
+                                <Entry 
+                                    key={entry.country + entry.year} 
+                                    id={entry.country + entry.year}
+                                    country={entry.country}
+                                    year={entry.year}
+                                    position={entry.position}
+                                />
+                            ))
+                        }
+                    </SortableContext>
+                    <DragOverlay />
+                    </DndContext>
                 </>
             )}
-        
         </>
     )
 }
