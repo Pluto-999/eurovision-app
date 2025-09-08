@@ -16,6 +16,7 @@ import { useEffect } from "react"
 import axios from "axios"
 import socket from "./socket"
 import "./index.css"
+import "./styles/loading.css"
 
 function App() {
   useEffect(() => {

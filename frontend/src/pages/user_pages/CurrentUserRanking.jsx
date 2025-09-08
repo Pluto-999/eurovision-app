@@ -6,16 +6,20 @@ import { useNavigate } from "react-router-dom"
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable"
 import Entry from "../../components/Entry"
+import { Ring } from "ldrs/react"
+import "ldrs/react/Ring.css"
 
 function CurrentUserRanking() {
     const params = useParams()
     const [allEntries, setAllEntries] = useState([])
+    const [loading, setLoading] = useState(false)
     const sensors = useSensors(
         useSensor(PointerSensor)
     )
     const navigate = useNavigate()
 
     function fetchRankings() {
+        setLoading(true)
         axios.get(`http://localhost:3000/api/ranking/currentUserRankings/${params.year}`,
             { withCredentials: true }
         )
@@ -35,10 +39,9 @@ function CurrentUserRanking() {
             if (error.response.status === 401) {
                 navigate("/account")
             }
-            // maybe don't have this ??
-            else {
-                navigate("/user/home")
-            }
+        })
+        .finally(() => {
+            setLoading(false)
         })
     }
 
@@ -85,32 +88,41 @@ function CurrentUserRanking() {
 
     return (
         <>
-        <DndContext 
-            onDragEnd={handleDragEnd}
-            sensors={sensors}
-            collisionDetection={closestCenter}
-        >
-            
-            <h1> My {params.year} Ranking</h1>
+            {loading ? (
+                <div className="loader">
+                    <Ring />
+                </div>
+            ) : (
+                <>
+                <DndContext 
+                onDragEnd={handleDragEnd}
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                >
+                
+                <h1> My {params.year} Ranking</h1>
 
-            <SortableContext
-                items={allEntries.map(entry => entry.country + entry.year)}
-                strategy={rectSortingStrategy}
-            >
-                {
-                    allEntries.map(entry => (
-                        <Entry 
-                            key={entry.country + entry.year} 
-                            id={entry.country + entry.year}
-                            country={entry.country}
-                            year={entry.year}
-                            position={entry.position}
-                        />
-                    ))
-                }
-            </SortableContext>
-            <DragOverlay />
-        </DndContext>
+                <SortableContext
+                    items={allEntries.map(entry => entry.country + entry.year)}
+                    strategy={rectSortingStrategy}
+                >
+                    {
+                        allEntries.map(entry => (
+                            <Entry 
+                                key={entry.country + entry.year} 
+                                id={entry.country + entry.year}
+                                country={entry.country}
+                                year={entry.year}
+                                position={entry.position}
+                            />
+                        ))
+                    }
+                </SortableContext>
+                <DragOverlay />
+                </DndContext>
+                </>
+            )}
+        
         </>
     )
 }

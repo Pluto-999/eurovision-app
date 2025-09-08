@@ -45,7 +45,7 @@ function Entry(props) {
         className={`p-3 mb-2 rounded-lg shadow cursor-pointer ${rankedStyle}`}
     >
         <div {...attributes} {...listeners}>
-          {isRanked ? props.position + ")" : ""} {props.country} {hasPoints ? ` - ${points[props.position]} points` : ""}
+          {isRanked ? props.position + ")" : ""} {props.country} {hasPoints ? `: ${points[props.position]} points` : ""}
         </div>
         <ul>
           <li>

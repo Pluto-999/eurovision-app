@@ -36,16 +36,20 @@ function FriendSearch () {
         <>
             <h1> Search for friends </h1>
 
-            <form onSubmit={handleSubmit} className="p-2 flex gap-4">
-                <input
-                    type="text"
-                    required={true}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Enter a username to start your search"
-                >    
-                </input>
-
-                <button><input type="submit" value="Search"></input></button>
+            <form onSubmit={handleSubmit}>
+                
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend"> Username </legend>
+                    <input 
+                        type="text"
+                        className="input"
+                        placeholder="Search for a username"
+                        onChange={(e) => setSearch(e.target.value)}
+                        required={true}
+                    />
+                </fieldset>
+                
+                <input type="submit" value="Search" className="btn"></input>
             </form>
 
             {

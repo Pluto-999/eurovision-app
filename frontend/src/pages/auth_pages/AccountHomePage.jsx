@@ -38,8 +38,10 @@ function HomePage () {
         user ? (navigate("/user/home")) : ( 
             <>
             <h1> Account Home Page </h1>
-            <Link to="/account/register"> Register </Link>
-            <Link to="/account/login"> Login </Link>
+            <div className="flex flex-col gap-3 p-5">
+                <div><Link to="/account/register"> Register </Link></div>
+                <div><Link to="/account/login"> Login </Link></div>
+            </div>
             </>
         )}
         </>

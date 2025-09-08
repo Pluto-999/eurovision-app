@@ -6,22 +6,29 @@ import Popup from "../../components/Popup"
 import CountryIndividualEntryPage from "../entries_pages/CountryIndividualEntryPage"
 import toast from "react-hot-toast"
 import Sort from "../../components/Sort"
+import { Ring } from "ldrs/react"
+import "ldrs/react/Ring.css"
 
 function SemiResultsPage() {
     const params = useParams()
     const [results, setResults] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         axios.get(`http://localhost:3000/api/results/semi/${params.semi_number}/${params.year}`)
         .then(response => setResults(response.data.data))
         .catch(error => {
             console.log(error)
             if (error.response.data.message) {
-                toast(error.response.data.message)
+                toast.error(error.response.data.message)
             }
             else {
-                toast("Something has gone wrong, please try again")
+                toast.error("Something has gone wrong, please try again")
             }
+        })
+        .finally(() => {
+            setLoading(false)
         })
     }, [])
 
@@ -37,31 +44,40 @@ function SemiResultsPage() {
                     includeCountry={true}
                 />
             </div>
-            <ul className="grid">
-            {
-                results.map(result => (
-                    <Popup 
-                        entryCountry={result.country}
-                        entryYear={result.year}
-                        listItems={
-                            <>
-                                <li> Country: {result.country}</li>
-                                <li> Position: {result.position}</li>
-                                <li> Points: {result.points}</li>
-                                <li> Running Order: {result.running_order}</li>   
-                            </>
-                        }
-                        popupContent={
-                            <CountryIndividualEntryPage 
+            
+            {loading ? (
+                <div className="loader">
+                    <Ring />
+                </div>
+            ) : (
+                <>
+                    <ul className="grid">
+                    {
+                        results.map(result => (
+                            <Popup 
                                 entryCountry={result.country}
-                                entryYear={result.year} 
+                                entryYear={result.year}
+                                listItems={
+                                    <>
+                                        <li> Country: {result.country}</li>
+                                        <li> Position: {result.position}</li>
+                                        <li> Points: {result.points}</li>
+                                        <li> Running Order: {result.running_order}</li>   
+                                    </>
+                                }
+                                popupContent={
+                                    <CountryIndividualEntryPage 
+                                        entryCountry={result.country}
+                                        entryYear={result.year} 
+                                    />
+                                }
+                                buttonStyling={"link"}
                             />
-                        }
-                        buttonStyling={"link"}
-                    />
-                ))
-            }
-            </ul>
+                        ))
+                    }
+                    </ul>
+                </>
+            )}
         </>
     )
 }

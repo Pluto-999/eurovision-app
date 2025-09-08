@@ -13,10 +13,12 @@ function SearchPage() {
     const [searchType, setSearchType] = useState("")
     const [searchResults, setSearchResults] = useState([])
     const [loading, setLoading] = useState(false)
+    const [madeSearch, setMadeSearch] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
+        setMadeSearch(true)
 
         try {
             const response = await axios.post("http://localhost:3000/api/search/", {
@@ -97,7 +99,9 @@ function SearchPage() {
             
             {
                 loading ? (
-                    <Ring />
+                    <div className="loader">
+                        <Ring />
+                    </div>
                 ) : (
                     searchResults.length > 0 ? (
                         <>
@@ -136,8 +140,11 @@ function SearchPage() {
                                 ))
                             }
                         </>
-                    ) : (
-                        <div> No results, please try a different search </div>
+                    ) : (   
+                        madeSearch ? 
+                            <div> No results, please try a different search </div>
+                        :
+                            <></>
                     )
                 )
             }

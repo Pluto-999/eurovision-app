@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/Stats.css";
 import Sort from "../../components/Sort"
+import toast from "react-hot-toast"
 
 function CountryResultsPage() {
   const params = useParams();
@@ -16,7 +17,15 @@ function CountryResultsPage() {
         setSemiResults(response.data.data.semi_results)
         setFinalResults(response.data.data.final_results)
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error)
+        if (error.response.data.message) {
+          toast.error(error.response.data.message)
+        }
+        else {
+          toast.error("Something has gone wrong, please try again")
+        }
+      });
   }, []);
 
   return (

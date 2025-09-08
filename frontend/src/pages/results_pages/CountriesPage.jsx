@@ -2,19 +2,42 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import "../../styles/Stats.css"
+import { Ring } from "ldrs/react"
+import "ldrs/react/Ring.css"
+import toast from "react-hot-toast"
 
 function CountriesPage() {
     const [countries, setCountries] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         axios.get("http://localhost:3000/api/countries")
         .then(response => setCountries(response.data.data))
+        .catch(error => {
+            console.log(error)
+            if (error.response.data.message) {
+                toast.error(error.response.data.message)
+            }
+            else {
+                toast.error("Something has gone wrong, please try again")
+            }
+        })
+        .finally(() => {
+            setLoading(false)
+        })
     }, [])
 
     return (
         <>
         <h1> List of Participating Countries since 2021 </h1>
-        <div>
+        {loading ? (
+            <div className="loader">
+                <Ring />
+            </div>
+        ) : (
+            <>
+            <div>
             <ul className="grid">
                 {countries.map((country) => (
                     <li key={country.country}>
@@ -34,7 +57,9 @@ function CountriesPage() {
                     </li>
                 ))}
             </ul>
-        </div>
+            </div>
+            </>
+        )}
         </>
     )
 }

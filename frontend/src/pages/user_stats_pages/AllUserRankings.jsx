@@ -36,42 +36,44 @@ function AllUserRankings() {
 
     return (
         <>
-            {loading ? ( <Ring />) : (
-            <>
             <h1> Community Results for {params.year} </h1>
-            
-            { console.log(rankings) }
-            
-            <ul className="grid">
-            {
-                rankings.map(ranking => (
-                    <Popup 
-                        entryCountry={ranking.country}
-                        entryYear={ranking.year}
-                        listItems={
-                            <>
-                                <li> Country: {ranking.country}</li>
-                                <li> Total Points: {ranking.points}</li>
-                            </>
-                        }
-                        popupContent={
-                            <>
-                            <CountryIndividualEntryPage 
+            {loading ? (
+                <div className="loader">
+                    <Ring />
+                </div>
+            ) : (
+                <>
+                    <ul className="grid">
+                    {
+                        rankings.map(ranking => (
+                            <Popup 
                                 entryCountry={ranking.country}
                                 entryYear={ranking.year}
-                                noResults={true}
+                                listItems={
+                                    <>
+                                        <li> Country: {ranking.country}</li>
+                                        <li> Total Points: {ranking.points}</li>
+                                    </>
+                                }
+                                popupContent={
+                                    <>
+                                    <CountryIndividualEntryPage 
+                                        entryCountry={ranking.country}
+                                        entryYear={ranking.year}
+                                        noResults={true}
+                                    />
+                                    <ExtraUserStatsPopup country={ranking.country} year={ranking.year} />
+                                    </>
+                                }
+                                buttonStyling={"link"}
                             />
-                            <ExtraUserStatsPopup country={ranking.country} year={ranking.year} />
-                            </>
-                        }
-                        buttonStyling={"link"}
-                    />
 
-                ))
-            }
-            </ul>
-            </>
+                        ))
+                    }
+                    </ul>
+                </>
             )}
+
         </>
     )
 }

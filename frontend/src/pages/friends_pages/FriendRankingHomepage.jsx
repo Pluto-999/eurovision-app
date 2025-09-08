@@ -6,11 +6,13 @@ function FriendRankingHomepage() {
     return (
         <>
             <h1> View {params.username}'s Rankings </h1>
-            <Link to={`/friends/${params.username}/ranking/2025`}> 2025 Ranking </Link>
-            <Link to={`/friends/${params.username}/ranking/2024`}> 2024 Ranking </Link>
-            <Link to={`/friends/${params.username}/ranking/2023`}> 2023 Ranking </Link>
-            <Link to={`/friends/${params.username}/ranking/2022`}> 2022 Ranking </Link>
-            <Link to={`/friends/${params.username}/ranking/2021`}> 2021 Ranking </Link>
+            <div className="flex flex-col gap-2.5 pt-2.5">
+                <div><Link to={`/friends/${params.username}/ranking/2025`}> 2025 Ranking </Link></div>
+                <div><Link to={`/friends/${params.username}/ranking/2024`}> 2024 Ranking </Link></div>
+                <div><Link to={`/friends/${params.username}/ranking/2023`}> 2023 Ranking </Link></div>
+                <div><Link to={`/friends/${params.username}/ranking/2022`}> 2022 Ranking </Link></div>
+                <div><Link to={`/friends/${params.username}/ranking/2021`}> 2021 Ranking </Link></div>
+            </div>
         </>
     )
 }
