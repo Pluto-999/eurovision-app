@@ -1,5 +1,6 @@
 const sql = require("../config/db")
 const asyncWrapper = require("../middleware/asyncWrapper")
+const createReturnData = require("../utils/highestPosition")
 
 const searchForData = asyncWrapper(async (req, res) => {
     const searchValue = req.body.searchValue
@@ -49,8 +50,6 @@ const searchForData = asyncWrapper(async (req, res) => {
 
             const errorMessage = `When giving a year, please ensure it either is between: ${process.env.SEARCH_LOWEST_YEAR_SHORT} - ${process.env.SEARCH_HIGHEST_YEAR_SHORT} or ${process.env.SEARCH_LOWEST_YEAR_LONG} - ${process.env.SEARCH_HIGHEST_YEAR_LONG}`
 
-            console.log("YEAR!!!", numberLength)
-
             if (
                 numberLength === 2 && 
                 (year > Number(process.env.SEARCH_HIGHEST_YEAR_SHORT) ||
@@ -75,11 +74,8 @@ const searchForData = asyncWrapper(async (req, res) => {
 
             // convert year to 4 digits to search for in db
             if (numberLength === 2) {
-                console.log(year)
                 year += 2000
             }
-
-            console.log(year)
 
             const data = await sql`
                 SELECT *
@@ -87,9 +83,9 @@ const searchForData = asyncWrapper(async (req, res) => {
                 WHERE country ILIKE ${searchString + '%'} AND year=${year}
             `
 
-            console.log(data)
+            const toReturn = await createReturnData(data)
 
-            return res.status(200).json({ success: true, data: data })
+            return res.status(200).json({ success: true, data: toReturn })
         }
 
     }
@@ -105,9 +101,9 @@ const searchForData = asyncWrapper(async (req, res) => {
             WHERE artist ILIKE ${'%' + searchString + '%'}
         `
 
-        console.log(data)
+        const toReturn = await createReturnData(data)
 
-        return res.status(200).json({ success: true, data: data })
+        return res.status(200).json({ success: true, data: toReturn })
     }
 
     if (searchType === "Song") {
@@ -121,9 +117,9 @@ const searchForData = asyncWrapper(async (req, res) => {
             WHERE song ILIKE ${'%' + searchString + '%'}
         `
 
-        console.log(data)
+        const toReturn = await createReturnData(data)
 
-        return res.status(200).json({ success: true, data: data })
+        return res.status(200).json({ success: true, data: toReturn })
     }
 
 })
