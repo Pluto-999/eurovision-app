@@ -5,6 +5,7 @@ import "../../styles/Stats.css"
 import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
 import toast from "react-hot-toast"
+import Pagination from "../../components/Pagination"
 
 function CountriesPage() {
     const [countries, setCountries] = useState([])
@@ -39,23 +40,27 @@ function CountriesPage() {
             <>
             <div>
             <ul className="grid">
-                {countries.map((country) => (
-                    <li key={country.country}>
-                        <Link 
-                            to={`/entries/country/${country.country}`}
-                            className="link"    
-                        >
-                            {country.country}
-                            <img
-                                src={country.flag_image}
-                                alt={`Flag of ${country.country}`}
-                                width="30%"
-                                height="30%"
-                                className="mx-auto"
-                            />
-                        </Link>
-                    </li>
-                ))}
+                <Pagination 
+                    data={countries}
+                    itemsPerPage={12}
+                    renderDataItem={(country) => (
+                        <li key={country.country}>
+                            <Link 
+                                to={`/entries/country/${country.country}`}
+                                className="link"    
+                            >
+                                {country.country}
+                                <img
+                                    src={country.flag_image}
+                                    alt={`Flag of ${country.country}`}
+                                    width="30%"
+                                    height="30%"
+                                    className="mx-auto"
+                                />
+                            </Link>
+                        </li>
+                    )}
+                />
             </ul>
             </div>
             </>

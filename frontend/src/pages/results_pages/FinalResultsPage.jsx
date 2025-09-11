@@ -8,6 +8,7 @@ import Sort from "../../components/Sort"
 import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
 import toast from "react-hot-toast"
+import Pagination from "../../components/Pagination"
 
 function FinalResultsPage() {
     const params = useParams()
@@ -52,8 +53,10 @@ function FinalResultsPage() {
             ) : (
                 <>
                     <ul className="grid">
-                    {
-                        results.map(result => (
+                    <Pagination 
+                        data={results}
+                        itemsPerPage={10}
+                        renderDataItem={(result) => (
                             <Popup 
                                 entryCountry={result.country}
                                 entryYear={result.year}
@@ -73,8 +76,8 @@ function FinalResultsPage() {
                                 }
                                 buttonStyling={"link"}
                             />
-                        ))
-                    }
+                        )}
+                    />
                     </ul>
                 </>
             )}

@@ -1,0 +1,12 @@
+.paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.5rem
+}
+
+.page,
+.break {
+  display: none; 
+}

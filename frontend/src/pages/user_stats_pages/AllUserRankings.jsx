@@ -8,7 +8,7 @@ import Popup from "../../components/Popup"
 import ExtraUserStatsPopup from "./ExtraUserStatsPopup"
 import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
-
+import Pagination from "../../components/Pagination"
 
 function AllUserRankings() {
     const params = useParams()
@@ -44,8 +44,10 @@ function AllUserRankings() {
             ) : (
                 <>
                     <ul className="grid">
-                    {
-                        rankings.map(ranking => (
+                    <Pagination 
+                        data={rankings}
+                        itemsPerPage={10}
+                        renderDataItem={(ranking) => (
                             <Popup 
                                 entryCountry={ranking.country}
                                 entryYear={ranking.year}
@@ -67,9 +69,8 @@ function AllUserRankings() {
                                 }
                                 buttonStyling={"link"}
                             />
-
-                        ))
-                    }
+                        )}
+                    />
                     </ul>
                 </>
             )}

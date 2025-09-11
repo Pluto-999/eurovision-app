@@ -6,6 +6,7 @@ import CountryIndividualEntryPage from "../entries_pages/CountryIndividualEntryP
 import Sort from "../../components/Sort"
 import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
+import Pagination from "../../components/Pagination"
 
 function SearchPage() {
     
@@ -38,7 +39,7 @@ function SearchPage() {
             setLoading(false)
         }
     }
-    
+
     return (
         <>
             <h1> Search </h1>
@@ -115,30 +116,33 @@ function SearchPage() {
                                 />
                             </div>
 
-                            {
-                                searchResults.map(result => (
+                            <Pagination 
+                                data={searchResults}
+                                itemsPerPage={10}
+                                renderDataItem={(item) => (
                                     <Popup 
-                                        entryCountry={result.country}
-                                        entryYear={result.year}
+                                        entryCountry={item.country}
+                                        entryYear={item.year}
                                         listItems={
                                             <>
-                                                <li> Country: {result.country} </li>
-                                                <li> Year: {result.year} </li>
-                                                <li> Artist: {result.artist} </li>
-                                                <li> Song: {result.song} </li>
-                                                <li> Best Position: {result.position} ({result.finalOrSemi})</li>
+                                                <li> Country: {item.country} </li>
+                                                <li> Year: {item.year} </li>
+                                                <li> Artist: {item.artist} </li>
+                                                <li> Song: {item.song} </li>
+                                                <li> Best Position: {item.position} ({item.finalOrSemi})</li>
                                             </>
                                         }
                                         popupContent={
                                             <CountryIndividualEntryPage 
-                                                entryCountry={result.country}
-                                                entryYear={result.year}
+                                                entryCountry={item.country}
+                                                entryYear={item.year}
                                             />
                                         }
                                         buttonStyling={"link"}
                                     />
-                                ))
-                            }
+                                )}
+                            />
+
                         </>
                     ) : (   
                         madeSearch ? 
