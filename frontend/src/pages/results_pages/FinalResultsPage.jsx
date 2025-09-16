@@ -50,18 +50,17 @@ function FinalResultsPage() {
                     <Ring />
                 </div>
             ) : (
-                <>
-                    <ResultsTable 
-                        includeRunningOrder={true}
-                        results={results}
-                        renderPopupContent={(result) => (
-                            <CountryIndividualEntryPage 
-                                entryCountry={result.country}
-                                entryYear={result.year} 
-                            />
-                        )}
-                    />
-                </>
+                <ResultsTable 
+                    includeRunningOrder={true}
+                    includePoints={true}
+                    results={results}
+                    renderPopupContent={(result) => (
+                        <CountryIndividualEntryPage 
+                            entryCountry={result.country}
+                            entryYear={result.year} 
+                        />
+                    )}
+                />
             )}
         </>
     )

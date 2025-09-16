@@ -1,6 +1,9 @@
+import { Rating } from "react-simple-star-rating"
 
 function ResultsTable({
+    includePoints,
     includeRunningOrder,
+    includeStarsRating,
     results,
     renderPopupContent
 }) {
@@ -11,8 +14,9 @@ function ResultsTable({
             <tr>
                 <th> Position </th>
                 <th> Country </th>
-                <th> Points </th>
-                { includeRunningOrder && <th> Running Order </th> }
+                {includePoints && <th> Points </th>}
+                {includeRunningOrder && <th> Running Order </th>}
+                {includeStarsRating && <th> Rating </th>} 
             </tr>
             </thead>
             <tbody>
@@ -21,10 +25,30 @@ function ResultsTable({
                         key={result.country + result.year}
                         onClick={() => document.getElementById(`modal_${result.country}_${result.year}`).showModal()}
                     >
-                        <td> {result.position} </td>
+                        <td> {result.position > 0 ? (
+                            <> {result.position} </>
+                        ): (
+                            <> - </>
+                        )} </td>
                         <td> {result.country} </td>
-                        <td> {result.points} </td>
-                        { includeRunningOrder && <td> {result.running_order} </td> }
+                        {includePoints && <td> {result.points} </td>}
+                        {includeRunningOrder && <td> {result.running_order} </td>}
+                        {includeStarsRating && 
+                            <td>
+                            {result.stars_rating === 0 ? (
+                                <Rating 
+                                    readonly
+                                    SVGclassName="inline"
+                                />
+                            ) : (
+                                <Rating
+                                    readonly
+                                    initialValue={result.rating}
+                                    SVGclassName="inline"
+                                />
+                            )}
+                            </td>
+                        }
                     </tr>
                 ))}
             </tbody>
@@ -39,7 +63,7 @@ function ResultsTable({
                     <form method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
-                    { renderPopupContent(result) }
+                    {renderPopupContent(result)}
                 </div>
                 <form method="dialog" className="modal-backdrop">
                     <button>close</button>

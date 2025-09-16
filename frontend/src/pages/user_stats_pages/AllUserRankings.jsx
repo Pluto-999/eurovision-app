@@ -4,11 +4,10 @@ import axios from "axios"
 import toast from "react-hot-toast"
 import "../../styles/Stats.css"
 import CountryIndividualEntryPage from "../entries_pages/CountryIndividualEntryPage"
-import Popup from "../../components/Popup"
 import ExtraUserStatsPopup from "./ExtraUserStatsPopup"
 import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
-import Pagination from "../../components/Pagination"
+import ResultsTable from "../../components/ResultsTable"
 
 function AllUserRankings() {
     const params = useParams()
@@ -42,37 +41,20 @@ function AllUserRankings() {
                     <Ring />
                 </div>
             ) : (
-                <>
-                    <ul className="grid">
-                    <Pagination 
-                        data={rankings}
-                        itemsPerPage={10}
-                        renderDataItem={(ranking) => (
-                            <Popup 
-                                entryCountry={ranking.country}
-                                entryYear={ranking.year}
-                                listItems={
-                                    <>
-                                        <li> Country: {ranking.country}</li>
-                                        <li> Total Points: {ranking.points}</li>
-                                    </>
-                                }
-                                popupContent={
-                                    <>
-                                    <CountryIndividualEntryPage 
-                                        entryCountry={ranking.country}
-                                        entryYear={ranking.year}
-                                        noResults={true}
-                                    />
-                                    <ExtraUserStatsPopup country={ranking.country} year={ranking.year} />
-                                    </>
-                                }
-                                buttonStyling={"link"}
-                            />
-                        )}
-                    />
-                    </ul>
-                </>
+                <ResultsTable 
+                    results={rankings}
+                    includePoints={true}
+                    renderPopupContent={(result) => (
+                        <>
+                                <CountryIndividualEntryPage 
+                                    entryCountry={result.country}
+                                    entryYear={result.year}
+                                    noResults={true}
+                                />
+                                <ExtraUserStatsPopup country={result.country} year={result.year} />
+                                </>
+                    )}
+                />
             )}
 
         </>

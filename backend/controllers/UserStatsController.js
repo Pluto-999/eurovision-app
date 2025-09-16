@@ -140,9 +140,18 @@ const getUserResults = asyncWrapper(async (req, res) => {
         })
     }
 
+    // sort in decreasing order, then sort alphabetically by country if points are equal
     toReturn.sort((a, b) => (
-        a.points > b.points ? -1 : b.points > a.points ? 1 : 0
+        a.points > b.points ? -1 : b.points > a.points ? 1 : a.country.localeCompare(b.country)
     ))
+
+    
+    let position = 1
+
+    toReturn.forEach(element => {
+        element["position"] = position
+        position += 1
+    })
 
     res.json({ success: true, data: toReturn })
 })

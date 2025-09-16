@@ -48,13 +48,17 @@ function ExtraUserStatsPopup(props) {
                             allowFraction
                             SVGclassName="inline"
                         />
-                    ) : ( <> No one has rated this entry yet </>
+                    ) : ( 
+                        <Rating 
+                            readonly
+                            SVGclassName="inline"
+                        />
                     )}</li>
                     <li>Average Position: {averagePosition > 0 ? (
-                        averagePosition) : ( <> No has has ranked this entry yet </>
+                        averagePosition) : ( <> - </>
                     )}</li>
                     <li>Average Points: {averagePoints > 0 ? (
-                        averagePoints) : ( <> No has has ranked this entry yet </>
+                        averagePoints) : ( <> - </>
                     )}</li>
                 </ul>
             </div>

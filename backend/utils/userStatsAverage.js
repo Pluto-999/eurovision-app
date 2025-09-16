@@ -5,7 +5,7 @@ function calculateAverage(data, column) {
     }
 
     const average = total / data.length
-    return average
+    return Number((average).toFixed(2))
     
 }
 
