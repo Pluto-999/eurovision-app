@@ -129,7 +129,7 @@ function SearchPage() {
                                                 <li> Year: {item.year} </li>
                                                 <li> Artist: {item.artist} </li>
                                                 <li> Song: {item.song} </li>
-                                                <li> Best Position: {item.position} ({item.finalOrSemi})</li>
+                                                <li> Overall Result: {item.position} ({item.finalOrSemi})</li>
                                             </>
                                         }
                                         popupContent={
@@ -142,7 +142,6 @@ function SearchPage() {
                                     />
                                 )}
                             />
-
                         </>
                     ) : (   
                         madeSearch ? 

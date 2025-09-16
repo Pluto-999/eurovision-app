@@ -1,10 +1,14 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { Link } from "react-router-dom"
 
 function SingleResultsPage({ entryCountry, entryYear }) {
     const params = useParams()
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState({
+        semi_result: [],
+        final_result: []
+    })
 
     const country = params.country ? params.country : entryCountry
     const year = params.year ? params.year : entryYear
@@ -23,44 +27,55 @@ function SingleResultsPage({ entryCountry, entryYear }) {
         })
     }, [])
 
-    let qualified = true
-
     return (
         <>
             <div> 
                 {
-                    results.semi_result?.length === 0 ? (
+                    results.semi_result.length === 0 ? (
                         <>
                         <h2> Semi Final Result </h2>
                         <div> Automatic Qualifier for this year, so has no Semi Final Result </div>
                         </>
                     ) : (
                         <>
-                            <h2> Semi Final Result (Semi Final {results.semi_result?.[0].semi_number}) </h2>
-                            <div> {results.semi_result?.map(result => (
-                                <ul key={result.country + result.year}>
-                                    <li> Position: { result.position }</li>
-                                    <li> Points: { result.points }</li>
-                                    <li> Running Order: { result.running_order }</li>
-                                    <li>{result.is_nq ? qualified = false: qualified = true}</li>
-                                </ul>
-                            ))}
-                            </div>
+                            <h2>
+                                <Link to={`/results/semi/${results.semi_result[0].semi_number}/${results.semi_result[0].year}`}> 
+                                    Semi Final {results.semi_result[0].semi_number} Result 
+                                </Link>
+                            </h2>
+                            <ul>
+                                <li> Position: {results.semi_result[0].position} </li>
+                                <li> Points: {results.semi_result[0].points} </li>
+                                <li> Running Order: {results.semi_result[0].running_order} </li>
+                            </ul>
                         </>
                     ) 
                     
                 } 
             </div>
 
-            <h2> Final Result </h2>
-            <div> {!qualified && <div> Did not qualify for the Grand Final </div>}</div>
-            <div> {qualified && results.final_result?.map( result => (
-                <ul key={result.country + result.year}>
-                    <li> Position: { result.position }</li>
-                    <li> Points: { result.points }</li>
-                    <li> Running Order: { result.running_order }</li>
-                </ul>
-            ))}
+            <div>
+                {
+                    results.final_result.length === 0 ? (
+                        <>
+                        <h2> Final Result </h2>
+                        <div> Did not qualify for the Grand Final </div>
+                        </>
+                    ) : (
+                        <>
+                            <h2>
+                                <Link to={`/results/final/${results.final_result[0].year}`}> 
+                                    Final Result 
+                                </Link>
+                            </h2>
+                            <ul>
+                                <li> Position: {results.final_result[0].position} </li>
+                                <li> Points: {results.final_result[0].points} </li>
+                                <li> Running Order: {results.final_result[0].running_order} </li>
+                            </ul>
+                        </>
+                    )
+                }
             </div>
         </>
     )

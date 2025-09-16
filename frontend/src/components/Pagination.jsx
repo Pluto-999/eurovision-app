@@ -28,7 +28,9 @@ function Pagination({ data, renderDataItem, itemsPerPage }) {
 
     return (
         <>
-            {displayData}
+            <div className="grid">
+                {displayData}
+            </div>
 
             <div className="flex flex-col items-center justify-center gap-2">
                 <ReactPaginate 

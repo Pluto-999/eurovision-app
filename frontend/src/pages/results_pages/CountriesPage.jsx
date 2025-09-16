@@ -37,33 +37,27 @@ function CountriesPage() {
                 <Ring />
             </div>
         ) : (
-            <>
-            <div>
-            <ul className="grid">
-                <Pagination 
-                    data={countries}
-                    itemsPerPage={12}
-                    renderDataItem={(country) => (
-                        <li key={country.country}>
-                            <Link 
-                                to={`/entries/country/${country.country}`}
-                                className="link"    
-                            >
-                                {country.country}
-                                <img
-                                    src={country.flag_image}
-                                    alt={`Flag of ${country.country}`}
-                                    width="30%"
-                                    height="30%"
-                                    className="mx-auto"
-                                />
-                            </Link>
-                        </li>
-                    )}
-                />
-            </ul>
-            </div>
-            </>
+            <Pagination 
+                data={countries}
+                itemsPerPage={12}
+                renderDataItem={(country) => (
+                    <li key={country.country}>
+                        <Link 
+                            to={`/entries/country/${country.country}`}
+                            className="link"    
+                        >
+                            {country.country}
+                            <img
+                                src={country.flag_image}
+                                alt={`Flag of ${country.country}`}
+                                width="30%"
+                                height="30%"
+                                className="mx-auto"
+                            />
+                        </Link>
+                    </li>
+                )}
+            />
         )}
         </>
     )
