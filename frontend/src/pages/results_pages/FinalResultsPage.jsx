@@ -2,13 +2,12 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import "../../styles/Stats.css"
-import Popup from "../../components/Popup"
 import CountryIndividualEntryPage from "../entries_pages/CountryIndividualEntryPage"
 import Sort from "../../components/Sort"
 import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
 import toast from "react-hot-toast"
-import Pagination from "../../components/Pagination"
+import ResultsTable from "../../components/ResultsTable"
 
 function FinalResultsPage() {
     const params = useParams()
@@ -52,37 +51,18 @@ function FinalResultsPage() {
                 </div>
             ) : (
                 <>
-                    <ul className="grid">
-                    <Pagination 
-                        data={results}
-                        itemsPerPage={10}
-                        renderDataItem={(result) => (
-                            <Popup 
+                    <ResultsTable 
+                        includeRunningOrder={true}
+                        results={results}
+                        renderPopupContent={(result) => (
+                            <CountryIndividualEntryPage 
                                 entryCountry={result.country}
-                                entryYear={result.year}
-                                listItems={
-                                    <>
-                                        <li> Country: {result.country}</li>
-                                        <li> Position: {result.position}</li>
-                                        <li> Points: {result.points}</li>
-                                        <li> Running Order: {result.running_order}</li> 
-                                    </>
-                                }
-                                popupContent={
-                                    <CountryIndividualEntryPage 
-                                        entryCountry={result.country}
-                                        entryYear={result.year} 
-                                    />
-                                }
-                                buttonStyling={"link"}
+                                entryYear={result.year} 
                             />
                         )}
                     />
-                    </ul>
                 </>
             )}
-
-            
         </>
     )
 }
