@@ -86,6 +86,7 @@ function IndividualCountryHomePage() {
                                 <tr
                                     key={entry.country + entry.year}
                                     onClick={() => document.getElementById(`modal_${entry.country}_${entry.year}`).showModal()}
+                                    className="hover:bg-[#646cff] cursor-pointer"
                                 >
                                     <td> {entry.year} </td>
                                     <td> {entry.artist} </td>

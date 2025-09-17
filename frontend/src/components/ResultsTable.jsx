@@ -1,4 +1,5 @@
 import { Rating } from "react-simple-star-rating"
+import "../styles/table.css"
 
 function ResultsTable({
     includePoints,
@@ -24,11 +25,16 @@ function ResultsTable({
                     <tr
                         key={result.country + result.year}
                         onClick={() => document.getElementById(`modal_${result.country}_${result.year}`).showModal()}
+                        className={
+                            `hover:bg-[#646cff] cursor-pointer
+                            ${result.position <= 0 ? "bg-gray-300" : ""}
+                            `
+                        }
                     >
                         <td> {result.position > 0 ? (
                             <> {result.position} </>
                         ): (
-                            <> - </>
+                            <div> - </div>
                         )} </td>
                         <td> {result.country} </td>
                         {includePoints && <td> {result.points} </td>}
