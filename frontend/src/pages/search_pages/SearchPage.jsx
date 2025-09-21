@@ -19,7 +19,6 @@ function SearchPage() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        setMadeSearch(true)
 
         try {
             const response = await axios.post("http://localhost:3000/api/search/", {
@@ -27,13 +26,17 @@ function SearchPage() {
             })
             if (response.data.success) {
                 setSearchResults(response.data.data)
+                setMadeSearch(true)
             }
             else {
                 toast.error("Something went wrong, please try again")
+                setMadeSearch(false)
             }
         } 
         catch (error) {
             toast.error(error.response.data.message)
+            setSearchResults([])
+            setMadeSearch(false)
         }
         finally {
             setLoading(false)
@@ -45,41 +48,45 @@ function SearchPage() {
             <h1> Search </h1>
 
             <fieldset className="fieldset">
-                <legend className="fieldset-legend"> Choose what to search for </legend>
-                <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn m-1">
-                        { searchType ? searchType : "Search Options" }
-                    </div>
-                        <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                            <li><button onClick={() => {
-                                setSearchType("Country & Year")
-                                toast.success(
-                                    "Ensure to start your search in the text box, then press submit to search for the country and year", 
-                                    { duration: 5000}
-                                )
-                            }}>
-                                Country & Year
-                            </button></li>
-                            <li><button onClick={() => {
-                                setSearchType("Artist")
-                                toast.success(
-                                    "Ensure to start your search in the text box, then press submit to search for artists",
-                                    { duration: 5000 }
-                                )
-                            }}>
-                                Artist
-                            </button></li>
-                            <li><button onClick={() => {
-                                setSearchType("Song")
-                                toast.success(
-                                    "Ensure to start your search in the text box, then press submit to search for songs",
-                                    { duration: 5000}
-                                )
-                            }}>
-                                Song
-                            </button></li>
-                        </ul>
-                </div>
+            <legend className="fieldset-legend"> Choose what to search for </legend>
+                
+                <form className="filter">
+                    <input 
+                        className="btn btn-square" 
+                        type="reset" 
+                        value="x" 
+                        onClick={() => setSearchType("")}    
+                    />
+                    <input 
+                        className="btn" 
+                        type="radio" 
+                        name="frameworks" 
+                        aria-label="Country"
+                        onClick={() => setSearchType("Country")}    
+                    />
+                    <input 
+                        className="btn" 
+                        type="radio" 
+                        name="frameworks" 
+                        aria-label="Artist"
+                        onClick={() => setSearchType("Artist")}    
+                    />
+                    <input 
+                        className="btn" 
+                        type="radio" 
+                        name="frameworks" 
+                        aria-label="Song"
+                        onClick={() => setSearchType("Song")}
+                    />
+                    <input 
+                        className="btn" 
+                        type="radio" 
+                        name="frameworks" 
+                        aria-label="Year"
+                        onClick={() => setSearchType("Year")}
+                    />
+                </form>
+            
             </fieldset>
 
             <form onSubmit={handleSubmit}>
@@ -144,7 +151,7 @@ function SearchPage() {
                             />
                         </>
                     ) : (   
-                        madeSearch ? 
+                        searchType !== "" && madeSearch ? 
                             <div> No results, please try a different search </div>
                         :
                             <></>

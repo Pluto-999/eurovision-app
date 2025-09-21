@@ -15,7 +15,7 @@ const searchForData = asyncWrapper(async (req, res) => {
     }
 
     const splitString = searchValue.split(" ")
-    
+
     const stringArray = []
     const numberArray = []
 
@@ -28,27 +28,15 @@ const searchForData = asyncWrapper(async (req, res) => {
         }
     })
 
-    const searchString = stringArray.join(" ")
-    
-    if (searchType === "Country & Year") {
-        
-        if (searchString.length === 0) {
-            return res.status(400).json({success: false, message: "Please ensure you provide some alphabetical characters to search for a country" })
-        }
 
-        if (numberArray.length === 0) {
-            return res.status(400).json({ success: false, message: "Please ensure you provide a year to search for. This includes making sure that the year is not directly preceded or followed by an alphabetical character"})
-        }
-        if (numberArray.length > 1) {
-            return res.status(400).json({ success: false, message: "Please search for a maximum of just one year at a time" })
-        }
-
-        // only valid numbers in search are: 25 - 21 or 2025 - 2021, so outside of this is an error
-        else {
+    if (searchType === "Year") {
+        if (numberArray.length === 1 && stringArray.length === 0) {
+            
+            // only valid search numbers are: 21 - 25 or 2021 - 2025
             let year = numberArray[0]
             const numberLength = String(year).length
 
-            const errorMessage = `When giving a year, please ensure it either is between: ${process.env.SEARCH_LOWEST_YEAR_SHORT} - ${process.env.SEARCH_HIGHEST_YEAR_SHORT} or ${process.env.SEARCH_LOWEST_YEAR_LONG} - ${process.env.SEARCH_HIGHEST_YEAR_LONG}`
+            const errorMessage = `When searching for a year, please ensure it either is between: ${process.env.SEARCH_LOWEST_YEAR_SHORT} - ${process.env.SEARCH_HIGHEST_YEAR_SHORT} or ${process.env.SEARCH_LOWEST_YEAR_LONG} - ${process.env.SEARCH_HIGHEST_YEAR_LONG}`
 
             if (
                 numberLength === 2 && 
@@ -80,20 +68,45 @@ const searchForData = asyncWrapper(async (req, res) => {
             const data = await sql`
                 SELECT *
                 FROM entry
-                WHERE country ILIKE ${searchString + '%'} AND year=${year}
+                WHERE year=${year}
             `
 
             const toReturn = await createReturnData(data)
 
             return res.status(200).json({ success: true, data: toReturn })
+        
+        } 
+        else {
+            return res.status(400).json({ success: false, message: "When searching for a year, please provide exactly one valid year only and nothing else in your search" })
         }
+    }
+
+
+    if (numberArray.length > 0) {
+        return res.status(400).json({ success: false, message: "Please ensure you search with alphabetical characters only when you are not searching for a year" })
+    }
+
+    const searchString = stringArray.join(" ")
+    
+    if (searchType === "Country") {
+        
+        if (searchString.length === 0) {
+            return res.status(400).json({success: false, message: "Please ensure you provide some alphabetical characters to search for a country" })
+        }
+
+        const data = await sql`
+            SELECT *
+            FROM entry
+            WHERE country ILIKE ${searchString + '%'}
+        `
+
+        const toReturn = await createReturnData(data)
+
+        return res.status(200).json({ success: true, data: toReturn })
 
     }
 
     if (searchType === "Artist") {
-        if (numberArray.length > 0) {
-            return res.status(400).json({success: false, message: 'Since you are searching with a number, please search under "Country & Year"'})
-        }
 
         const data = await sql`
             SELECT *
@@ -107,9 +120,6 @@ const searchForData = asyncWrapper(async (req, res) => {
     }
 
     if (searchType === "Song") {
-        if (numberArray.length > 0) {
-            return res.status(400).json({success: false, message: 'Since you are searching with a number, please search under "Country & Year"'})
-        }
 
         const data = await sql`
             SELECT *

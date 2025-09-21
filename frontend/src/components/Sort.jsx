@@ -1,4 +1,4 @@
-import { FaSortAlphaDown, FaSortAlphaDownAlt, FaSortAmountDown, FaSortAmountDownAlt } from "react-icons/fa"
+import { FaSortAlphaDown, FaSortAlphaDownAlt, FaSortAmountDown, FaSortAmountDownAlt, FaSort } from "react-icons/fa"
 import { useState } from "react"
 import sortHelper from "../utils/sort"
 
@@ -38,7 +38,10 @@ function Sort({
     
     return (
         <div className={`dropdown ${endPosition ? "dropdown-end" : ""}`}>
-            <div tabIndex={0} role="button" className="btn m-1">Sort</div>
+            <div tabIndex={0} role="button" className="btn m-1">
+                <FaSort />
+                Sort
+            </div>
             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
             
                 <li>
