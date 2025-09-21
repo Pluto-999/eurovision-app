@@ -71,9 +71,6 @@ function ResultsTable({
                     </form>
                     {renderPopupContent(result)}
                 </div>
-                <form method="dialog" className="modal-backdrop">
-                    <button>close</button>
-                </form>
             </dialog>
         ))}
         </>

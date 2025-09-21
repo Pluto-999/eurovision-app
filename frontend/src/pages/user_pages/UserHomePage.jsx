@@ -42,7 +42,6 @@ function UserHomePage() {
             ) : (
                <>
                <h1> Welcome {user ? user.username : ""} </h1>
-                <Link to="/account/logout"> Logout </Link>
                 <h2> My Rankings </h2>
                 <div className="flex flex-col gap-2.5">
                     <div><Link to="/user/my_ranking/2025">My 2025 Ranking</Link></div>

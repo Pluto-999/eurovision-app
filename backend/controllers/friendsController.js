@@ -39,6 +39,8 @@ const getFriends = asyncWrapper(async (req, res) => {
         ...secondaryFriends.map(f => f.user1)
     ]
 
+    allFriends.sort()
+
     res.status(200).json({ success: true, friends: allFriends })
 })
 
