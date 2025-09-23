@@ -3,12 +3,14 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import socket from "../../socket"
+import { useUserContext } from "../../context/userContext"
 
 function RegisterPage() {
     const navigate = useNavigate()
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const { setUser } = useUserContext()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -21,9 +23,9 @@ function RegisterPage() {
             }, { withCredentials: true })
             
             if (response.data.success) {
-                toast("Account successfully created", {
-                    icon: "✅"
-                })
+                toast.success("Account successfully created")
+                setUser(response.data.user)
+                console.log(response.data)
                 navigate("/user/home")
 
                 if (!socket.connected) {

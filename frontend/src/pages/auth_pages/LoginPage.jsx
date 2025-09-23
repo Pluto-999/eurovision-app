@@ -4,11 +4,13 @@ import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import socket from "../../socket"
 import { Link } from "react-router-dom"
+import { useUserContext } from "../../context/userContext"
 
 function LoginPage() {
     const navigate = useNavigate()
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const { setUser } = useUserContext()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -21,6 +23,8 @@ function LoginPage() {
             
             if (response.data.success) {
                 toast.success("Successfully logged in")
+                setUser(response.data.user)
+                console.log(response.data)
                 navigate("/user/home")
 
                 if (!socket.connected) {

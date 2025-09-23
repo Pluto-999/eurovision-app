@@ -65,7 +65,13 @@ const register = asyncWrapper(async (req, res) => {
     // add all entries as unranked and associated to the new user being registered
     createDeafultRankings(username)
 
-    res.status(201).json({ success: true, username: user[0].username })
+    const response = {
+        username: user[0].username,
+        email: user[0].email,
+        profile_picture: user[0].profile_picture
+    }
+
+    res.status(201).json({ success: true, user: response })
 
 })
 
@@ -98,7 +104,13 @@ const login = asyncWrapper(async (req, res) => {
 
     attachCookie(res, payload)
 
-    res.status(200).json({ success: true, username: user[0].username })
+    const response = {
+        username: user[0].username,
+        email: user[0].email,
+        profile_picture: user[0].profile_picture
+    }
+
+    res.status(200).json({ success: true, user: response })
 })
 
 const logout = asyncWrapper(async (req, res) => {

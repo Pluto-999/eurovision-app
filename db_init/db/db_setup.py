@@ -95,6 +95,13 @@ cur.execute("""
     ADD password_token_expiration TIMESTAMP 
 """)
 
+# Add row for profile picture
+cur.execute("""
+    ALTER TABLE users
+    ADD profile_picture TEXT
+    DEFAULT 'https://res.cloudinary.com/dt4ozqfdr/image/upload/v1758639875/Screenshot_2025-09-23_160350_soetp8.png'
+""")
+
 conn.commit()
 
 

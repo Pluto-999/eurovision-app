@@ -5,6 +5,16 @@ const morgan = require("morgan")
 const cors = require("cors")
 const dotenv = require("dotenv")
 const cookieParser = require("cookie-parser")
+const fileUpload = require("express-fileupload")
+
+dotenv.config()
+
+const cloudinary = require("cloudinary").v2
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 const errorHandler = require("./middleware/errorHandler")
 
@@ -22,8 +32,6 @@ const searchRoutes = require("./routes/searchRoutes")
 
 const authMiddleware = require("./middleware/authMiddleware")
 
-dotenv.config()
-
 const { app, server } = require("./socket")
 
 const PORT = process.env.PORT || 3000
@@ -34,9 +42,9 @@ app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
 }))
-
 app.use(express.json())
 app.use(cookieParser(process.env.JWT_SECRET_KEY))
+app.use(fileUpload({ useTempFiles: true }))
 
 app.get("/", (req, res) => {
     console.log('Cookies: ', req.signedCookies)
