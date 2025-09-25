@@ -4,6 +4,7 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import { FaLink } from "react-icons/fa6"
 import { useLocation } from "react-router-dom"
+import toast from "react-hot-toast"
 
 function SingleResultsPage({ entryCountry, entryYear }) {
     const params = useParams()
@@ -47,11 +48,12 @@ function SingleResultsPage({ entryCountry, entryYear }) {
                                     <h2> Semi Final {results.semi_result[0].semi_number} Result </h2>
                                 ) : (
                                     <h2>
-                                        <Link to={`/results/semi/${results.semi_result[0].semi_number}/${results.semi_result[0].year}`}>
-                                            <div className="flex justify-center items-center gap-2">
-                                                Semi Final {results.semi_result[0].semi_number} Result 
-                                                <FaLink />
-                                            </div>
+                                        <Link 
+                                            to={`/results/semi/${results.semi_result[0].semi_number}/${results.semi_result[0].year}`}
+                                            className="inline-flex justify-center items-center gap-2"
+                                        >
+                                            Semi Final {results.semi_result[0].semi_number} Result 
+                                            <FaLink />
                                         </Link>
                                     </h2>
                                 )
@@ -81,11 +83,12 @@ function SingleResultsPage({ entryCountry, entryYear }) {
                                     <h2> Final Result </h2>
                                 ) : (
                                     <h2>
-                                        <Link to={`/results/final/${results.final_result[0].year}`}>
-                                            <div className="flex justify-center items-center gap-2">
-                                                Final Result
-                                                <FaLink />
-                                            </div>
+                                        <Link 
+                                            to={`/results/final/${results.final_result[0].year}`}
+                                            className="inline-flex justify-center items-center gap-2"
+                                        >
+                                            Final Result
+                                            <FaLink />
                                         </Link>
                                     </h2>
                                 )
