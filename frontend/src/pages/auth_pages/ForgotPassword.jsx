@@ -22,17 +22,16 @@ function ForgotPassword() {
     }
 
     return (
-        <>
+        <div className="whole_page">
             <h2> Forgot your Password? </h2>
-
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="w-96">
                 
                 <fieldset className="fieldset">
-                    <legend className="fieldset-legend"> Email </legend>
+                    <legend className="fieldset-legend"> Enter your email to reset your password</legend>
                     <input 
                         type="text" 
                         className="input" 
-                        placeholder="Enter your email to reset your password"
+                        placeholder="Enter your email"
                         onChange={(e) => setEmail(e.target.value)}
                         required={true}
                     />
@@ -40,7 +39,7 @@ function ForgotPassword() {
 
                 <input type="submit" className="btn"></input>
             </form>
-        </>
+        </div>
     )
 }
 

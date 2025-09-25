@@ -45,119 +45,121 @@ function SearchPage() {
 
     return (
         <>
-            <h1> Search </h1>
-
-            <fieldset className="fieldset">
-            <legend className="fieldset-legend"> Choose what to search for </legend>
-                
-                <form className="filter">
-                    <input 
-                        className="btn btn-square" 
-                        type="reset" 
-                        value="x" 
-                        onClick={() => setSearchType("")}    
-                    />
-                    <input 
-                        className="btn" 
-                        type="radio" 
-                        name="frameworks" 
-                        aria-label="Country"
-                        onClick={() => setSearchType("Country")}    
-                    />
-                    <input 
-                        className="btn" 
-                        type="radio" 
-                        name="frameworks" 
-                        aria-label="Artist"
-                        onClick={() => setSearchType("Artist")}    
-                    />
-                    <input 
-                        className="btn" 
-                        type="radio" 
-                        name="frameworks" 
-                        aria-label="Song"
-                        onClick={() => setSearchType("Song")}
-                    />
-                    <input 
-                        className="btn" 
-                        type="radio" 
-                        name="frameworks" 
-                        aria-label="Year"
-                        onClick={() => setSearchType("Year")}
-                    />
-                </form>
-            
-            </fieldset>
-
-            <form onSubmit={handleSubmit}>
+            <div className="whole_page">
+                <h1> Search </h1>
 
                 <fieldset className="fieldset">
-                    <legend className="fieldset-legend"> Search </legend>
-                    <input 
-                        type="text"
-                        className="input"
-                        placeholder="Start your search"
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        required={true}
-                    />
+                <legend className="fieldset-legend"> Choose what to search for </legend>
+                    
+                    <form className="filter">
+                        <input 
+                            className="btn btn-square" 
+                            type="reset" 
+                            value="x" 
+                            onClick={() => setSearchType("")}    
+                        />
+                        <input 
+                            className="btn" 
+                            type="radio" 
+                            name="frameworks" 
+                            aria-label="Country"
+                            onClick={() => setSearchType("Country")}    
+                        />
+                        <input 
+                            className="btn" 
+                            type="radio" 
+                            name="frameworks" 
+                            aria-label="Artist"
+                            onClick={() => setSearchType("Artist")}    
+                        />
+                        <input 
+                            className="btn" 
+                            type="radio" 
+                            name="frameworks" 
+                            aria-label="Song"
+                            onClick={() => setSearchType("Song")}
+                        />
+                        <input 
+                            className="btn" 
+                            type="radio" 
+                            name="frameworks" 
+                            aria-label="Year"
+                            onClick={() => setSearchType("Year")}
+                        />
+                    </form>
+                
                 </fieldset>
 
-                <input type="submit" className="btn"/>
-            </form>
-            
-            {
-                loading ? (
-                    <div className="loader">
-                        <Ring />
-                    </div>
-                ) : (
-                    searchResults.length > 0 ? (
-                        <>
-                            <div className="flex gap-5 items-center">
-                                <h2> Search Results </h2>
-                                <Sort 
-                                    data={searchResults}
-                                    setData={setSearchResults}
-                                    includeCountry={true}
-                                    includeYear={true}
-                                />
-                            </div>
+                <form onSubmit={handleSubmit}>
 
-                            <Pagination 
-                                data={searchResults}
-                                itemsPerPage={10}
-                                renderDataItem={(item) => (
-                                    <Popup 
-                                        entryCountry={item.country}
-                                        entryYear={item.year}
-                                        listItems={
-                                            <>
-                                                <li> Country: {item.country} </li>
-                                                <li> Year: {item.year} </li>
-                                                <li> Artist: {item.artist} </li>
-                                                <li> Song: {item.song} </li>
-                                                <li> Overall Result: {item.position} ({item.finalOrSemi})</li>
-                                            </>
-                                        }
-                                        popupContent={
-                                            <CountryIndividualEntryPage 
-                                                entryCountry={item.country}
-                                                entryYear={item.year}
-                                            />
-                                        }
-                                        buttonStyling={"link"}
+                    <fieldset className="fieldset">
+                        <legend className="fieldset-legend"> Search </legend>
+                        <input 
+                            type="text"
+                            className="input"
+                            placeholder="Start your search"
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            required={true}
+                        />
+                    </fieldset>
+
+                    <input type="submit" className="btn"/>
+                </form>
+                
+                {
+                    loading ? (
+                        <div className="loader">
+                            <Ring />
+                        </div>
+                    ) : (
+                        searchResults.length > 0 ? (
+                            <>
+                                <div className="flex gap-5 items-center">
+                                    <h2> Search Results </h2>
+                                    <Sort 
+                                        data={searchResults}
+                                        setData={setSearchResults}
+                                        includeCountry={true}
+                                        includeYear={true}
                                     />
-                                )}
-                            />
-                        </>
-                    ) : (   
-                        searchType !== "" && madeSearch ? 
-                            <div> No results, please try a different search </div>
-                        :
-                            <></>
+                                </div>
+
+                                <Pagination 
+                                    data={searchResults}
+                                    itemsPerPage={10}
+                                    renderDataItem={(item) => (
+                                        <Popup 
+                                            entryCountry={item.country}
+                                            entryYear={item.year}
+                                            listItems={
+                                                <>
+                                                    <li> Country: {item.country} </li>
+                                                    <li> Year: {item.year} </li>
+                                                    <li> Artist: {item.artist} </li>
+                                                    <li> Song: {item.song} </li>
+                                                    <li> Overall Result: {item.position} ({item.finalOrSemi})</li>
+                                                </>
+                                            }
+                                            popupContent={
+                                                <CountryIndividualEntryPage 
+                                                    entryCountry={item.country}
+                                                    entryYear={item.year}
+                                                />
+                                            }
+                                            buttonStyling={"link"}
+                                        />
+                                    )}
+                                />
+                            </>
+                        ) : (   
+                            searchType !== "" && madeSearch ? 
+                                <div> No results, please try a different search </div>
+                            :
+                                <></>
+                        )
                     )
-                )
-            }
+                }
+            </div>
         </>
     )
 }

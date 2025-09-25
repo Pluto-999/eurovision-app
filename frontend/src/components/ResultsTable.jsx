@@ -10,7 +10,7 @@ function ResultsTable({
 }) {
     return (
         <>
-        <table>
+        <table className="w-full table-fixed">
             <thead>
             <tr>
                 <th> Position </th>
@@ -71,6 +71,9 @@ function ResultsTable({
                     </form>
                     {renderPopupContent(result)}
                 </div>
+                <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                </form>
             </dialog>
         ))}
         </>

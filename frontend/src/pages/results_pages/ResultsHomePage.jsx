@@ -5,7 +5,7 @@ function ResultsHomePage() {
     const styling = "flex flex-col gap-2"
 
     return (
-        <>
+        <div className="whole_page">
         <h1> Results Home Page</h1>
         <h2> 2025 Results</h2>
         <div className={styling}>
@@ -37,7 +37,7 @@ function ResultsHomePage() {
             <div><Link to="/results/semi/1/2021"> 2021 Semi Final 1 Results </Link></div>
             <div><Link to="/results/semi/2/2021"> 2021 Semi Final 2 Results </Link></div>
         </div>
-        </>
+        </div>
     )
 }
 

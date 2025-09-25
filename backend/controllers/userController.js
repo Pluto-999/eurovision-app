@@ -58,8 +58,21 @@ const changeProfilePicture = asyncWrapper(async (req, res) => {
     return res.status(200).json({ success: true, profilePicture: result.secure_url })
 })
 
+
+const resetProfilePicture = asyncWrapper(async (req, res) => {
+    const user = await sql`
+        UPDATE users
+        SET profile_picture=${process.env.DEFAULT_PROFILE_PICTURE}
+        WHERE username=${req.username}
+        RETURNING profile_picture
+    `
+
+    return res.status(200).json({ success: true, profilePicture: user[0].profile_picture })
+})
+
 module.exports = {
     updateUserDetails,
     homePage,
-    changeProfilePicture
+    changeProfilePicture,
+    resetProfilePicture
 }

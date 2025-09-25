@@ -33,7 +33,7 @@ function FinalResultsPage() {
     }, [])
 
     return (
-        <>
+        <div className="whole_page">
             <div className="flex gap-5 items-center">
                 <h1> {params.year} Final Results Page </h1>
                 <Sort 
@@ -62,7 +62,7 @@ function FinalResultsPage() {
                     )}
                 />
             )}
-        </>
+        </div>
     )
 }
 

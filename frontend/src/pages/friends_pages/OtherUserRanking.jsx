@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import axios, { all } from "axios"
+import axios from "axios"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-import { Rating } from "react-simple-star-rating"
 import "../../styles/Stats.css"
 import CountryIndividualEntryPage from "../entries_pages/CountryIndividualEntryPage"
 import { Ring } from "ldrs/react"
@@ -71,7 +70,7 @@ function OtherUserRanking() {
     }, [])
 
     return(
-        <>
+        <div className="whole_page">
             <h1> {params.username}'s Ranking of {params.year} Entries </h1>
 
             {loading ? (
@@ -93,7 +92,7 @@ function OtherUserRanking() {
 
                 </>
             )}
-        </>
+        </div>
     )
 }
 

@@ -87,7 +87,7 @@ function CurrentUserRanking() {
     }
 
     return (
-        <>
+        <div className="whole_page w-full">
             <h1> My {params.year} Ranking</h1>
 
             {loading ? (
@@ -122,7 +122,7 @@ function CurrentUserRanking() {
                     </DndContext>
                 </>
             )}
-        </>
+        </div>
     )
 }
 

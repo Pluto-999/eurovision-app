@@ -34,7 +34,7 @@ function AllUserRankings() {
     }, [])
 
     return (
-        <>
+        <div className="whole_page">
             <h1> Community Results for {params.year} </h1>
             {loading ? (
                 <div className="loader">
@@ -57,7 +57,7 @@ function AllUserRankings() {
                 />
             )}
 
-        </>
+        </div>
     )
 }
 

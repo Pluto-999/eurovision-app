@@ -4,6 +4,8 @@ import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import FriendDelete from "./FriendDelete"
 import { Link } from "react-router-dom"
+import { IoChatboxEllipses } from "react-icons/io5"
+import { FaRankingStar } from "react-icons/fa6"
 
 function FriendsList() {
     const [friendList, setFriendList] = useState([])
@@ -32,7 +34,7 @@ function FriendsList() {
     }, [])
 
     return (
-        <>
+        <div className="whole_page">
             {friendList?.length === 0 ? (
                 <>
                 <h2> You currently have no friends </h2>
@@ -46,8 +48,18 @@ function FriendsList() {
                 friendList.map((friend) => (
                     <li key={friend} className="p-2 flex items-center gap-4">
                         {friend}
-                        <button><Link to={`/friends/${friend}`}> View Friend's Rankings </Link></button>
-                        <button><Link to={`/chat/${friend}`}> Chat with {friend} </Link></button>
+                        <Link to={`/friends/${friend}`}>
+                            <button className="btn">
+                                <FaRankingStar />
+                                Rankings
+                            </button>
+                        </Link>
+                        <Link to={`/chat/${friend}`}> 
+                            <button className="btn">
+                                <IoChatboxEllipses />
+                                Chat 
+                            </button>
+                        </Link>
                         <FriendDelete username={friend} fetchFriends={fetchFriends}/>
                     </li>
                 ))
@@ -55,7 +67,7 @@ function FriendsList() {
             </ul>
             </>
             )}
-        </>
+        </div>
             
     )
 }

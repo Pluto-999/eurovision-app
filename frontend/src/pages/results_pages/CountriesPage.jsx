@@ -30,7 +30,7 @@ function CountriesPage() {
     }, [])
 
     return (
-        <>
+        <div className="whole_page"> 
         <h1> List of Participating Countries since 2021 </h1>
         {loading ? (
             <div className="loader">
@@ -59,7 +59,7 @@ function CountriesPage() {
                 )}
             />
         )}
-        </>
+        </div>
     )
 }
 

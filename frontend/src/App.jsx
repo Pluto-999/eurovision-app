@@ -35,9 +35,10 @@ function App() {
   
   return (
     <>
-      <div className="main_page">
+      
       <div><Toaster /></div>
       <Navbar />
+      <div className="main_page">
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/results/*" element={<ResultsRoutes />} />

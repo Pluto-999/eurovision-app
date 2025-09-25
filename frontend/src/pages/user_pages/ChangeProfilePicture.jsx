@@ -9,7 +9,7 @@ function ChangeProfilePicture() {
     const [loading, setLoading] = useState(false)
     const { user, setUser } = useUserContext()
 
-    const handleSubmit = async (e) => {
+    const handleUpload = async (e) => {
         e.preventDefault()
         
         const formData = new FormData()
@@ -29,7 +29,29 @@ function ChangeProfilePicture() {
             toast.success("Successfully updated your profile picture")
         }
         catch (error) {
-            console.log(error)
+            if (error.response?.data?.message) {
+                toast.error(error.response.data.message)
+            }
+            else {
+                toast.error("Something went wrong, please try again")
+            }
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
+    const handleReset = async () => {
+        try {
+            setLoading(true)
+            const response = await axios.patch("http://localhost:3000/api/user/resetProfilePicture",
+                {}, { withCredentials: true }
+            )
+            setUser({ ...user, profile_picture: response.data.profilePicture })
+
+            toast.success("Profile picture was successfully reset to default")
+        }
+        catch (error) {
             if (error.response?.data?.message) {
                 toast.error(error.response.data.message)
             }
@@ -43,21 +65,27 @@ function ChangeProfilePicture() {
     }
 
     return (
-        <>
+        <div className="whole_page">
         <h1> Change your profile picture </h1>
-        <form onSubmit={handleSubmit}>
+
+        <form onSubmit={handleUpload} className="flex flex-col gap-4">
             <fieldset className="fieldset">
                 <legend className="fieldset-legend">Pick a profile picture</legend>
                 <input 
-                    type="file" 
-                    className="file-input" 
-                    onChange={(e) => setImage(e.target.files[0])}
-                    required={true}
+                type="file" 
+                className="file-input" 
+                onChange={(e) => setImage(e.target.files[0])}
+                required
                 />
                 <label className="label">Max size 2MB</label>
             </fieldset>
 
-            <input type="submit" className="btn" />
+            <div className="flex gap-4">
+                <input type="submit" value="Upload" className="btn" />
+                <button type="button" onClick={handleReset} className="btn btn-soft btn-error">
+                Reset to default
+                </button>
+            </div>
         </form>
 
         {loading && (
@@ -65,7 +93,7 @@ function ChangeProfilePicture() {
                 <Ring />
             </div>
         )}
-        </>
+        </div>
     )
 }
 

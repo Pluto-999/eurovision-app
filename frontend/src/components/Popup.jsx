@@ -23,6 +23,9 @@ function Popup({
                 </form>
                 {popupContent}
             </div>
+            <form method="dialog" className="modal-backdrop">
+                <button>close</button>
+            </form>
             </dialog>
         </li>
     )

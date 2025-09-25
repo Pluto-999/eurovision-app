@@ -63,7 +63,7 @@ function ChangeUserRating() {
     }, [])
 
     return (
-        <>
+        <div className="whole_page">
             <h1> {params.country}, { params.year } </h1>
             
             <Rating
@@ -73,7 +73,7 @@ function ChangeUserRating() {
                 SVGclassName="inline"
             />
             
-        </>
+        </div>
     ) 
 }
 

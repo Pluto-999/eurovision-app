@@ -4,24 +4,30 @@
     z-index: 1;
     background-color: white;
     padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 ul{
     list-style-type: none;
 }
 
+.navbar_links {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    transition-duration: 0.5s;
+}
+
 .navbar_links li {
-    display: inline;
-    padding: 12px;
+    padding: 5px;
     transition-duration: 0.5s;
 }
 
 .navbar_links li :hover{
     color: #56598a;
-    transition-duration: 0.5s;
-}
-
-.navbar_links li a{
     transition-duration: 0.5s;
 }
 

@@ -34,7 +34,7 @@ function UserHomePage() {
     }, [])
 
     return (
-        <>
+        <div className="whole_page">
             {loading ? (
                 <div className="loader">
                     <Ring />
@@ -58,7 +58,7 @@ function UserHomePage() {
                </> 
             )}
             
-        </>
+        </div>
     )
 }
 

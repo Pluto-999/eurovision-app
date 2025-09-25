@@ -41,9 +41,9 @@ function LoginPage() {
     }
 
     return (
-        <>
+        <div className="whole_page">
             <h1> Login </h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="w-96">
                 
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend"> Username </legend>
@@ -73,7 +73,7 @@ function LoginPage() {
 
                 <input type="submit" className="btn"></input>
             </form>
-        </>
+        </div>
     )
 }
 

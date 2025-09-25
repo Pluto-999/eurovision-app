@@ -33,7 +33,7 @@ function SemiResultsPage() {
     }, [])
 
     return (
-        <>
+        <div className="whole_page">
             <div className="flex gap-5 items-center">
                 <h1> {params.year} Semi Results {params.semi_number} Page </h1>
                 <Sort 
@@ -62,7 +62,7 @@ function SemiResultsPage() {
                     )}
                 />
             )}
-        </>
+        </div>
     )
 }
 

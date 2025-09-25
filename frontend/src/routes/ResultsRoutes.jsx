@@ -13,8 +13,8 @@ function ResultsRoutes() {
             <Route path="/all_results" element={<ResultsHomePage />}/>
             <Route path="/final/:year" element={< FinalResultsPage />} />
             <Route path="/semi/:semi_number/:year" element={<SemiResultsPage />} />
-            <Route path="/:country/:year" element={<SingleResultsPage />}/>
-            <Route path="/:country" element={<CountryResultsPage />}/>
+            {/* <Route path="/:country/:year" element={<SingleResultsPage />}/>
+            <Route path="/:country" element={<CountryResultsPage />}/> */}
         </Routes>
     )
 }

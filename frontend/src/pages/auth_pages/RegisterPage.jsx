@@ -47,9 +47,9 @@ function RegisterPage() {
     }
 
     return (
-        <>
+        <div className="whole_page">
             <h1> Register </h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="w-96">
                 
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend"> Username </legend>
@@ -86,7 +86,7 @@ function RegisterPage() {
 
                 <input type="submit" className="btn"></input>
             </form>
-        </>
+        </div>
     )
 }
 

@@ -56,7 +56,7 @@ function IndividualCountryHomePage() {
     }, [])
 
     return (
-        <>
+        <div className="whole_page">
             <div className="flex gap-5 items-center">
                 <h1> {params.country} in Eurovision </h1>
                 <Sort 
@@ -72,13 +72,14 @@ function IndividualCountryHomePage() {
                 </div>
             ) : (
                 <>
-                    <table>
+                    <div>
+                    <table className="w-full table-fixed">
                         <thead>
                         <tr>
-                            <th> Year </th>
-                            <th> Artist </th>
-                            <th> Song </th>
-                            <th> Overall Result </th>
+                            <th className="w-1/6">Year</th>
+                            <th className="w-1/3">Artist</th>
+                            <th className="w-1/3">Song</th>
+                            <th className="w-1/6">Overall Result</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -96,7 +97,7 @@ function IndividualCountryHomePage() {
                             ))}
                         </tbody>
                     </table>
-
+                    </div>
                     {entries.map(entry => (
                         <dialog 
                             key={entry.country + entry.year}
@@ -115,7 +116,7 @@ function IndividualCountryHomePage() {
                     ))}
                 </>
             )}
-        </>
+        </div>
     )
 }
 

@@ -6,7 +6,7 @@ const searchForFriends = asyncWrapper(async (req, res) => {
     const currentUsername = req.username
 
     const users = await sql`
-        SELECT username
+        SELECT username, profile_picture
         FROM users
         WHERE username!=${currentUsername} 
             AND username ILIKE ${usernameToSearch + '%'}

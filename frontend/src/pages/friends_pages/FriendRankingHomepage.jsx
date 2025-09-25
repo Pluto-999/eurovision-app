@@ -4,7 +4,7 @@ function FriendRankingHomepage() {
     const params = useParams()
 
     return (
-        <>
+        <div className="whole_page">
             <h1> View {params.username}'s Rankings </h1>
             <div className="flex flex-col gap-2.5 pt-2.5">
                 <div><Link to={`/friends/${params.username}/ranking/2025`}> 2025 Ranking </Link></div>
@@ -13,7 +13,7 @@ function FriendRankingHomepage() {
                 <div><Link to={`/friends/${params.username}/ranking/2022`}> 2022 Ranking </Link></div>
                 <div><Link to={`/friends/${params.username}/ranking/2021`}> 2021 Ranking </Link></div>
             </div>
-        </>
+        </div>
     )
 }
 

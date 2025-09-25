@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import socket from "../../socket"
 import { useParams } from "react-router-dom"
 import axios from "axios"
+import { IoSend } from "react-icons/io5"
+import "../../styles/chat.css"
 
 function Chat() {
     const [message, setMessage] = useState("")
@@ -38,7 +40,7 @@ function Chat() {
     }, [])
 
     return (
-        <>
+        <div className="whole_page">
             <h1> Chat with {params.username} </h1>
             
             <ul> 
@@ -62,13 +64,15 @@ function Chat() {
                     ))
                 } 
             </ul>
-            <input 
-                placeholder="message" 
-                value={message}
-                onChange={(event) => {setMessage(event.target.value)}}
-            ></input>
-            <button onClick={sendMessage}> Send Message </button>
-        </>
+            <div className="message_bar">
+                <input 
+                    placeholder="message" 
+                    value={message}
+                    onChange={(event) => {setMessage(event.target.value)}}
+                ></input>
+                <button className="btn" onClick={sendMessage}> <IoSend /> </button>
+            </div>
+        </div>
     )
 }
 

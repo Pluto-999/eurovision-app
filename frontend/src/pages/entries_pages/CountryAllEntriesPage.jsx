@@ -25,7 +25,7 @@ function CountryAllEntriesPage() {
     }, [])
 
     return (
-        <>
+        <div className="whole_page">
         <h1> List of Entries for {params.country} </h1>
         <ul className="grid">
             {entries.map(entry => (
@@ -50,7 +50,7 @@ function CountryAllEntriesPage() {
                 )
             )}
             </ul>
-        </>
+        </div>
     )
 }
 

@@ -1,5 +1,6 @@
 import axios from "axios"
 import toast from "react-hot-toast"
+import { IoPersonAdd } from "react-icons/io5"
 
 function FriendAdd({ username }) {
 
@@ -8,17 +9,15 @@ function FriendAdd({ username }) {
             username: username
         }, { withCredentials: true })
         .then(() => {
-            toast("Friend successfully added", {
-                icon: "✅"
-            })
+            toast.success("Friend successfully added")
         })
         .catch(error => {
             console.log(error)
             if (error.response.data.message) {
-                toast(error.response.data.message)
+                toast.error(error.response.data.message)
             }
             else {
-                toast("Something has gone wrong, please try again")
+                toast.error("Something has gone wrong, please try again")
             }
             if (error.response.status === 401) {
                 navigate("/account")
@@ -28,7 +27,10 @@ function FriendAdd({ username }) {
 
     return (
         <>
-            <button onClick={addFriend}> Add friend </button>
+            <button className="btn btn-soft btn-success" onClick={addFriend}> 
+                <IoPersonAdd />
+                Add friend 
+            </button>
         </>
     )
 }

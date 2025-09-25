@@ -21,10 +21,10 @@ function FriendSearch () {
         .catch(error => {
             console.log(error)
             if (error.response.data.message) {
-                toast(error.response.data.message)
+                toast.error(error.response.data.message)
             }
             else {
-                toast("Something has gone wrong, please try again")
+                toast.error("Something has gone wrong, please try again")
             }
             if (error.response.status === 401) {
                 navigate("/account")
@@ -33,10 +33,10 @@ function FriendSearch () {
     }
 
     return (
-        <>
+        <div className="whole_page">
             <h1> Search for friends </h1>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="w-96">
                 
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend"> Username </legend>
@@ -56,6 +56,11 @@ function FriendSearch () {
                 searchResults.map(friend => (
                     <ul key={friend.username}>
                         <li className="p-2 flex items-center gap-4">
+                            <div className="avatar">
+                                <div className="w-10 rounded-full">
+                                    <img src={friend.profile_picture} />
+                                </div>
+                            </div>
                             {friend.username} 
                             <FriendAdd username={friend.username}/> 
                         </li>
@@ -63,7 +68,7 @@ function FriendSearch () {
                 ))
                 
             } 
-        </>
+        </div>
     )
 }
 

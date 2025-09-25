@@ -1,5 +1,6 @@
 import axios from "axios"
 import toast from "react-hot-toast"
+import { IoPersonRemove } from "react-icons/io5"
 
 function FriendDelete({ username, fetchFriends }) {
 
@@ -26,7 +27,10 @@ function FriendDelete({ username, fetchFriends }) {
 
     return (
         <>
-            <button onClick={DeleteFriend}> Delete friend </button>
+            <button className="btn btn-soft btn-error" onClick={DeleteFriend}> 
+                <IoPersonRemove />
+                Delete friend 
+            </button>
         </>
     )
 }

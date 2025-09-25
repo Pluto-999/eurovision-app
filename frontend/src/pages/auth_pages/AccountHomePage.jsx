@@ -36,13 +36,13 @@ function HomePage () {
             <Ring />
         ) : 
         user ? (navigate("/user/home")) : ( 
-            <>
+            <div className="whole_page">
             <h1> Account Home Page </h1>
-            <div className="flex flex-col gap-3 p-5">
+            <div className="flex flex-col gap-3">
                 <div><Link to="/account/register"> Register </Link></div>
                 <div><Link to="/account/login"> Login </Link></div>
             </div>
-            </>
+            </div>
         )}
         </>
     )

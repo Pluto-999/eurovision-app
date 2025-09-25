@@ -34,10 +34,10 @@ function ResetPassword () {
     }
 
     return (
-        <>
+        <div className="whole_page">
             <h2> Reset your password </h2>
             
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="w-96">
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend"> New Password </legend>
                     <input 
@@ -62,7 +62,7 @@ function ResetPassword () {
 
                 <input type="submit" className="btn"></input>
             </form>
-        </>
+        </div>
     )
 }
 
