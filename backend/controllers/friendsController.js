@@ -5,15 +5,21 @@ const searchForFriends = asyncWrapper(async (req, res) => {
     const usernameToSearch = req.params.username
     const currentUsername = req.username
 
+    if (!usernameToSearch) {
+        return res.status(400).json({ success: false, message: "Please provide a username to search for" })
+    }
+
     const users = await sql`
         SELECT username, profile_picture
-        FROM users
-        WHERE username!=${currentUsername} 
-            AND username ILIKE ${usernameToSearch + '%'}
+        FROM users LEFT JOIN friends
+        ON (
+            (friends.user1=users.username AND friends.user2=${currentUsername}) OR
+            (friends.user2=users.username AND friends.user1=${currentUsername})
+        )
+        WHERE users.username!=${currentUsername}
+            AND users.username ILIKE ${usernameToSearch + '%'}
+            AND friends.user1 IS NULL
     `
-    if (users.length === 0) {
-        return res.status(404).json({ success: false, message: "No users exist" })
-    }
 
     res.status(200).json({ success: true, users: users })
 })
@@ -22,26 +28,14 @@ const searchForFriends = asyncWrapper(async (req, res) => {
 const getFriends = asyncWrapper(async (req, res) => {
     const username = req.username
 
-    const primaryFriends = await sql`
-        SELECT user2
-        FROM friends
-        WHERE user1=${username}
+    const friends = await sql`
+        SELECT username, profile_picture
+        FROM friends INNER JOIN users
+        ON (friends.user1=${username} AND users.username=friends.user2)
+        OR (friends.user2=${username} AND users.username=friends.user1)
     `
 
-    const secondaryFriends = await sql`
-        SELECT user1
-        FROM friends
-        WHERE user2=${username}
-    `
-
-    const allFriends = [
-        ...primaryFriends.map(f => f.user2),
-        ...secondaryFriends.map(f => f.user1)
-    ]
-
-    allFriends.sort()
-
-    res.status(200).json({ success: true, friends: allFriends })
+    res.status(200).json({ success: true, friends: friends })
 })
 
 
@@ -85,13 +79,22 @@ const addFriend = asyncWrapper(async (req, res) => {
 
     // otherwise we can now add the friend
 
-    const newFriendship = await sql`
+    await sql`
         INSERT INTO friends(user1, user2)
         VALUES (${firstUser}, ${secondUser})
         RETURNING *
     `
 
-    res.status(201).json({ success: true, newFriendship: newFriendship[0] })
+    const newFriend = await sql`
+        SELECT username, profile_picture
+        FROM users
+        WHERE username=${usernameToAdd}
+    `
+
+    res.status(201).json({ 
+        success: true, 
+        newFriend: newFriend[0]
+    })
 
 })
 
@@ -131,7 +134,11 @@ const deleteFriend = asyncWrapper(async (req, res) => {
         WHERE user1=${firstUser} AND user2=${secondUser}
     `
 
-    res.status(200).json({ success: true, message: `Successfully deleted ${usernameToRemove} as your friend` })
+    res.status(200).json({ 
+        success: true, 
+        message: `Successfully deleted ${usernameToRemove} as your friend`, 
+        deleted: usernameToRemove
+    })
 
 })
 

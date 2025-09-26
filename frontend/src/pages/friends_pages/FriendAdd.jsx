@@ -1,15 +1,20 @@
 import axios from "axios"
 import toast from "react-hot-toast"
 import { IoPersonAdd } from "react-icons/io5"
+import { useNavigate } from "react-router-dom"
+import { useFriendsListContext } from "../../context/friendsListContext"
 
 function FriendAdd({ username }) {
+    const { setFriendsList } = useFriendsListContext()
+    const navigate = useNavigate()
 
     const addFriend = async () => {
         axios.post("http://localhost:3000/api/friends/add", {
             username: username
         }, { withCredentials: true })
-        .then(() => {
+        .then((response) => {
             toast.success("Friend successfully added")
+            setFriendsList(prev => [...prev, response.data.newFriend])
         })
         .catch(error => {
             console.log(error)

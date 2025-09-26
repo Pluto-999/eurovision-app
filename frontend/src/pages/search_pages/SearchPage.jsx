@@ -34,7 +34,12 @@ function SearchPage() {
             }
         } 
         catch (error) {
-            toast.error(error.response.data.message)
+            if (error.response.data.message) {
+                toast.error(error.response.data.message)
+            }
+            else {
+                toast.error("Something went wrong, please try again")
+            }
             setSearchResults([])
             setMadeSearch(false)
         }
@@ -90,7 +95,7 @@ function SearchPage() {
                 
                 </fieldset>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="w-96">
 
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend"> Search </legend>
@@ -105,7 +110,7 @@ function SearchPage() {
 
                     <input type="submit" className="btn"/>
                 </form>
-                
+                </div>
                 {
                     loading ? (
                         <div className="loader">
@@ -126,7 +131,7 @@ function SearchPage() {
 
                                 <Pagination 
                                     data={searchResults}
-                                    itemsPerPage={10}
+                                    itemsPerPage={9}
                                     renderDataItem={(item) => (
                                         <Popup 
                                             entryCountry={item.country}
@@ -159,7 +164,6 @@ function SearchPage() {
                         )
                     )
                 }
-            </div>
         </>
     )
 }
