@@ -25,7 +25,6 @@ function RegisterPage() {
             if (response.data.success) {
                 toast.success("Account successfully created")
                 setUser(response.data.user)
-                console.log(response.data)
                 navigate("/user/home")
 
                 if (!socket.connected) {

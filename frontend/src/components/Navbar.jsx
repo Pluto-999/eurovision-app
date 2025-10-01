@@ -2,6 +2,12 @@ import { Link } from "react-router-dom"
 import "../styles/Navbar.css"
 import { useUserContext } from "../context/userContext"
 import { IoIosMenu } from "react-icons/io"
+import { IoSettings } from "react-icons/io5"
+import { IoHome } from "react-icons/io5"
+import { FiLogOut } from "react-icons/fi"
+import { FiLogIn } from "react-icons/fi"
+import { IoCreate } from "react-icons/io5"
+
 
 function Navbar() {
     
@@ -36,17 +42,17 @@ function Navbar() {
                             {user.username}
                         </div>
                             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                <li><Link to="/user/home"> Homepage </Link></li>
-                                <li><Link to="/user/settings"> Account Settings </Link></li>
-                                <li><Link to="/account/logout"> Logout </Link></li>
+                                <li><Link to="/user/home"> <IoHome /> Homepage </Link></li>
+                                <li><Link to="/user/settings"> <IoSettings /> Account Settings </Link></li>
+                                <li><Link to="/account/logout"> <FiLogOut /> Logout </Link></li>
                             </ul>
                         </div>
                     ) : (
                         <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="nav_dropdown">Account</div>
                             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                <li><Link to="/account/login"> Login </Link></li>
-                                <li><Link to="/account/register"> Register </Link></li>
+                                <li><Link to="/account/login"> <FiLogIn /> Login </Link></li>
+                                <li><Link to="/account/register"> <IoCreate /> Register </Link></li>
                             </ul>
                         </div>
                     )}
@@ -80,17 +86,17 @@ function Navbar() {
                                     {user.username}
                                 </div>
                                     <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                        <li><Link to="/user/home"> Homepage </Link></li>
-                                        <li><Link to="/user/settings"> Account Settings </Link></li>
-                                        <li><Link to="/account/logout"> Logout </Link></li>
+                                        <li><Link to="/user/home"> <IoHome /> Homepage </Link></li>
+                                        <li><Link to="/user/settings"> <IoSettings /> Account Settings </Link></li>
+                                        <li><Link to="/account/logout"> <FiLogOut /> Logout </Link></li>
                                     </ul>
                                 </div>
                             ) : (
                                 <div className="dropdown dropdown-left">
                                 <div tabIndex={0} role="button" className="nav_dropdown">Account</div>
                                     <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                        <li><Link to="/account/login"> Login </Link></li>
-                                        <li><Link to="/account/register"> Register </Link></li>
+                                        <li><Link to="/account/login"> <FiLogIn /> Login </Link></li>
+                                        <li><Link to="/account/register"> <IoCreate /> Register </Link></li>
                                     </ul>
                                 </div>
                             )}

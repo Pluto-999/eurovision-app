@@ -2,6 +2,7 @@ const sql = require("../config/db")
 const asyncWrapper = require("../middleware/asyncWrapper")
 const cloudinary = require("cloudinary").v2
 const fs = require("fs")
+const { attachCookie } = require("../utils/jwt")
 
 const updateUserDetails = asyncWrapper(async (req, res) => {
     res.send("update user details")
@@ -70,9 +71,51 @@ const resetProfilePicture = asyncWrapper(async (req, res) => {
     return res.status(200).json({ success: true, profilePicture: user[0].profile_picture })
 })
 
+
+const changeUsername = asyncWrapper(async (req, res) => {
+
+    const newUsername = req.body.username
+
+    if (!newUsername) {
+        return res.status(400).json({ success: false, message: "Please provide a new username" })
+    }
+
+    if (newUsername === req.username) {
+        return res.status(400).json({ success: false, message: "Please provide a new username" })
+    }
+
+    if (newUsername.length < 3 || newUsername.length > 15) {
+        return res.status(400).json({ success: false, message: "Username must be between 3 and 15 characters" })
+    }
+
+    const findUsername = await sql`
+        SELECT username
+        FROM users
+        WHERE username=${newUsername}
+    `
+
+    if (findUsername.length > 0) {
+        return res.status(409).json({ success: false, message: "Sorry, this username is already in use. Please pick another" })
+    }
+
+    const user = await sql`
+        UPDATE users
+        SET username=${newUsername}
+        WHERE username=${req.username}
+        RETURNING username
+    `
+
+    const payload = { username: user[0].username }
+
+    attachCookie(res, payload)
+
+    res.status(200).json({ success: true, payload })
+})
+
 module.exports = {
     updateUserDetails,
     homePage,
     changeProfilePicture,
-    resetProfilePicture
+    resetProfilePicture,
+    changeUsername
 }

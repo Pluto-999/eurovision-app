@@ -37,11 +37,11 @@ const register = asyncWrapper(async (req, res) => {
     `
 
     if (findUsername.length > 0) {
-        return res.status(409).json({ success: false, message: "Sorry, this username is already associated to an account"} )
+        return res.status(409).json({ success: false, message: "Sorry, this username is already in use. Please pick another" })
     }
 
     if (findEmail.length > 0) {
-        return res.status(409).json({ success: false, message: "Sorry, this email is already associated to an account"} )
+        return res.status(409).json({ success: false, message: "Sorry, this email is already associated to an account" })
     }
 
 

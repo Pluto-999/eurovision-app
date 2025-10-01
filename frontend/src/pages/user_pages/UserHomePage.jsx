@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
+import { useUserContext } from "../../context/userContext"
 
 function UserHomePage() {
-    const [user, setUser] = useState(null)
+    const { user, setUser } = useUserContext()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 

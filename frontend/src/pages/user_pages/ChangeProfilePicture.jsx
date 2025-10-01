@@ -26,7 +26,7 @@ function ChangeProfilePicture() {
             )
             setUser({ ...user, profile_picture: response.data.profilePicture })
             
-            toast.success("Successfully updated your profile picture")
+            toast.success("Your profile picture has been successfully updated")
         }
         catch (error) {
             if (error.response?.data?.message) {

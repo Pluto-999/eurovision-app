@@ -19,6 +19,7 @@ const searchForFriends = asyncWrapper(async (req, res) => {
         WHERE users.username!=${currentUsername}
             AND users.username ILIKE ${usernameToSearch + '%'}
             AND friends.user1 IS NULL
+            AND friends.user2 IS NULL
     `
 
     res.status(200).json({ success: true, users: users })
@@ -39,63 +40,133 @@ const getFriends = asyncWrapper(async (req, res) => {
 })
 
 
-const addFriend = asyncWrapper(async (req, res) => {
-    
+const createFriendRequest = asyncWrapper(async (req, res) => {
+    const currentUsername = req.username
     const usernameToAdd = req.body.username
 
-    if (!usernameToAdd) {
-        return res.status(400).json({ success: false, message: "Ensure you give the username of the friend you want to add" })
+    if (!usernameToAdd || currentUsername === usernameToAdd) {
+        return res.status(400).json({ success: false, message: "Ensure you give the username of the user you want to send the friend request to" })
     }
 
-    const friendToAdd = await sql`
-        SELECT username
+    const findUser = await sql`
+        SELECT *
         FROM users
         WHERE username=${usernameToAdd}
     `
 
-    if (friendToAdd.length === 0) {
+    if (findUser.length === 0) {
         return res.status(404).json({ success: false, message: "No user exists with this username" })
     }
 
-    const currentUsername = req.username
-
-    if (currentUsername === friendToAdd[0]["username"]) {
-        return res.status(400).json({ success: false, message: "You cannot add yourself as a friend" })
-    }    
-
-    // now check if the two users are already friends
-    
-    const [firstUser, secondUser] = [currentUsername, usernameToAdd].sort()
-
-    const existingFriendship = await sql`
+    const existingPendingRequest = await sql`
         SELECT *
-        FROM friends
-        WHERE user1=${firstUser} AND user2=${secondUser}
+        FROM friend_requests
+        WHERE (sender=${currentUsername} AND receiver=${usernameToAdd})
+            OR (sender=${usernameToAdd} AND receiver=${currentUsername})
     `
 
-    if (existingFriendship.length > 0) {
-        return res.status(400).json({ success: false, message: "You are already friends with this user" });
+    if (existingPendingRequest.length >= 1) {
+        return res.status(400).json({ success: false, message: "A friend request has already been sent between you and this user. Please either wait for them to accept it, or check your friend requests" })
     }
 
-    // otherwise we can now add the friend
+    const alreadyFriends = await sql`
+        SELECT *
+        FROM friends
+        WHERE (user1=${currentUsername} AND user2=${usernameToAdd})
+            OR (user1=${usernameToAdd} AND user2=${currentUsername})
+    `
+
+    if (alreadyFriends.length >= 1) {
+        return res.status(400).json({ success: false, message: "You are already friends with each other so you cannot send a friend request" })
+    }
 
     await sql`
-        INSERT INTO friends(user1, user2)
-        VALUES (${firstUser}, ${secondUser})
-        RETURNING *
+        INSERT INTO friend_requests (sender, receiver)
+        VALUES (${currentUsername}, ${usernameToAdd})
     `
 
-    const newFriend = await sql`
-        SELECT username, profile_picture
+    res.status(200).json({ success: true, message: `Successfully sent a friend request to ${usernameToAdd}` })
+})
+
+
+const acceptFriendRequest = asyncWrapper(async (req, res) => {
+    const currentUsername = req.username
+    const usernameRequest = req.body.username
+
+    if (!usernameRequest || currentUsername === usernameRequest) {
+        return res.status(400).json({ success: false, message: "Ensure you give the username of who the request comes from" })
+    }
+
+    const findUser = await sql`
+        SELECT *
         FROM users
-        WHERE username=${usernameToAdd}
+        WHERE username=${usernameRequest}
     `
 
-    res.status(201).json({ 
-        success: true, 
-        newFriend: newFriend[0]
-    })
+    if (findUser.length === 0) {
+        return res.status(404).json({ success: false, message: "No user exists with this username" })
+    }
 
+    const findRequest = await sql`
+        SELECT *
+        FROM friend_requests
+        WHERE sender=${usernameRequest} AND receiver=${currentUsername}
+    `
+
+    if (findRequest.length === 0) {
+        return res.status(404).json({ success: false, message: "Friend request not found" })
+    }
+
+    await sql`
+        DELETE FROM friend_requests
+        WHERE sender=${usernameRequest} AND receiver=${currentUsername}
+    `
+
+    await sql`
+        INSERT INTO friends (user1, user2)
+        VALUES (${currentUsername}, ${usernameRequest})
+    `
+
+    res.status(200).json({ success: true, message: `You are now friends with ${usernameRequest}`})
+})
+
+
+const rejectFriendRequest = asyncWrapper(async (req, res) => {
+    const currentUsername = req.username
+    const usernameRequest = req.body.username
+
+    if (!usernameRequest || currentUsername === usernameRequest) {
+        return res.status(400).json({ success: false, message: "Ensure you give the username of who the request comes from" })
+    }
+
+    const findRequest = await sql`
+        SELECT *
+        FROM friend_requests
+        WHERE sender=${usernameRequest} AND receiver=${currentUsername}
+    `
+
+    if (findRequest.length === 0) {
+        return res.status(404).json({ success: false, message: "Friend request not found" })
+    }
+
+    await sql`
+        DELETE FROM friend_requests
+        WHERE (sender=${usernameRequest} AND receiver=${currentUsername})
+    `
+
+    res.status(200).json({ success: true, message: `You have successfully rejected the friend request from ${usernameRequest}`})
+})
+
+
+const getFriendRequests = asyncWrapper(async (req, res) => {
+    
+    const friendRequests = await sql`
+        SELECT sender
+        FROM friend_requests
+        WHERE receiver=${req.username}
+    `
+
+    return res.status(200).json({ success: true, friendRequests: friendRequests })
 })
 
 
@@ -116,13 +187,12 @@ const deleteFriend = asyncWrapper(async (req, res) => {
     if (findUser.length === 0) {
         return res.status(404).json({ success: false, message: "No user exists with this username" })
     }
-    
-    const [firstUser, secondUser] = [usernameToRemove, currentUsername].sort()
 
     const existingFriendship = await sql`
         SELECT *
         FROM friends
-        WHERE user1=${firstUser} AND user2=${secondUser}
+        WHERE (user1=${currentUsername} AND user2=${usernameToRemove}) 
+            OR (user1=${usernameToRemove} AND user2=${currentUsername})
     `
 
     if (existingFriendship.length === 0) {
@@ -131,20 +201,25 @@ const deleteFriend = asyncWrapper(async (req, res) => {
 
     await sql`
         DELETE FROM friends
-        WHERE user1=${firstUser} AND user2=${secondUser}
+        WHERE (user1=${currentUsername} AND user2=${usernameToRemove})
+            OR (user1=${usernameToRemove} AND user2=${currentUsername})
     `
-
-    res.status(200).json({ 
-        success: true, 
-        message: `Successfully deleted ${usernameToRemove} as your friend`, 
+    
+    res.status(200).json({
+        success: true,
+        message: `Successfully deleted ${usernameToRemove} as your friend`,
         deleted: usernameToRemove
     })
 
 })
 
+
 module.exports = {
     searchForFriends,
-    getFriends, 
-    addFriend,
+    getFriends,
+    createFriendRequest,
+    acceptFriendRequest,
+    rejectFriendRequest,
+    getFriendRequests,
     deleteFriend
 }

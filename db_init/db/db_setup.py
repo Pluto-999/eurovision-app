@@ -87,21 +87,22 @@ cur.execute("""
             )
     )
 """)
+conn.commit()
 
 # Add rows for forgot password
 cur.execute("""
     ALTER TABLE users
-    ADD password_token TEXT,
-    ADD password_token_expiration TIMESTAMP 
+    ADD COLUMN IF NOT EXISTS password_token TEXT,
+    ADD COLUMN IF NOT EXISTS password_token_expiration TIMESTAMP 
 """)
+conn.commit()
 
 # Add row for profile picture
 cur.execute("""
     ALTER TABLE users
-    ADD profile_picture TEXT
+    ADD COLUMN IF NOT EXISTS profile_picture TEXT
     DEFAULT 'https://res.cloudinary.com/dt4ozqfdr/image/upload/v1758639875/Screenshot_2025-09-23_160350_soetp8.png'
 """)
-
 conn.commit()
 
 
@@ -138,16 +139,79 @@ conn.commit()
 
 cur.execute("""
     CREATE TABLE IF NOT EXISTS friends (
+        friendship_id SERIAL PRIMARY KEY,
         user1 TEXT NOT NULL,
         user2 TEXT NOT NULL,
-        PRIMARY KEY (user1, user2),
-        FOREIGN KEY (user1) REFERENCES users(username),
-        FOREIGN KEY (user2) REFERENCES users(username),
-        CHECK (user1 < user2),
-        CHECK (user1 != user2)
+        FOREIGN KEY (user1) REFERENCES users(username) ON UPDATE CASCADE,
+        FOREIGN KEY (user2) REFERENCES users(username) ON UPDATE CASCADE,
+        CHECK (user1 != user2),
+        UNIQUE (user1, user2)
     )
 """)
 conn.commit()
+
+
+cur.execute("""
+    CREATE TABLE IF NOT EXISTS friend_requests (
+        request_id SERIAL PRIMARY KEY,
+        sender TEXT NOT NULL,
+        receiver TEXT NOT NULL,
+        FOREIGN KEY (sender) REFERENCES users(username) ON UPDATE CASCADE,
+        FOREIGN KEY (receiver) REFERENCES users(username) ON UPDATE CASCADE,
+        CHECK (sender != receiver)
+    )
+""")
+conn.commit()
+
+
+# Add ON UPDATE CASCADE for changing of username functionality
+
+cur.execute("""
+    ALTER TABLE ranking
+    DROP CONSTRAINT IF EXISTS ranking_username_fkey
+""")
+conn.commit()
+
+cur.execute("""
+    ALTER TABLE ranking
+    ADD CONSTRAINT ranking_username_fkey
+    FOREIGN KEY (username)
+    REFERENCES users(username)
+    ON UPDATE CASCADE
+""")
+conn.commit()
+
+
+cur.execute("""
+    ALTER TABLE messages
+    DROP CONSTRAINT IF EXISTS messages_sender_fkey
+""")
+conn.commit()
+
+cur.execute("""
+    ALTER TABLE messages
+    ADD CONSTRAINT messages_sender_fkey
+    FOREIGN KEY (sender)
+    REFERENCES users(username)
+    ON UPDATE CASCADE
+""")
+conn.commit()
+
+cur.execute("""
+    ALTER TABLE messages
+    DROP CONSTRAINT IF EXISTS messages_receiver_fkey
+""")
+conn.commit()
+
+cur.execute("""
+    ALTER TABLE messages
+    ADD CONSTRAINT messages_receiver_fkey
+    FOREIGN KEY (receiver) 
+    REFERENCES users(username)
+    ON UPDATE CASCADE
+""")
+conn.commit()
+
 
 # Close the cursor and return the connection to the pool
 cur.close()

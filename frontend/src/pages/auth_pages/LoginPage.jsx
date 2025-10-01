@@ -24,7 +24,6 @@ function LoginPage() {
             if (response.data.success) {
                 toast.success("Successfully logged in")
                 setUser(response.data.user)
-                console.log(response.data)
                 navigate("/user/home")
 
                 if (!socket.connected) {
@@ -36,7 +35,12 @@ function LoginPage() {
             }
         }
         catch (error) {
-            toast.error(error.response.data.message)
+            if (error.response?.data?.message) {
+                toast.error(error.response.data.message)
+            }
+            else {
+                toast.error("Something went wrong, please try again")
+            }
         }
     }
 
