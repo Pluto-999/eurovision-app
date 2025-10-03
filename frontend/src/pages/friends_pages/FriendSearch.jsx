@@ -2,7 +2,7 @@ import { useState } from "react"
 import axios from "axios"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-import FriendAdd from "./FriendAdd"
+import SendFriendRequest from "./SendFriendRequest"
 import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
 import Pagination from "../../components/Pagination"
@@ -96,7 +96,7 @@ function FriendSearch () {
                                         </div>
                                         {friend.username} 
                                     </div>
-                                    <FriendAdd username={friend.username}/> 
+                                    <SendFriendRequest username={friend.username}/> 
                                 </div>
                             )}
                         />

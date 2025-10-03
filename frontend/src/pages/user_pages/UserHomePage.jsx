@@ -55,6 +55,7 @@ function UserHomePage() {
                 <div className="flex flex-col gap-2.5">
                     <div><Link to="/friends/my_friends"> My Friends </Link></div>
                     <div><Link to="/friends/search"> Search for Friends</Link></div>
+                    <div><Link to="/friends/requests"> My Friend Requests </Link></div>
                 </div>
                </> 
             )}

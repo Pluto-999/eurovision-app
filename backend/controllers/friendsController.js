@@ -158,15 +158,62 @@ const rejectFriendRequest = asyncWrapper(async (req, res) => {
 })
 
 
-const getFriendRequests = asyncWrapper(async (req, res) => {
-    
-    const friendRequests = await sql`
-        SELECT sender
-        FROM friend_requests
-        WHERE receiver=${req.username}
+const deleteFriendRequest = asyncWrapper(async (req, res) => {
+    const usernameToRemove = req.params.username
+    const currentUsername = req.username
+
+    if (currentUsername === usernameToRemove) {
+        return res.status(400).json({ success: false, message: "You cannot remove a friend request from yourself" })
+    }
+  
+    const findUser = await sql`
+        SELECT *
+        FROM users
+        WHERE username=${usernameToRemove}
     `
 
-    return res.status(200).json({ success: true, friendRequests: friendRequests })
+    if (findUser.length === 0) {
+        return res.status(404).json({ success: false, message: "No user exists with this username" })
+    }
+
+    const currentRequest = await sql`
+        SELECT *
+        FROM friend_requests
+        WHERE sender=${currentUsername} AND receiver=${usernameToRemove}
+    `
+
+    if (currentRequest.length === 0) {
+        return res.status(404).json({ success: false, message: `You haven't sent a request to ${usernameToRemove} yet` })
+    }
+
+    await sql`
+        DELETE FROM friend_requests
+        WHERE sender=${currentUsername} AND receiver=${usernameToRemove}
+    `
+
+    res.status(200).json({
+        success: true,
+        message: `Successfully deleted the friend request to ${usernameToRemove}`,
+        deleted: usernameToRemove
+    })
+})
+
+const getFriendRequests = asyncWrapper(async (req, res) => {
+    
+    const incomingRequests = await sql`
+        SELECT username, profile_picture
+        FROM friend_requests INNER JOIN users
+        ON users.username=friend_requests.sender
+        WHERE friend_requests.receiver=${req.username}
+    `
+    const outgoingRequests = await sql`
+        SELECT username, profile_picture
+        FROM friend_requests INNER JOIN users
+        ON users.username=friend_requests.receiver
+        WHERE friend_requests.sender=${req.username}
+    `
+
+    return res.status(200).json({ success: true, incomingRequests, outgoingRequests })
 })
 
 
@@ -220,6 +267,7 @@ module.exports = {
     createFriendRequest,
     acceptFriendRequest,
     rejectFriendRequest,
+    deleteFriendRequest,
     getFriendRequests,
     deleteFriend
 }

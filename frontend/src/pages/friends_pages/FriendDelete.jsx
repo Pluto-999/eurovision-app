@@ -18,7 +18,7 @@ function FriendDelete({ username }) {
         })
         .catch(error => {
             console.log(error)
-            if (error.response.data.message) {
+            if (error.response?.data?.message) {
                 toast(error.response.data.message)
             }
             else {

@@ -34,14 +34,14 @@ function RegisterPage() {
             else {
                 console.log(response)
             }
-
         }
         catch (error) {
-            console.log(error)
-            toast(error.response.data.message, {
-                icon: "❌"   
-            })
-            console.log(error.response.data.message)
+            if (error.response?.data?.message) {
+                toast.error(error.response.data.message)
+            }
+            else {
+                toast.error("Something went wrong, please try again")
+            }
         }
     }
 
