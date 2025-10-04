@@ -17,25 +17,33 @@ import axios from "axios"
 import socket from "./socket"
 import "./index.css"
 import "./styles/loading.css"
+import ProtectedRoute from "./routes/ProtectedRoute"
+import { useUserContext } from "./context/userContext"
 
 function App() {
+  const { setUser, setLoading } = useUserContext()
+  
   useEffect(() => {
     axios.get("http://localhost:3000/api/user/home", 
       { withCredentials: true }
     )
-    .then(() => {
+    .then((response) => {
+      setUser(response.data.user)
       if (!socket.connected) {
         socket.connect()
       }
     })
     .catch(() => {
+      setUser(null)
       console.log("user hasn't logged in or registered yet ...")
     })
-  })
+    .finally(() => {
+      setLoading(false)
+    })
+  }, [])
   
   return (
     <>
-      
       <div><Toaster /></div>
       <Navbar />
       <div className="main_page">
@@ -44,12 +52,33 @@ function App() {
         <Route path="/results/*" element={<ResultsRoutes />} />
         <Route path="/entries/*" element={<EntriesRoutes />} />
         <Route path="/account/*" element={<AccountRoutes />} />
-        <Route path="/user/*" element={<UserRoutes />}/>
+        <Route 
+          path="/user/*" 
+          element={
+            <ProtectedRoute>
+              <UserRoutes />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/countries/*" element={<CountriesPage />} />
-        <Route path="/friends/*" element={<FriendsRoutes />} />
+        <Route 
+          path="/friends/*" 
+          element={
+            <ProtectedRoute>
+              <FriendsRoutes />
+            </ProtectedRoute>
+          } 
+        />
         <Route path="/user_stats/*" element={<UserStatsRoutes />} />
         <Route path="/search/*" element={<SearchRoutes />} />
-        <Route path="/chat/:username" element={<Chat />} />
+        <Route 
+          path="/chat/:username" 
+          element={
+            <ProtectedRoute>
+              <Chat />
+            </ProtectedRoute>
+          } 
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       </div>

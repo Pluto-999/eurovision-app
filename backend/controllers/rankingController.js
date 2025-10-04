@@ -161,17 +161,6 @@ const changeRanking = asyncWrapper(async (req, res) => {
             ORDER BY position ASC
         `
 
-
-        console.log(currentRank)
-        console.log("--------------------")
-        console.log(countryInNewRank)
-        console.log("--------------------")
-        console.log(shiftPositionDownwards)
-        console.log("--------------------")
-        console.log(shiftPositionUpwards)
-
-
-
         // need to check if the country in the inputted position is less than or greater than the current rank of the country
         
         // if the current rank of the country is lower than the inputted position, we want to move the country down some positions
@@ -344,8 +333,6 @@ const getCurrentUserAllRankings = asyncWrapper(async (req, res) => {
         ranked_entries: ranked_entries, 
         unranked_entries: unranked_entries
     })
-
-    return getRankings(req.params.year, username[0]["username"], res)
 })
 
 const getOtherUserAllRankings = asyncWrapper(async (req, res) => {

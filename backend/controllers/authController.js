@@ -166,7 +166,7 @@ const resetPassword = async (req, res) => {
     const { token, password } = req.body
 
     if (!token || !password) {
-        return res.status(400).json({ success: false, message: "All fields are required" })
+        return res.status(400).json({ success: false, message: "All fields are required, including a valid token and new password. Please try again with the link given via email" })
     }
 
     const user = await sql`
