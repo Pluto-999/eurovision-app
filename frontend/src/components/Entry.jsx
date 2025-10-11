@@ -1,8 +1,9 @@
 import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
-import { Link } from "react-router-dom"
 import Popup from './Popup';
 import CountryIndividualEntryPage from '../pages/entries_pages/CountryIndividualEntryPage';
+import { FaArrowsUpDown } from "react-icons/fa6"
+import ChangeRating from "./ChangeRating"
 
 function Entry(props) {
   const {
@@ -38,45 +39,48 @@ function Entry(props) {
   }
 
   return (
-    <>
     <div 
         ref={setNodeRef} 
         style={style} 
-        className={`p-3 mb-2 rounded-lg shadow cursor-pointer ${rankedStyle}`}
+        className={`flex justify-between p-3 mb-2 rounded-lg shadow cursor-pointer ${rankedStyle} cursor-default`}
     >
-        <div {...attributes} {...listeners}>
-          {isRanked ? props.position + ")" : ""} {props.country} {hasPoints ? `: ${points[props.position]} points` : ""}
+        <div className='flex items-center gap-5'>
+          <div 
+            {...attributes} 
+            {...listeners} 
+            className='cursor-grab'
+            title='Drag to change ranking'  
+          >
+            <FaArrowsUpDown size={50} />
+          </div>
+          <div className='text-lg'>
+            {isRanked ? props.position + "." : ""} {props.country} {hasPoints ? `: ${points[props.position]} points` : ""}
+          </div>
         </div>
-        <ul>
-          <li>
-            <Popup 
-              entryCountry={props.country}
-              entryYear={props.year}
-              listItems={
-                <>
-                  <li> View Entry </li>
-                </>
-              }
-              popupContent={
-                <CountryIndividualEntryPage 
-                  entryCountry={props.country}
-                  entryYear={props.year}
-                />
-              }
-            />
-          </li>
-          <li>
-            <Link
-              to={`/user/change_rating/${props.country}/${props.year}`}
-              onClick={(e) => e.stopPropagation()}
-              className="text-gray-800 hover:text-blue-600 font-medium"
-            >
-              Edit Rating
-            </Link>
-          </li>
-      </ul>
+        
+        <div className="flex gap-5">
+          <ChangeRating 
+            country={props.country}
+            year={props.year}
+          />
+
+          <Popup 
+            entryCountry={props.country}
+            entryYear={props.year}
+            listItems={
+              <>
+                <li> View Entry </li>
+              </>
+            }
+            popupContent={
+              <CountryIndividualEntryPage 
+                entryCountry={props.country}
+                entryYear={props.year}
+              />
+            }
+          />
+        </div>
     </div>
-    </>
   );
 }
 

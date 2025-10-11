@@ -9,7 +9,7 @@ import LogoutPage from "../pages/auth_pages/LogoutPage"
 function AccountRoutes() {
     return (
         <Routes>
-            <Route path="/" element={<AccountHomePage />}></Route>
+            <Route path="/" element={<AccountHomePage />} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="logout" element={<LogoutPage />} />

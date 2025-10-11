@@ -42,13 +42,15 @@ function Chat() {
             setUserDetails(response.data.otherUserDetails)
         } 
         catch (error) {
+            if (error.response?.status === 401) {
+                return
+            } 
             if (error.response?.data?.message) {
                 toast.error(error.response.data.message)
             }
             else {
                 toast.error("Something went wrong, please try again")
             }
-            navigate("/user/home")
         }
         finally {
             setLoading(false)

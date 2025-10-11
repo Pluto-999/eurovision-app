@@ -35,11 +35,13 @@ function OtherUserRanking() {
                         entry["rating"] = ratingResponse.data.rating > 0 ? ratingResponse.data.rating : 0
                     }
                     catch(error) {
-                        console.log(error)
-                        if (error.response.data.message) {
+                        if (error.response?.status === 401) {
+                            return
+                        }
+                        if (error.response?.data?.message) {
                             toast.error(error.response.data.message)
                         }
-                        if (error.response.status === 404) {
+                        if (error.response?.status === 404) {
                             navigate("/friends/my_friends")
                         }
                         else {
@@ -50,11 +52,13 @@ function OtherUserRanking() {
                 }
                 setAllEntries(combinedEntries)
             } catch (error) {
-                console.log(error)
-                if (error.response.data.message) {
+                if (error.response?.status === 401) {
+                    return
+                }
+                if (error.response?.data?.message) {
                     toast.error(error.response.data.message)
                 }
-                if (error.response.status === 404) {
+                if (error.response?.status === 404) {
                     navigate("/friends/my_friends")
                 }
                 else {

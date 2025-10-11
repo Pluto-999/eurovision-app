@@ -31,6 +31,9 @@ function FriendsList() {
             setFriendsList(response.data.friends)
         })
         .catch(error => {
+            if (error.response?.status === 401) {
+                return
+            }
             if (error.response?.data?.message) {
                 toast.error(error.response.data.message)
             }
