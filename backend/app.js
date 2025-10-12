@@ -38,7 +38,14 @@ const { app, server } = require("./socket")
 
 const PORT = process.env.PORT || 3000
 
-app.use(helmet())
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+            "img-src": ["'self'", "data:", "https:", "https://upload.wikimedia.org", "https://res.cloudinary.com"],
+        },
+    },
+}))
 app.use(morgan("dev"))
 app.use(cors({
     origin: process.env.NODE_ENV === "production"
@@ -49,12 +56,6 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser(process.env.JWT_SECRET_KEY))
 app.use(fileUpload({ useTempFiles: true }))
-
-app.get("/", (req, res) => {
-    console.log('Cookies: ', req.signedCookies)
-
-    res.send("HOME PAGE")
-})
 
 app.use("/api/countries", countriesRoutes)
 app.use("/api/entries", entriesRoutes)
