@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import axios from "axios"
+import api from "../utils/axios"
 
 const FriendsListContext = createContext(null)
 
@@ -8,9 +8,7 @@ export function FriendsListContextProvider({ children }) {
     const [friendsList, setFriendsList] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/friends/my_friends", 
-            { withCredentials: true }
-        )
+        api.get("/friends/my_friends")
         .then(response => {
             setFriendsList(response.data.friends)
         })

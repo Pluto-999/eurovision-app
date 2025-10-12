@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import axios from "axios"
+import api from "../utils/axios"
 
 const UserContext = createContext(null)
 
@@ -9,8 +9,7 @@ export function UserContextProvider({ children }) {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/user/home",
-            { withCredentials: true })
+        api.get("/user/home")
         .then(response => {
             setUser(response.data.user)
         })

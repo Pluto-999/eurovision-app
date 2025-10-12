@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useSearchParams } from "react-router-dom"
@@ -21,10 +21,7 @@ function ResetPassword () {
         }
 
         try {
-            const response = await axios.post(
-                "http://localhost:3000/api/auth/reset-password", 
-                { password: passwordOne, token }
-            )
+            const response = await api.post("/auth/reset-password", { password: passwordOne, token })
             toast.success(response.data.message)
             navigate("/account/login")
         }

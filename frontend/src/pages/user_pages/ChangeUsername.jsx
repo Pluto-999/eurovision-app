@@ -1,5 +1,5 @@
 import { useState } from "react"
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { Ring } from "ldrs/react"
 import { useUserContext } from "../../context/userContext"
@@ -15,13 +15,8 @@ function ChangeUsername() {
 
         try {
             setLoading(true)
-            const response = await axios.patch(
-                "http://localhost:3000/api/user/changeUsername", 
-                { username },
-                { withCredentials: true }
-            )
-
-            setUser({ ...user, username: response.data.username})
+            const response = await api.patch("/user/changeUsername", { username })
+            setUser({ ...user, username: response.data.payload.username})
 
             toast.success("Your username has been successfully updated")
         }

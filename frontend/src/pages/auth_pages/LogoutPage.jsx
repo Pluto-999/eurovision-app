@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import { useEffect } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
@@ -10,9 +10,7 @@ function LogoutPage() {
     const { setUser } = useUserContext()
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/auth/logout",
-            { withCredentials: true }
-        )
+        api.get("/auth/logout")
         .then(response => {
             const message = response.data.message
             toast(message)

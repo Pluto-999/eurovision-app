@@ -3,12 +3,13 @@ function Popup({
     entryCountry, 
     entryYear, 
     listItems, 
-    popupContent
+    popupContent,
+    buttonStyling
 }) {
 
     return (
         <li key={entryCountry + entryYear} className="card">
-            <button className="btn" onClick={()=>document.getElementById(`modal_${entryCountry}_${entryYear}`).showModal()}>
+            <button className={`btn ${buttonStyling}`} onClick={()=>document.getElementById(`modal_${entryCountry}_${entryYear}`).showModal()}>
                 <ul>
                     {listItems}
                 </ul>

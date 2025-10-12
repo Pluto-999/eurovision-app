@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { Rating } from "react-simple-star-rating"
 
@@ -13,13 +13,13 @@ function ExtraUserStatsPopup(props) {
     useEffect(() => {
         async function fetchData() {
             try {
-                const avgRating = await axios.get(`http://localhost:3000/api/userstats/avgRating/${country}/${year}`)
+                const avgRating = await api.get(`/userstats/avgRating/${country}/${year}`)
                 setAverageRating(avgRating.data.data.average)
                 
-                const avgPosition = await axios.get(`http://localhost:3000/api/userstats/avgPosition/${country}/${year}`)
+                const avgPosition = await api.get(`/userstats/avgPosition/${country}/${year}`)
                 setAveragePosition(avgPosition.data.data.average)
 
-                const avgPoints = await axios.get(`http://localhost:3000/api/userstats/avgPoints/${country}/${year}`)
+                const avgPoints = await api.get(`/userstats/avgPoints/${country}/${year}`)
                 setAveragePoints(avgPoints.data.data.average)
             } catch (error) {
                 console.log(error)

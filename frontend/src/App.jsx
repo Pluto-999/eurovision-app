@@ -13,7 +13,7 @@ import Chat from "./pages/friends_pages/Chat"
 import NotFound from "./pages/NotFound"
 import { Toaster } from "react-hot-toast"
 import { useEffect } from "react"
-import axios from "axios"
+import api from "./utils/axios"
 import socket from "./socket"
 import "./index.css"
 import "./styles/loading.css"
@@ -24,9 +24,7 @@ function App() {
   const { setUser, setLoading } = useUserContext()
   
   useEffect(() => {
-    axios.get("http://localhost:3000/api/user/home", 
-      { withCredentials: true }
-    )
+    api.get("http://localhost:3000/api/user/home")
     .then((response) => {
       setUser(response.data.user)
       if (!socket.connected) {

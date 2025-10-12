@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import "../../styles/Stats.css"
@@ -20,18 +20,14 @@ function OtherUserRanking() {
         const loadEntriesAndRatings = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get(`http://localhost:3000/api/ranking/otherUserRankings/${params.username}/${params.year}`, 
-                    { withCredentials: true }
-                )
+                const response = await api.get(`/ranking/otherUserRankings/${params.username}/${params.year}`)
                 const unranked = response.data.unranked_entries
                 const ranked = response.data.ranked_entries
                 const combinedEntries = ranked.concat(unranked)
 
                 for (const entry of combinedEntries) {
                     try {
-                        const ratingResponse = await axios.get(`http://localhost:3000/api/rating/otherUserRating/${params.username}/${entry.country}/${params.year}`,
-                            { withCredentials: true }
-                        )
+                        const ratingResponse = await api.get(`/rating/otherUserRating/${params.username}/${entry.country}/${params.year}`)
                         entry["rating"] = ratingResponse.data.rating > 0 ? ratingResponse.data.rating : 0
                     }
                     catch(error) {

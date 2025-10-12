@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { IoPersonRemove } from "react-icons/io5"
 import { useFriendsListContext } from "../../context/friendsListContext"
@@ -8,8 +8,7 @@ function FriendDelete({ username }) {
     const { setFriendsList } = useFriendsListContext()
 
     const DeleteFriend = async () => {
-        axios.delete(`http://localhost:3000/api/friends/delete/${username}`, 
-            { withCredentials: true })
+        api.delete(`/friends/delete/${username}`)
         .then((response) => {
             toast.success("Friend successfully deleted")
             setFriendsList(prev =>

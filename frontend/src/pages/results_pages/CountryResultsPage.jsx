@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../utils/axios"
 import "../../styles/Stats.css";
 import Sort from "../../components/Sort"
 import toast from "react-hot-toast"
@@ -11,8 +11,7 @@ function CountryResultsPage() {
   const [finalResults, setFinalResults] = useState([])
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/api/results/${params.country}`)
+    api.get(`/results/${params.country}`)
       .then((response) => {
         setSemiResults(response.data.data.semi_results)
         setFinalResults(response.data.data.final_results)

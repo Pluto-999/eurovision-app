@@ -1,5 +1,5 @@
 import { useState } from "react"
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import SendFriendRequest from "./SendFriendRequest"
@@ -25,9 +25,7 @@ function FriendSearch () {
         e.preventDefault()
         setLoading(true)
 
-        axios.get(`http://localhost:3000/api/friends/search/${search}`,
-            { withCredentials: true }
-        )
+        api.get(`/friends/search/${search}`)
         .then(response => {
             if (response.data.success) {
                 setSearchResults(response.data.users)

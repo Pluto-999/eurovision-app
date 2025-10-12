@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
 
@@ -9,8 +9,8 @@ function ForgotPassword() {
         e.preventDefault()
 
         try {
-            const response = await axios.post(
-                "http://localhost:3000/api/auth/forgot-password", 
+            const response = await api.post(
+                "/auth/forgot-password", 
                 { email }
             )
             toast.success(response.data.message)

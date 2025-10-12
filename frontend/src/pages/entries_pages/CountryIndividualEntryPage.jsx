@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../utils/axios"
 import { useParams } from "react-router-dom"
 import SingleResultsPage from "../results_pages/SingleResultsPage"
 import { FaYoutube } from "react-icons/fa";
@@ -15,7 +15,7 @@ function CountryIndividualEntryPage({ entryCountry, entryYear, noResults }) {
     const year = params.year ? params.year : entryYear
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/entries/${country}/${year}`)
+        api.get(`/entries/${country}/${year}`)
         .then(response => setEntryData(response.data.data))
         .catch(error => {
             console.log(error)

@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { IoPersonAdd } from "react-icons/io5"
 
@@ -6,9 +6,8 @@ function AcceptFriendRequest({ username, onAccepted }) {
 
     const acceptRequest = async () => {
         try {
-            const response = await axios.patch("http://localhost:3000/api/friends/accept_friend_request", 
-                { username }, 
-                { withCredentials: true }
+            const response = await api.patch("/friends/accept_friend_request", 
+                { username }
             )
 
             toast.success(response.data.message)

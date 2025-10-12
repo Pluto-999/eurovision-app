@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../utils/axios"
 import "../../styles/Stats.css"
 import CountryIndividualEntryPage from "../entries_pages/CountryIndividualEntryPage"
 import Sort from "../../components/Sort"
@@ -16,7 +16,7 @@ function FinalResultsPage() {
 
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:3000/api/results/final/${params.year}`)
+        api.get(`/results/final/${params.year}`)
         .then(response => setResults(response.data.data))
         .catch(error => {
             console.log(error)

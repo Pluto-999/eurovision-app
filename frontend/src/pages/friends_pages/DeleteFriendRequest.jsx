@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { IoPersonRemove } from "react-icons/io5"
 
@@ -6,10 +6,7 @@ function DeleteFriendRequest({ username, onAccepted }) {
 
     const deleteRequest = async () => {
         try {
-            const response = await axios.delete(`http://localhost:3000/api/friends/delete_request/${username}`, 
-                { withCredentials: true }
-            )
-            
+            const response = await api.delete(`/friends/delete_request/${username}`)
             toast.success(response.data.message)
             onAccepted()
         } 

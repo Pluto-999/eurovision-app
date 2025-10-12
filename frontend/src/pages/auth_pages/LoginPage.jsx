@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
@@ -16,10 +16,7 @@ function LoginPage() {
         e.preventDefault()
 
         try {
-            const response = await axios.post("http://localhost:3000/api/auth/login", {
-                username,
-                password
-            }, { withCredentials: true })
+            const response = await api.post("/auth/login", {username, password})
             
             if (response.data.success) {
                 toast.success("Successfully logged in")
