@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { IoPersonAdd } from "react-icons/io5"
 import { useNavigate } from "react-router-dom"
@@ -8,11 +8,7 @@ function SendFriendRequest({ username }) {
 
     const sendFriendRequest = async () => {
         try {
-            await axios.post("http://localhost:3000/api/friends/create_friend_request", 
-                { username },
-                { withCredentials: true }
-            )
-
+            await api.post("/friends/create_friend_request", {username})
             toast.success(`Successfully sent a friend request to ${username}`)
         } 
         catch (error) {

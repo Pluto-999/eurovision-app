@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable"
@@ -15,9 +15,7 @@ function CurrentUserRanking() {
     )
 
     function fetchRankings() {
-        axios.get(`http://localhost:3000/api/ranking/currentUserRankings/${params.year}`,
-            { withCredentials: true }
-        )
+        api.get(`/ranking/currentUserRankings/${params.year}`)
         .then((response) => {
             const unranked = response.data.unranked_entries
             const ranked = response.data.ranked_entries
@@ -59,11 +57,11 @@ function CurrentUserRanking() {
         ) + 1
 
 
-        axios.patch("http://localhost:3000/api/ranking/changeRanking", {
+        api.patch("/ranking/changeRanking", {
             country: activeEntry.country,
             year: activeEntry.year,
             position: newPosition
-        }, { withCredentials: true })
+        })
         .then(() => {
             fetchRankings()
             toast.success("Ranking successfully updated")

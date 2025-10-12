@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import "../../styles/Stats.css"
 import CountryIndividualEntryPage from "../entries_pages/CountryIndividualEntryPage"
@@ -15,7 +15,7 @@ function AllUserRankings() {
     const [loading, setLoading] = useState(true)
     
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/userstats/results/${params.year}`)
+        api.get(`/userstats/results/${params.year}`)
         .then(response => {
             setRankings(response.data.data)
         })

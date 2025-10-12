@@ -1,5 +1,5 @@
 import { useState } from "react"
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { Ring } from "ldrs/react"
 import { useUserContext } from "../../context/userContext"
@@ -17,12 +17,10 @@ function ChangeProfilePicture() {
 
         try {
             setLoading(true)
-            const response = await axios.patch(
-                "http://localhost:3000/api/user/changeProfilePicture", formData,
-                {
-                withCredentials: true,
-                headers: { "Content-Type": "multipart/form-data" }
-                }
+            const response = await api.patch(
+                "/user/changeProfilePicture", 
+                formData,
+                { headers: { "Content-Type": "multipart/form-data" } }
             )
             setUser({ ...user, profile_picture: response.data.profilePicture })
             
@@ -44,9 +42,7 @@ function ChangeProfilePicture() {
     const handleReset = async () => {
         try {
             setLoading(true)
-            const response = await axios.patch("http://localhost:3000/api/user/resetProfilePicture",
-                {}, { withCredentials: true }
-            )
+            const response = await api.patch("/user/resetProfilePicture", {})
             setUser({ ...user, profile_picture: response.data.profilePicture })
 
             toast.success("Profile picture was successfully reset to default")

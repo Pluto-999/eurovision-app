@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import socket from "../../socket"
 import { useNavigate, useParams } from "react-router-dom"
-import axios from "axios"
+import api from "../../utils/axios"
 import { IoSend } from "react-icons/io5"
 import "../../styles/chat.css"
 import toast from "react-hot-toast"
@@ -34,9 +34,7 @@ function Chat() {
     const fetchMessages = async () => {
         setLoading(true)
         try {
-            const response = await axios.get(`http://localhost:3000/api/messages/${params.username}`, 
-                { withCredentials: true }
-            )
+            const response = await api.get(`/messages/${params.username}`)
             console.log(response)
             setAllMessages(response.data.messages)
             setUserDetails(response.data.otherUserDetails)

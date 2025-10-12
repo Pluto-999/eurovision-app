@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../utils/axios"
 import { Link } from "react-router-dom"
 import "../../styles/Stats.css"
 import { Ring } from "ldrs/react"
@@ -13,7 +13,7 @@ function CountriesPage() {
 
     useEffect(() => {
         setLoading(true)
-        axios.get("http://localhost:3000/api/countries")
+        api.get("/countries")
         .then(response => setCountries(response.data.data))
         .catch(error => {
             console.log(error)

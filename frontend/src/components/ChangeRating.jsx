@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../utils/axios"
 import toast from "react-hot-toast"
 import { Rating } from 'react-simple-star-rating'
 
@@ -7,13 +7,13 @@ function ChangeRating({ country, year }) {
     const [rating, setRating] = useState(0)
 
     const handleRating = (rate) => {
-        axios.patch("http://localhost:3000/api/rating/changeRating", 
+        api.patch("/rating/changeRating", 
             {
                 country: country,
                 year: year,
                 rating: rate
             },
-            { withCredentials: true }
+
         )
         .then(() => {
             setRating(rate)
@@ -32,7 +32,7 @@ function ChangeRating({ country, year }) {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/rating/currentUserRating/${country}/${year}`,
+        api.get(`/rating/currentUserRating/${country}/${year}`,
             { withCredentials: true }
         )
         .then((response) => {

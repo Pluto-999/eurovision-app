@@ -7,6 +7,8 @@ const dotenv = require("dotenv")
 const cookieParser = require("cookie-parser")
 const fileUpload = require("express-fileupload")
 
+const path = require("path")
+
 dotenv.config()
 
 const cloudinary = require("cloudinary").v2
@@ -39,7 +41,9 @@ const PORT = process.env.PORT || 3000
 app.use(helmet())
 app.use(morgan("dev"))
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.NODE_ENV === "production"
+    ? true
+    : "http://localhost:5173",
     credentials: true
 }))
 app.use(express.json())
@@ -65,6 +69,14 @@ app.use("/api/ranking", rankingRoutes)
 app.use("/api/search", searchRoutes)
 
 app.use(errorHandler)
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../frontend/dist")))
+
+    app.get(/^\/(?!api).*/, (req, res) => {
+        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+    })
+}
 
 server.listen(PORT, () => {
     console.log(`server is listening on port ${PORT} ...`)

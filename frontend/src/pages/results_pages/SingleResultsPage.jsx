@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../utils/axios"
 import { Link } from "react-router-dom"
 import { FaLink } from "react-icons/fa6"
 import { useLocation } from "react-router-dom"
@@ -19,7 +19,7 @@ function SingleResultsPage({ entryCountry, entryYear }) {
     const location = useLocation().pathname
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/results/${country}/${year}`)
+        api.get(`/results/${country}/${year}`)
         .then(response => setResults(response.data.data))
         .catch(error => {
             console.log(error)

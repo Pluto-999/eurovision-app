@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../utils/axios"
 import { useParams } from "react-router-dom"
 import CountryIndividualEntryPage from "./CountryIndividualEntryPage"
 import { Ring } from "ldrs/react"
@@ -16,10 +16,10 @@ function IndividualCountryHomePage() {
         async function fetchData() {
             setLoading(true)
             try {
-                const entriesRequest = await axios.get(`http://localhost:3000/api/entries/country/${params.country}`)
+                const entriesRequest = await api.get(`/entries/country/${params.country}`)
                 const entriesData = entriesRequest.data.data
 
-                const resultsRequest = await axios.get(`http://localhost:3000/api/results/${params.country}`)
+                const resultsRequest = await api.get(`/results/${params.country}`)
                 const semiResultsData = resultsRequest.data.data.semi_results
                 const finalResultsData = resultsRequest.data.data.final_results
 

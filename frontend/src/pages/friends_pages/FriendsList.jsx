@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import FriendDelete from "./FriendDelete"
@@ -25,8 +25,7 @@ function FriendsList() {
     
     const fetchFriends = async () => {
         setLoading(true)
-        axios.get("http://localhost:3000/api/friends/my_friends",
-            { withCredentials: true })
+        api.get("/friends/my_friends")
         .then(response => {
             setFriendsList(response.data.friends)
         })

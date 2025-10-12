@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import { useEffect, useState } from "react"
 import "../../styles/friends.css"
 import AcceptFriendRequest from "./AcceptFriendRequest"
@@ -16,9 +16,7 @@ function FriendRequestsHomePage() {
     const fetchData = async () => {
         setLoading(true)
         try {
-            const response = await axios.get("http://localhost:3000/api/friends/my_friend_requests", 
-                { withCredentials: true }
-            )
+            const response = await api.get("/friends/my_friend_requests")
             setIncomingRequests(response.data.incomingRequests)
             setOutgoingRequests(response.data.outgoingRequests)
         }

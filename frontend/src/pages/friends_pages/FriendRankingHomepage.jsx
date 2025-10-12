@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom"
 import { useUserContext } from "../../context/userContext"
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
 
 function FriendRankingHomepage() {
     const params = useParams()

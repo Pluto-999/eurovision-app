@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import toast from "react-hot-toast"
 import { IoPersonRemove } from "react-icons/io5"
 
@@ -6,11 +6,9 @@ function RejectFriendRequest({ username, onAccepted }) {
 
     const rejectRequest = async () => {
         try {
-            const response = await axios.patch("http://localhost:3000/api/friends/reject_friend_request",
-                { username },
-                { withCredentials: true }
+            const response = await api.patch("/friends/reject_friend_request",
+                { username }
             )
-            
             toast.success(response.data.message)
             onAccepted()
         } 

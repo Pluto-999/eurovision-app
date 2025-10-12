@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../utils/axios"
 import { useParams } from "react-router-dom"
 import CountryIndividualEntryPage from "./CountryIndividualEntryPage"
 import "../../styles/Stats.css"
@@ -11,7 +11,7 @@ function CountryAllEntriesPage() {
     const [entries, setEntries] = useState([])
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/entries/country/${params.country}`)
+        api.get(`/entries/country/${params.country}`)
         .then(response => setEntries(response.data.data))
         .catch(error => {
             console.log(error)

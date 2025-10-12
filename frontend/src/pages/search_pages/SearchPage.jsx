@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../../utils/axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import Popup from "../../components/Popup"
@@ -21,9 +21,7 @@ function SearchPage() {
         setLoading(true)
 
         try {
-            const response = await axios.post("http://localhost:3000/api/search/", {
-                searchValue, searchType
-            })
+            const response = await api.post("/search/", {searchValue, searchType})
             if (response.data.success) {
                 setSearchResults(response.data.data)
                 setMadeSearch(true)
