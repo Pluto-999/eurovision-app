@@ -7,6 +7,7 @@ import { IoHome } from "react-icons/io5"
 import { FiLogOut } from "react-icons/fi"
 import { FiLogIn } from "react-icons/fi"
 import { IoCreate } from "react-icons/io5"
+import "../styles/links.css"
 
 function Navbar() {
     
@@ -18,13 +19,13 @@ function Navbar() {
             <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="nav_dropdown"> Official Results </div>
                     <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                        <li><Link to="/countries"> Participating Countries </Link></li>
-                        <li><Link to="/results/all_results"> All Results </Link></li>
+                        <li><Link to="/countries" className="text_link"> Participating Countries </Link></li>
+                        <li><Link to="/results/all_results" className="text_link"> All Results </Link></li>
                     </ul>
             </div>
         </li>
-        <li><Link to="/user_stats">Community Rankings and Ratings</Link></li>
-        <li><Link to="search">Search</Link></li>
+        <li><Link to="/user_stats" className="text_link">Community Rankings and Ratings</Link></li>
+        <li><Link to="search" className="text_link">Search</Link></li>
         <li>
             {user ? (
                 <div className="dropdown dropdown-end">
@@ -37,17 +38,17 @@ function Navbar() {
                     {user.username}
                 </div>
                     <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                        <li><Link to="/user/home"> <IoHome /> Homepage </Link></li>
-                        <li><Link to="/user/settings"> <IoSettings /> Account Settings </Link></li>
-                        <li><Link to="/account/logout"> <FiLogOut /> Logout </Link></li>
+                        <li><Link to="/user/home" className="text_link"> <IoHome /> Homepage </Link></li>
+                        <li><Link to="/user/settings" className="text_link"> <IoSettings /> Account Settings </Link></li>
+                        <li><Link to="/account/logout" className="text_link"> <FiLogOut /> Logout </Link></li>
                     </ul>
                 </div>
             ) : (
                 <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="nav_dropdown">Account</div>
                     <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                        <li><Link to="/account/login"> <FiLogIn /> Login </Link></li>
-                        <li><Link to="/account/register"> <IoCreate /> Register </Link></li>
+                        <li><Link to="/account/login" className="text_link"> <FiLogIn /> Login </Link></li>
+                        <li><Link to="/account/register" className="text_link"> <IoCreate /> Register </Link></li>
                     </ul>
                 </div>
             )}
@@ -57,7 +58,7 @@ function Navbar() {
 
     return (
         <nav className="navbar">
-            <div className="navbar_title">
+            <div className="navbar_title text_link">
                 <Link to="/">Euroscore</Link>
             </div>
             <ul className="navbar_links">

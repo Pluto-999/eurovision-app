@@ -7,6 +7,7 @@ import Sort from "../../components/Sort"
 import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
 import Pagination from "../../components/Pagination"
+import "../../styles/links.css"
 
 function SearchPage() {
     
@@ -149,7 +150,7 @@ function SearchPage() {
                                                     entryYear={item.year}
                                                 />
                                             }
-                                            buttonStyling={"link"}
+                                            buttonStyling={"link text_link button_link"}
                                         />
                                     )}
                                 />

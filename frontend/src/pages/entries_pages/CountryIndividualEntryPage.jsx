@@ -6,6 +6,7 @@ import { FaYoutube } from "react-icons/fa";
 import { FaSpotify } from "react-icons/fa";
 import "../../styles/Stats.css"
 import toast from "react-hot-toast"
+import "../../styles/links.css"
 
 function CountryIndividualEntryPage({ entryCountry, entryYear, noResults }) {
     const params = useParams()
@@ -36,8 +37,8 @@ function CountryIndividualEntryPage({ entryCountry, entryYear, noResults }) {
                 <li> Song: {entryData.song} </li>
                 <li>
                     <div className="icons">
-                        <a href={entryData.yt_url}><FaYoutube size={40}/></a>
-                        <a href={entryData.spotify_url}><FaSpotify size={40}/></a>
+                        <a href={entryData.yt_url} className="text_link"><FaYoutube size={40}/></a>
+                        <a href={entryData.spotify_url} className="text_link"><FaSpotify size={40}/></a>
                     </div>
                 </li>
                 <li>

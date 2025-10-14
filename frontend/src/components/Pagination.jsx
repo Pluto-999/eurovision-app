@@ -3,6 +3,7 @@ import { FaArrowCircleLeft } from "react-icons/fa"
 import { useState } from "react"
 import ReactPaginate from 'react-paginate'
 import "../styles/pagination.css"
+import "../styles/links.css"
 
 function Pagination({ data, renderDataItem, itemsPerPage }) {
 
@@ -38,8 +39,8 @@ function Pagination({ data, renderDataItem, itemsPerPage }) {
                     pageCount={pageCount}
                     onPageChange={handlePageChange}
                     containerClassName="paginate"
-                    previousClassName="hover:cursor-pointer"
-                    nextClassName="hover:cursor-pointer"
+                    previousClassName="hover:cursor-pointer text_link"
+                    nextClassName="hover:cursor-pointer text_link"
                     pageClassName="page"
                     breakClassName="break"
                 />

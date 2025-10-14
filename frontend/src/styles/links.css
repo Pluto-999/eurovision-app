@@ -1,0 +1,22 @@
+
+.text_link {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+  transition-duration: 0.5s;
+}
+
+.text_link:hover {
+  color: #4b51c4;
+  transition-duration: 0.5s;
+}
+
+.button_link {
+    transition-duration: 0.5s;
+}
+
+.button_link:hover {
+    transform: scale(1.1);
+    transition-duration: 0.5s;
+    background-color: #56598a;
+}

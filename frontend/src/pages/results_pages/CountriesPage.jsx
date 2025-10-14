@@ -6,6 +6,7 @@ import { Ring } from "ldrs/react"
 import "ldrs/react/Ring.css"
 import toast from "react-hot-toast"
 import Pagination from "../../components/Pagination"
+import "../../styles/links.css"
 
 function CountriesPage() {
     const [countries, setCountries] = useState([])
@@ -44,7 +45,7 @@ function CountriesPage() {
                     <li key={country.country}>
                         <Link 
                             to={`/entries/country/${country.country}`}
-                            className="link"    
+                            className="link text_link button_link"    
                         >
                             {country.country}
                             <img

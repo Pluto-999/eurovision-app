@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import socket from "../../socket"
 import { Link } from "react-router-dom"
 import { useUserContext } from "../../context/userContext"
+import "../../styles/links.css"
 
 function LoginPage() {
     const navigate = useNavigate()
@@ -68,8 +69,8 @@ function LoginPage() {
                     />
                 </fieldset>
 
-                <div>
-                    <Link to="/account/forgot_password">Forgot Password?</Link>
+                <div className="flex py-3">
+                    <Link to="/account/forgot_password" className="text_link">Forgot Password?</Link>
                 </div>
 
                 <input type="submit" className="btn"></input>

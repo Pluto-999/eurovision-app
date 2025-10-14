@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { FaLink } from "react-icons/fa6"
 import { useLocation } from "react-router-dom"
 import toast from "react-hot-toast"
+import "../../styles/links.css"
 
 function SingleResultsPage({ entryCountry, entryYear }) {
     const params = useParams()
@@ -50,7 +51,7 @@ function SingleResultsPage({ entryCountry, entryYear }) {
                                     <h2>
                                         <Link 
                                             to={`/results/semi/${results.semi_result[0].semi_number}/${results.semi_result[0].year}`}
-                                            className="inline-flex justify-center items-center gap-2"
+                                            className="inline-flex justify-center items-center gap-2 text_link"
                                         >
                                             Semi Final {results.semi_result[0].semi_number} Result 
                                             <FaLink />
@@ -85,7 +86,7 @@ function SingleResultsPage({ entryCountry, entryYear }) {
                                     <h2>
                                         <Link 
                                             to={`/results/final/${results.final_result[0].year}`}
-                                            className="inline-flex justify-center items-center gap-2"
+                                            className="inline-flex justify-center items-center gap-2 text_link"
                                         >
                                             Final Result
                                             <FaLink />
