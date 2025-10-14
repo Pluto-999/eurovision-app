@@ -12,6 +12,7 @@ import Pagination from "../../components/Pagination"
 import { FaSearch } from "react-icons/fa"
 import { useFriendsListContext } from "../../context/friendsListContext"
 import "../../styles/friends.css"
+import "../../styles/links.css"
 
 function FriendsList() {
     const [loading, setLoading] = useState(false)
@@ -63,7 +64,7 @@ function FriendsList() {
                         <>
                         <h2> You currently have no friends </h2>
                         <div>
-                            <Link to="/friends/search"> Search for friends </Link>
+                            <Link to="/friends/search" className="text_link"> Search for friends </Link>
                         </div>
                         </>
                     ) : (

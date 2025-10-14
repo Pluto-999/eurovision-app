@@ -12,7 +12,7 @@ function HomePage() {
       <div className="flex flex-col gap-20">
         <div className="flex flex-col items-center gap-3">
           <h1 className="font-medium">Welcome to Euroscore</h1>
-          <div> View official Eurovision results from 2021 onwards, rank and rate entries each year to shape community rankings, and share your results with friends and groups to compare favorites and see who tops your group's leaderboard.</div>
+          <div> View official Eurovision results from 2021 onwards, rank and rate entries each year to shape community rankings, and share and chat about your results with friends to compare favourites.</div>
         </div>
 
         <div className="flex flex-col gap-7">
