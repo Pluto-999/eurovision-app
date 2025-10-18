@@ -1,9 +1,15 @@
-const { Resend } = require("resend")
+const nodemailer = require("nodemailer")
+
+const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "adamw0909@gmail.com",
+            pass: process.env.GMAIL_APP_PASSWORD
+        }
+    })
 
 const sendResetPasswordEmail = async(username, email, token, origin) => {
     
-    const resend = new Resend(process.env.RESEND_API_KEY)
-
     const url = `${origin}/account/reset-password?token=${token}`
     const message = `
         <h3> Hello ${username}! </h3>    
@@ -12,17 +18,15 @@ const sendResetPasswordEmail = async(username, email, token, origin) => {
     `
 
     try {
-        resend.emails.send({
-            from: "onboarding@resend.dev",
+        await transporter.sendMail({
+            from: '"Euroscore" <adamw0909@gmail.com>',
             to: email,
-            subject: "Euroscore - Reset your password",
+            subject: "Euroscore - Reset Password",
             html: message
         })    
     } catch (error) {
         console.log(error)
     }
-    
-    
 }
 
 module.exports = sendResetPasswordEmail
