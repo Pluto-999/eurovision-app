@@ -1,12 +1,10 @@
-const nodemailer = require("nodemailer")
+const brevo = require("@getbrevo/brevo")
 
-const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: "adamw0909@gmail.com",
-            pass: process.env.GMAIL_APP_PASSWORD
-        }
-    })
+const apiInstance = new brevo.TransactionalEmailsApi()
+    apiInstance.setApiKey(
+        brevo.TransactionalEmailsApiApiKeys.apiKey,
+        process.env.BREVO_API_KEY
+    )
 
 const sendResetPasswordEmail = async(username, email, token, origin) => {
     
@@ -17,15 +15,23 @@ const sendResetPasswordEmail = async(username, email, token, origin) => {
         <p> Please note: This link is only valid for 10 minutes </p>
     `
 
+    const sendEmail = new brevo.SendSmtpEmail()
+    sendEmail.subject = "Euroscore - Reset Password"
+    sendEmail.htmlContent = message
+    sendEmail.sender = {
+        name: "Euroscore",
+        email: "adamw0909@gmail.com"
+    }
+    sendEmail.to = [{
+        email: email,
+        name: username
+    }]
+
     try {
-        await transporter.sendMail({
-            from: '"Euroscore" <adamw0909@gmail.com>',
-            to: email,
-            subject: "Euroscore - Reset Password",
-            html: message
-        })    
-    } catch (error) {
-        console.log(error)
+        await apiInstance.sendTransacEmail(sendEmail)    
+    } 
+    catch (error) {
+        console.error("Error sending reset email:", error.response?.body || error.message)
     }
 }
 
