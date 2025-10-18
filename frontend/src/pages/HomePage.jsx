@@ -9,10 +9,10 @@ import "../styles/links.css"
 
 function HomePage() {
   return (
-      <div className="flex flex-col gap-20">
+      <div className="flex flex-col gap-10">
         <div className="flex flex-col items-center gap-3">
           <h1 className="font-medium">Welcome to Euroscore</h1>
-          <div> View official Eurovision results from 2021 onwards, rank and rate entries each year to shape community rankings, and share and chat about your results with friends to compare favourites.</div>
+          <div className="text-center"> View official Eurovision results from 2021 onwards, rank and rate the entries of each year to shape community rankings, and share and chat about your results with friends to compare favourites.</div>
         </div>
 
         <div className="flex flex-col gap-7">
@@ -57,7 +57,7 @@ function HomePage() {
           </div>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center gap-5">
           <a
             href="https://github.com/Pluto-999/eurovision-app"
             className="flex p-3 gap-3 self-center text-lg items-center bg-[#646cff] text-white w-fit rounded-4xl shadow-lg button_link"
@@ -65,6 +65,7 @@ function HomePage() {
             <IoLogoGithub size={50} color="white"/>
             <div> Github Repository </div>
           </a>
+          <div> Fully designed and built by Adam Wood. </div>
         </div>
       </div>
   );
