@@ -47,12 +47,15 @@ app.use(helmet({
     },
 }))
 app.use(morgan("dev"))
-app.use(cors({
-    origin: process.env.NODE_ENV === "production"
-    ? true
-    : "http://localhost:5173",
-    credentials: true
-}))
+if (process.env.NODE_ENV === "production") {
+    // no need for CORS as deployed on same origin
+}
+else {
+    app.use(cors({
+        origin: "http://localhost:5173",
+        credentials: true
+    }))
+}
 app.use(express.json())
 app.use(cookieParser(process.env.JWT_SECRET_KEY))
 app.use(fileUpload({ useTempFiles: true }))

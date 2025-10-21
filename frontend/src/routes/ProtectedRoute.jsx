@@ -17,9 +17,11 @@ function ProtectedRoute({ children }) {
     }, [navigate, user, loading])
 
     if (loading) {
-        <div className="loader">
-            <Ring />
-        </div>
+        return (
+            <div className="loader">
+                <Ring />
+            </div>
+        )
     }
 
     return children
