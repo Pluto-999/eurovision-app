@@ -21,24 +21,13 @@ import ProtectedRoute from "./routes/ProtectedRoute"
 import { useUserContext } from "./context/userContext"
 
 function App() {
-  const { setUser, setLoading } = useUserContext()
+  const { user } = useUserContext()
   
   useEffect(() => {
-    api.get("http://localhost:3000/api/user/home")
-    .then((response) => {
-      setUser(response.data.user)
-      if (!socket.connected) {
-        socket.connect()
-      }
-    })
-    .catch(() => {
-      setUser(null)
-      console.log("user hasn't logged in or registered yet ...")
-    })
-    .finally(() => {
-      setLoading(false)
-    })
-  }, [])
+    if (user && !socket.connected) {
+      socket.connect()
+    }
+  }, [user])
   
   return (
     <>
