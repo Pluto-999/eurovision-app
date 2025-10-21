@@ -17,6 +17,9 @@ export function UserContextProvider({ children }) {
             console.log(error)
             setUser(null)
         })
+        .finally(() => {
+            setLoading(false)
+        })
     }, [])
 
     return (

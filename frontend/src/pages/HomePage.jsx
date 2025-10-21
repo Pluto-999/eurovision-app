@@ -16,7 +16,7 @@ function HomePage() {
         </div>
 
         <div className="flex flex-col gap-7">
-          <h2 className="bg-[#646cff] rounded-3xl text-white shadow-lg self-center"> Features </h2>
+          <h2 className="bg-[#646cff] rounded-3xl text-white shadow-lg self-center pl-5 pr-5"> Features </h2>
           <div className="grid grid-cols-3">
             <div className="flex flex-col gap-5">
               <div className="bg-[#c7d2fe] w-fit p-3 rounded-4xl shadow-lg">
